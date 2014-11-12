@@ -18,7 +18,7 @@ public class DatabaseConnection {
 
 	private static String url;
 
-	private static Connection getConnection() {
+	public static Connection getConnection() {
 
 		if (connection == null) {
 			try {

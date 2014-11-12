@@ -12,6 +12,7 @@ import java.util.List;
 public class Belegung extends RaumPlanerModel {
 
 	private static final long serialVersionUID = -6185510045881825157L;
+	
 	/** Das Thema der Buchung/Veranstaltung */
 	private String thema;
 	/** Startzeit */

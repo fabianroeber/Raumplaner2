@@ -11,6 +11,7 @@ import java.util.Date;
 public class Raum extends RaumPlanerModel {
 
 	private static final long serialVersionUID = 5344416189299259996L;
+	
 	/** Bezeichnung */
 	private String bezeichnung;
 	/** Fassungsverm&ouml;gen */

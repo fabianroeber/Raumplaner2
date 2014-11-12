@@ -9,6 +9,7 @@ package itprojekt.raumplaner.shared.model;
 public class User extends RaumPlanerModel {
 	
 	private static final long serialVersionUID = 1917108383838779183L;
+	
 	/** Vorname */
 	private String vorname;
 	/** Nachname */
