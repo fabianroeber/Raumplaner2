@@ -1,5 +1,9 @@
 package itprojekt.raumplaner.server;
 
-public class RaumplanerAdministrationImpl {
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+public class RaumplanerAdministrationImpl extends RemoteServiceServlet {
+
+	private static final long serialVersionUID = 4785387129676251677L;
 
 }
