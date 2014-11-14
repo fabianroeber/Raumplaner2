@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee">
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Raumplaner.html</welcome-file>
-  </welcome-file-list>
-
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>RaumplanerAdministrationImpl</servlet-name>
+		<servlet-class>itprojekt.raumplaner.server.RaumplanerAdministrationImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RaumplanerAdministrationImpl</servlet-name>
+		<url-pattern>/itprojekt.raumplaner/raumplaner</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ReportGeneratorImpl</servlet-name>
+		<servlet-class>itprojekt.raumplaner.server.report.ReportgeneratorImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReportGeneratorImpl</servlet-name>
+		<url-pattern>/itprojekt.raumplaner/report</url-pattern>
+	</servlet-mapping>
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Raumplaner.html</welcome-file>
+	</welcome-file-list>
 </web-app>
