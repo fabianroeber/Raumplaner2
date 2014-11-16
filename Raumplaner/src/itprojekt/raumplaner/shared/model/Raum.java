@@ -8,7 +8,7 @@ import java.util.Date;
  * @author Fabian
  *
  */
-public class Raum extends RaumPlanerModel {
+public class Raum extends RaumPlanerBusinessObject {
 
 	private static final long serialVersionUID = 5344416189299259996L;
 	

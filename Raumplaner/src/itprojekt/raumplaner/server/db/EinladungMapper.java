@@ -7,27 +7,35 @@ import itprojekt.raumplaner.shared.model.Einladung;
 public class EinladungMapper implements DbMapperInterface<Einladung> {
 
 	@Override
-	public List<Einladung> getAllModels() {
+	public List<Einladung> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void saveModel(Einladung model) {
+	public void updateBo(Einladung bo) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public Einladung getModelById(Long id) {
+	public void insertBo(Einladung bo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Einladung getBoById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteModel(Einladung model) {
+	public void deleteBo(Einladung bo) {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+	
 
 }

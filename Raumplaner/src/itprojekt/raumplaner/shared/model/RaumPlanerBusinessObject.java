@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Fabian
  *
  */
-public class RaumPlanerModel implements Serializable {
+public class RaumPlanerBusinessObject implements Serializable {
 	
 	private static final long serialVersionUID = -7768670689158205737L;
 	/** Id */

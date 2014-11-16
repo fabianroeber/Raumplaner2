@@ -9,7 +9,7 @@ import java.util.List;
  * @author Fabian
  *
  */
-public class Belegung extends RaumPlanerModel {
+public class Belegung extends RaumPlanerBusinessObject {
 
 	private static final long serialVersionUID = -6185510045881825157L;
 	

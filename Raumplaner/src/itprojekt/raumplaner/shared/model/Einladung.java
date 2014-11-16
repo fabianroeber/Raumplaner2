@@ -6,7 +6,7 @@ package itprojekt.raumplaner.shared.model;
  * @author Fabian
  *
  */
-public class Einladung extends RaumPlanerModel {
+public class Einladung extends RaumPlanerBusinessObject {
 
 	private static final long serialVersionUID = 8105987472322808899L;
 	

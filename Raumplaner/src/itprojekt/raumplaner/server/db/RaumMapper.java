@@ -7,25 +7,31 @@ import itprojekt.raumplaner.shared.model.Raum;
 public class RaumMapper implements DbMapperInterface<Raum> {
 
 	@Override
-	public List<Raum> getAllModels() {
+	public List<Raum> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void saveModel(Raum model) {
+	public void updateBo(Raum bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Raum getModelById(Long id) {
+	public void insertBo(Raum bo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Raum getBoById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteModel(Raum model) {
+	public void deleteBo(Raum bo) {
 		// TODO Auto-generated method stub
 
 	}
