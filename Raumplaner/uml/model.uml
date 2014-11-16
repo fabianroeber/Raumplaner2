@@ -149,8 +149,16 @@
       <packagedElement xmi:type="uml:Dependency" xmi:id="_yvrfAG3jEeS0BbIdz09jGQ" client="_mdZ1EG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_zwOWAG3jEeS0BbIdz09jGQ" client="_jr9BIG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_0WXwAG3jEeS0BbIdz09jGQ" client="_sjfCgG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_aDsJkG3nEeS0BbIdz09jGQ" name="DatabaseConnection">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_fJ7DkG3nEeS0BbIdz09jGQ" name="getConnection"/>
+      </packagedElement>
     </packagedElement>
-    <packagedElement xmi:type="uml:Package" xmi:id="_Y35zQG3kEeS0BbIdz09jGQ" name="Package1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Y35zQG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server">
+      <packagedElement xmi:type="uml:Class" xmi:id="_QoLt4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationImpl">
+        <generalization xmi:type="uml:Generalization" xmi:id="_DdA3oG3nEeS0BbIdz09jGQ" general="_tjXDwG3mEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_rmRE8G3mEeS0BbIdz09jGQ" client="_QoLt4G3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ"/>
+    </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_1WxAkG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.mail">
       <packagedElement xmi:type="uml:Class" xmi:id="_zSATgG3kEeS0BbIdz09jGQ" name="MailSender">
         <ownedOperation xmi:type="uml:Operation" xmi:id="_RcCpMG3lEeS0BbIdz09jGQ" name="SendMail"/>
@@ -167,6 +175,28 @@
         </ownedAttribute>
       </packagedElement>
     </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_JHaEEG3mEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_b-zn4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministration"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_eUnBoG3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationAsync"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_HIj8UG3nEeS0BbIdz09jGQ" client="_eUnBoG3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_NQgyAG3nEeS0BbIdz09jGQ" client="_b-zn4G3mEeS0BbIdz09jGQ" supplier="_H8Z0EG3nEeS0BbIdz09jGQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_tjXDwG3mEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_H8Z0EG3nEeS0BbIdz09jGQ" name="RemoteService"/>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_2SPC8G3nEeS0BbIdz09jGQ" name="RemoteService"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_2SPqAG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAW3nEeS0BbIdz09jGQ" name="ReportGenerator"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAm3nEeS0BbIdz09jGQ" name="ReportGeneratorAsync"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqA23nEeS0BbIdz09jGQ" client="_2SPqAm3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqBG3nEeS0BbIdz09jGQ" client="_2SPqAW3nEeS0BbIdz09jGQ" supplier="_2SPC8G3nEeS0BbIdz09jGQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_2SQREG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.report">
+      <packagedElement xmi:type="uml:Class" xmi:id="_2SQREW3nEeS0BbIdz09jGQ" name="ReportGeneratorImpl">
+        <generalization xmi:type="uml:Generalization" xmi:id="_2SQREm3nEeS0BbIdz09jGQ" general="_2SQRFG3nEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_2SQRE23nEeS0BbIdz09jGQ" client="_2SQREW3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_2SQRFG3nEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qiG14G29EeS0BbIdz09jGQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qiQm4G29EeS0BbIdz09jGQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>
