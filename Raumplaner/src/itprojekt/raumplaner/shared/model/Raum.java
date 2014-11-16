@@ -11,13 +11,13 @@ import java.util.Date;
 public class Raum extends RaumPlanerBusinessObject {
 
 	private static final long serialVersionUID = 5344416189299259996L;
-	
+
 	/** Bezeichnung */
 	private String bezeichnung;
 	/** Fassungsverm&ouml;gen */
-	private Long fassungsvermoegen;
+	private int fassungsvermoegen;
 
-	public Raum(Long id, Date date, String bezeichnung, Long fassungsvermoegen) {
+	public Raum(Long id, Date date, String bezeichnung, int fassungsvermoegen) {
 		this.setCreated(date);
 		this.setId(id);
 		this.bezeichnung = bezeichnung;
@@ -32,11 +32,11 @@ public class Raum extends RaumPlanerBusinessObject {
 		this.bezeichnung = bezeichnung;
 	}
 
-	public Long getFassungsvermoegen() {
+	public int getFassungsvermoegen() {
 		return fassungsvermoegen;
 	}
 
-	public void setFassungsvermoegen(Long fassungsvermoegen) {
+	public void setFassungsvermoegen(int fassungsvermoegen) {
 		this.fassungsvermoegen = fassungsvermoegen;
 	}
 

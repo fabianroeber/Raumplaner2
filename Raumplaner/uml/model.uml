@@ -1,4 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_lzagIGqyEeSUWcqH7DIwMQ" name="model">
-  <packagedElement xmi:type="uml:Class" xmi:id="_svJjMGqyEeSUWcqH7DIwMQ" name="RaumplanerModel"/>
-</uml:Model>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g">
+  <uml:Model xmi:id="_lzagIGqyEeSUWcqH7DIwMQ" name="model">
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndcG2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndcW2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#byte"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndcm2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#char"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndc22nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fnddG2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#float"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fnddW2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fnddm2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndd22nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#short"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_6fndeG2nEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_CNK_AG2oEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#Date"/>
+    </elementImport>
+    <elementImport xmi:type="uml:ElementImport" xmi:id="_EMtN0G2oEeS0BbIdz09jGQ">
+      <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#Long"/>
+    </elementImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_uFuYgG27EeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
+      <packagedElement xmi:type="uml:Class" xmi:id="_d6Jm8G2pEeS0BbIdz09jGQ" name="RaumplanerBusinessObject">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_hjyAEG2pEeS0BbIdz09jGQ" name="id" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_pIegkG2pEeS0BbIdz09jGQ" name="created" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#Date"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_8VplcG28EeS0BbIdz09jGQ" name="Belegung">
+        <generalization xmi:type="uml:Generalization" xmi:id="_2NtKQG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_9b9GMG28EeS0BbIdz09jGQ" name="Raum">
+        <generalization xmi:type="uml:Generalization" xmi:id="_7vkQUG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_9zh4sG28EeS0BbIdz09jGQ" name="Einladung">
+        <generalization xmi:type="uml:Generalization" xmi:id="_xJsd0G3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_ucVKkG3PEeS0BbIdz09jGQ" name="akzeptiert" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_U9C3UG3QEeS0BbIdz09jGQ" name="user" visibility="private" type="_-CuyUG28EeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_-CuyUG28EeS0BbIdz09jGQ" name="User">
+        <generalization xmi:type="uml:Generalization" xmi:id="_uB8pwG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_46cNYG29EeS0BbIdz09jGQ" name="vorname" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_-F4XgG29EeS0BbIdz09jGQ" name="nachname" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_BitSaG2-EeS0BbIdz09jGQ" name="email" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <nestedClassifier xmi:type="uml:Class" xmi:id="_dWhqwG3QEeS0BbIdz09jGQ"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qiG14G29EeS0BbIdz09jGQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qiQm4G29EeS0BbIdz09jGQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+    </profileApplication>
+  </uml:Model>
+  <ActionLanguage:TextualRepresentation xmi:id="_qiZw0G29EeS0BbIdz09jGQ" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+</xmi:XMI>

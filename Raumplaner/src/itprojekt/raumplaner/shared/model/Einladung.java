@@ -9,9 +9,9 @@ package itprojekt.raumplaner.shared.model;
 public class Einladung extends RaumPlanerBusinessObject {
 
 	private static final long serialVersionUID = 8105987472322808899L;
-	
+
 	/** Nutzer */
-	User user = null;
+	User user;
 	/** Zeigt an, ob die Einladung akzeptiert */
 	Boolean akzeptiert;
 
