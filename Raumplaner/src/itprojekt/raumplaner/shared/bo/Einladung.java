@@ -1,4 +1,4 @@
-package itprojekt.raumplaner.shared.model;
+package itprojekt.raumplaner.shared.bo;
 
 /**
  * Dieses Model enth&auml;lt alle relevanten Informationen zu einer Einladung.

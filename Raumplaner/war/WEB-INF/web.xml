@@ -15,7 +15,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>ReportGeneratorImpl</servlet-name>
-		<servlet-class>itprojekt.raumplaner.server.report.ReportgeneratorImpl</servlet-class>
+		<servlet-class>itprojekt.raumplaner.server.report.ReportGeneratorImpl</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ReportGeneratorImpl</servlet-name>

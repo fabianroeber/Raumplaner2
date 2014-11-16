@@ -2,7 +2,7 @@ package itprojekt.raumplaner.server.db;
 
 import java.util.List;
 
-import itprojekt.raumplaner.shared.model.User;
+import itprojekt.raumplaner.shared.bo.User;
 
 public class UserMapper implements DbMapperInterface<User> {
 

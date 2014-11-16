@@ -1,4 +1,4 @@
-package itprojekt.raumplaner.shared.model;
+package itprojekt.raumplaner.shared.bo;
 
 import java.util.Date;
 import java.util.List;

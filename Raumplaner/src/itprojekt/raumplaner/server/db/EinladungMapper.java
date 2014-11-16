@@ -2,7 +2,7 @@ package itprojekt.raumplaner.server.db;
 
 import java.util.List;
 
-import itprojekt.raumplaner.shared.model.Einladung;
+import itprojekt.raumplaner.shared.bo.Einladung;
 
 public class EinladungMapper implements DbMapperInterface<Einladung> {
 

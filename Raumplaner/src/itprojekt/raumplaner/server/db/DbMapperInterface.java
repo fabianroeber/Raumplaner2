@@ -2,7 +2,7 @@ package itprojekt.raumplaner.server.db;
 
 import java.util.List;
 
-import itprojekt.raumplaner.shared.model.RaumPlanerBusinessObject;
+import itprojekt.raumplaner.shared.bo.RaumPlanerBusinessObject;
 
 /**
  * Interface, dass verschiedene Methoden für alle Mapper bereitstellt.

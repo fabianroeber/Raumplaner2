@@ -34,7 +34,7 @@
     <elementImport xmi:type="uml:ElementImport" xmi:id="_EMtN0G2oEeS0BbIdz09jGQ">
       <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#Long"/>
     </elementImport>
-    <packagedElement xmi:type="uml:Package" xmi:id="_uFuYgG27EeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
+    <packagedElement xmi:type="uml:Package" xmi:id="_uFuYgG27EeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared.bo">
       <packagedElement xmi:type="uml:Class" xmi:id="_d6Jm8G2pEeS0BbIdz09jGQ" name="RaumplanerBusinessObject">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_hjyAEG2pEeS0BbIdz09jGQ" name="id" visibility="private">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
@@ -42,6 +42,8 @@
         <ownedAttribute xmi:type="uml:Property" xmi:id="_pIegkG2pEeS0BbIdz09jGQ" name="created" visibility="private">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#Date"/>
         </ownedAttribute>
+        <nestedClassifier xmi:type="uml:Extension" xmi:id="_l-Uh0G3iEeS0BbIdz09jGQ" name="T"/>
+        <nestedClassifier xmi:type="uml:Extension" xmi:id="_KS74gG3lEeS0BbIdz09jGQ" name="T"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_8VplcG28EeS0BbIdz09jGQ" name="Belegung">
         <generalization xmi:type="uml:Generalization" xmi:id="_2NtKQG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
@@ -128,6 +130,43 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Interface" xmi:id="_3sdKwG3SEeS0BbIdz09jGQ" name="Serializable"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_XHYYMG3hEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.db">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_jItcEG3hEeS0BbIdz09jGQ" name="DbMapperInterface">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_BzQoYG3jEeS0BbIdz09jGQ" name="getAll"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_CIkxEG3jEeS0BbIdz09jGQ" name="updateBO"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Ck9LEG3jEeS0BbIdz09jGQ" name="insertBo"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_C6DRUG3jEeS0BbIdz09jGQ" name="getBoById"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_DQbxAG3jEeS0BbIdz09jGQ" name="deleteBo"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_jr9BIG3jEeS0BbIdz09jGQ" name="EinladungMapper"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_mdZ1EG3jEeS0BbIdz09jGQ" name="UserMapper"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_m7sTkG3jEeS0BbIdz09jGQ" name="RaumMapper"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_sjfCgG3jEeS0BbIdz09jGQ" name="BelegungMapper">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_FJ4wgG3kEeS0BbIdz09jGQ" name="getBoByUser"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_HU-vEG3kEeS0BbIdz09jGQ" name="getBoByRaum"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_w7jO8G3jEeS0BbIdz09jGQ" client="_m7sTkG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_yvrfAG3jEeS0BbIdz09jGQ" client="_mdZ1EG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_zwOWAG3jEeS0BbIdz09jGQ" client="_jr9BIG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_0WXwAG3jEeS0BbIdz09jGQ" client="_sjfCgG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Y35zQG3kEeS0BbIdz09jGQ" name="Package1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_1WxAkG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.mail">
+      <packagedElement xmi:type="uml:Class" xmi:id="_zSATgG3kEeS0BbIdz09jGQ" name="MailSender">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_RcCpMG3lEeS0BbIdz09jGQ" name="SendMail"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_zrfKgG3kEeS0BbIdz09jGQ" name="MailModel">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_TbA3UG3lEeS0BbIdz09jGQ" name="empfaenger" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_XrAF0G3lEeS0BbIdz09jGQ" name="text" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_Zm-DQG3lEeS0BbIdz09jGQ" name="activationLink" visibility="private">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
+        </ownedAttribute>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qiG14G29EeS0BbIdz09jGQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qiQm4G29EeS0BbIdz09jGQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>

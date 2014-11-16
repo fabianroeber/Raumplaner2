@@ -1,6 +1,6 @@
 package itprojekt.raumplaner.server.db;
 
-import itprojekt.raumplaner.shared.model.Belegung;
+import itprojekt.raumplaner.shared.bo.Belegung;
 
 import java.util.List;
 
