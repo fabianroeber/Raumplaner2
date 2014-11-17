@@ -226,6 +226,12 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_2SPqAG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
       <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAW3nEeS0BbIdz09jGQ" name="ReportGenerator">
         <generalization xmi:type="uml:Generalization" xmi:id="_Wl0nMG55EeSW2odh8QWbYw" general="_2SPC8G3nEeS0BbIdz09jGQ"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_jjMDQG5-EeSW2odh8QWbYw" name="getAllBuchungenForRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_3k9IcG5-EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nPfV4G5-EeSW2odh8QWbYw" name="getAllBuchungenForUser">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_ySphUG5-EeSW2odh8QWbYw" name="User" type="_gebdUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAm3nEeS0BbIdz09jGQ" name="ReportGeneratorAsync"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqA23nEeS0BbIdz09jGQ" client="_2SPqAm3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
@@ -234,6 +240,12 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_2SQREW3nEeS0BbIdz09jGQ" name="ReportGeneratorImpl">
         <generalization xmi:type="uml:Generalization" xmi:id="_2SQREm3nEeS0BbIdz09jGQ" general="_2SQRFG3nEeS0BbIdz09jGQ"/>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_Z448cG5jEeS9WqeZEbJbkg" client="_2SQREW3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ" contract="_2SPqAW3nEeS0BbIdz09jGQ"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_7WvYAG5-EeSW2odh8QWbYw" name="getAllBuchungenForUser">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_7WvYAW5-EeSW2odh8QWbYw" name="User" type="_gebdUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_7WvYAm5-EeSW2odh8QWbYw" name="getAllBuchungenForRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_7WvYA25-EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_2SQRFG3nEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
