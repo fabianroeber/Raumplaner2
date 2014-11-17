@@ -153,6 +153,27 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_QoLt4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationImpl">
         <generalization xmi:type="uml:Generalization" xmi:id="_DdA3oG3nEeS0BbIdz09jGQ" general="_tjXDwG3mEeS0BbIdz09jGQ"/>
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_HtXAIG5jEeS9WqeZEbJbkg" client="_QoLt4G3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ" contract="_b-zn4G3mEeS0BbIdz09jGQ"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nnfboG59EeSW2odh8QWbYw" name="saveBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nnfboW59EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nnpMoG59EeSW2odh8QWbYw" name="deleteBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nnpMoW59EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nnpMom59EeSW2odh8QWbYw" name="deleteRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nnpMo259EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nnpMpG59EeSW2odh8QWbYw" name="getEinladungenForBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nnpMpW59EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nnpMpm59EeSW2odh8QWbYw" name="getAllRaums"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nny9oG59EeSW2odh8QWbYw" name="getAllUsers"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nny9oW59EeSW2odh8QWbYw" name="saveRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nny9om59EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nny9o259EeSW2odh8QWbYw" name="deleteEinladung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_nny9pG59EeSW2odh8QWbYw" name="Einladung" type="_hAZh8G50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_nny9pW59EeSW2odh8QWbYw" name="getAllBelegung"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_1WxAkG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.mail">
@@ -173,7 +194,28 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_JHaEEG3mEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
       <packagedElement xmi:type="uml:Interface" xmi:id="_b-zn4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministration">
-        <generalization xmi:type="uml:Generalization" xmi:id="_UmSaYG5jEeS9WqeZEbJbkg" general="_H8Z0EG3nEeS0BbIdz09jGQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_yzxgIG54EeSW2odh8QWbYw" general="_H8Z0EG3nEeS0BbIdz09jGQ"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_pBt6wG55EeSW2odh8QWbYw" name="getAllRaums"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_qi4LgG55EeSW2odh8QWbYw" name="getAllBelegung"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_r0-skG55EeSW2odh8QWbYw" name="getAllUsers"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_vS3vwG55EeSW2odh8QWbYw" name="saveRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_6CDu8G58EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_xF6asG55EeSW2odh8QWbYw" name="saveBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_8WNi4G58EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_1utx0G55EeSW2odh8QWbYw" name="deleteRaum">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_CzhkkG59EeSW2odh8QWbYw" name="Raum" type="_gPrPoG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_3NCxAG55EeSW2odh8QWbYw" name="deleteBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_KMO3gG59EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_6cKYYG55EeSW2odh8QWbYw" name="deleteEinladung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_NYbGsG59EeSW2odh8QWbYw" name="Einladung" type="_hAZh8G50EeSW2odh8QWbYw"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_EuegQG57EeSW2odh8QWbYw" name="getEinladungenForBelegung">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="_bJ5SgG59EeSW2odh8QWbYw" name="Belegung" type="_grGAUG50EeSW2odh8QWbYw"/>
+        </ownedOperation>
       </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_eUnBoG3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationAsync"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_HIj8UG3nEeS0BbIdz09jGQ" client="_eUnBoG3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ"/>
@@ -183,7 +225,7 @@
     <packagedElement xmi:type="uml:Interface" xmi:id="_2SPC8G3nEeS0BbIdz09jGQ" name="RemoteService"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_2SPqAG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
       <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAW3nEeS0BbIdz09jGQ" name="ReportGenerator">
-        <generalization xmi:type="uml:Generalization" xmi:id="_YCIPIG5jEeS9WqeZEbJbkg" general="_2SPC8G3nEeS0BbIdz09jGQ"/>
+        <generalization xmi:type="uml:Generalization" xmi:id="_Wl0nMG55EeSW2odh8QWbYw" general="_2SPC8G3nEeS0BbIdz09jGQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAm3nEeS0BbIdz09jGQ" name="ReportGeneratorAsync"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqA23nEeS0BbIdz09jGQ" client="_2SPqAm3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
