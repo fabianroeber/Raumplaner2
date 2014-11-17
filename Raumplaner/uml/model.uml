@@ -126,10 +126,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_XHYYMG3hEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.db">
       <packagedElement xmi:type="uml:Interface" xmi:id="_jItcEG3hEeS0BbIdz09jGQ" name="DbMapperInterface">
         <ownedOperation xmi:type="uml:Operation" xmi:id="_BzQoYG3jEeS0BbIdz09jGQ" name="getAll"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_CIkxEG3jEeS0BbIdz09jGQ" name="updateBO"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_Ck9LEG3jEeS0BbIdz09jGQ" name="insertBo"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_C6DRUG3jEeS0BbIdz09jGQ" name="getBoById"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_DQbxAG3jEeS0BbIdz09jGQ" name="deleteBo"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_CIkxEG3jEeS0BbIdz09jGQ" name="update"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_Ck9LEG3jEeS0BbIdz09jGQ" name="insert"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_C6DRUG3jEeS0BbIdz09jGQ" name="getById"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_DQbxAG3jEeS0BbIdz09jGQ" name="delete"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_jr9BIG3jEeS0BbIdz09jGQ" name="EinladungMapper">
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_3683UG5iEeS9WqeZEbJbkg" client="_jr9BIG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
@@ -142,8 +142,8 @@
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_sjfCgG3jEeS0BbIdz09jGQ" name="BelegungMapper">
         <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_5YGKwG5iEeS9WqeZEbJbkg" client="_sjfCgG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_FJ4wgG3kEeS0BbIdz09jGQ" name="getBoByUser"/>
-        <ownedOperation xmi:type="uml:Operation" xmi:id="_HU-vEG3kEeS0BbIdz09jGQ" name="getBoByRaum"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_FJ4wgG3kEeS0BbIdz09jGQ" name="getBelegungByUser"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="_HU-vEG3kEeS0BbIdz09jGQ" name="getBelegungByRaum"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_aDsJkG3nEeS0BbIdz09jGQ" name="DatabaseConnection">
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fJ7DkG3nEeS0BbIdz09jGQ" name="getConnection"/>
