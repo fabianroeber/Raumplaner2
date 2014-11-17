@@ -195,10 +195,40 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_2SQRFG3nEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_gPrPoG50EeSW2odh8QWbYw" name="Class1"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_gebdUG50EeSW2odh8QWbYw" name="Class2"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_grGAUG50EeSW2odh8QWbYw" name="Class3"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_hAZh8G50EeSW2odh8QWbYw" name="Class4"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gPrPoG50EeSW2odh8QWbYw" name="Raum"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gebdUG50EeSW2odh8QWbYw" name="User"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_grGAUG50EeSW2odh8QWbYw" name="Belegung"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_hAZh8G50EeSW2odh8QWbYw" name="Einladung"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_lRo4M251EeSW2odh8QWbYw" memberEnd="_lRo4NG51EeSW2odh8QWbYw _lRo4MG51EeSW2odh8QWbYw" navigableOwnedEnd="_lRo4MG51EeSW2odh8QWbYw">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_lRo4NG51EeSW2odh8QWbYw" name="Veranstaltung" type="_grGAUG50EeSW2odh8QWbYw" association="_lRo4M251EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lRo4NW51EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lRo4Nm51EeSW2odh8QWbYw" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_lRo4MG51EeSW2odh8QWbYw" name="Teilnehmer" type="_hAZh8G50EeSW2odh8QWbYw" aggregation="composite" association="_lRo4M251EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lRo4MW51EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lRo4Mm51EeSW2odh8QWbYw" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="__ZH-c251EeSW2odh8QWbYw" memberEnd="__ZH-dG51EeSW2odh8QWbYw __ZH-cG51EeSW2odh8QWbYw" navigableOwnedEnd="__ZH-dG51EeSW2odh8QWbYw">
+      <ownedEnd xmi:type="uml:Property" xmi:id="__ZH-dG51EeSW2odh8QWbYw" name="Ort" type="_gPrPoG50EeSW2odh8QWbYw" association="__ZH-c251EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__ZH-dW51EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__ZH-dm51EeSW2odh8QWbYw" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="__ZH-cG51EeSW2odh8QWbYw" name="Buchung" type="_grGAUG50EeSW2odh8QWbYw" association="__ZH-c251EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__ZH-cW51EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__ZH-cm51EeSW2odh8QWbYw" value="*"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_BgIuQ252EeSW2odh8QWbYw" memberEnd="_BgIuRG52EeSW2odh8QWbYw _BgIuQG52EeSW2odh8QWbYw" navigableOwnedEnd="_BgIuQG52EeSW2odh8QWbYw">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_BgIuRG52EeSW2odh8QWbYw" name="Einladung" type="_hAZh8G50EeSW2odh8QWbYw" association="_BgIuQ252EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BgIuRW52EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BgIuRm52EeSW2odh8QWbYw" value="1"/>
+      </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_BgIuQG52EeSW2odh8QWbYw" name="Eingeladener" type="_gebdUG50EeSW2odh8QWbYw" association="_BgIuQ252EeSW2odh8QWbYw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BgIuQW52EeSW2odh8QWbYw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BgIuQm52EeSW2odh8QWbYw" value="1"/>
+      </ownedEnd>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qiG14G29EeS0BbIdz09jGQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qiQm4G29EeS0BbIdz09jGQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_sYse0YZLEeKyw49uR6nx3g"/>
