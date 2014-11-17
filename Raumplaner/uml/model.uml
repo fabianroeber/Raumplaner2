@@ -64,6 +64,7 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_b77ekG3cEeS0BbIdz09jGQ" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_b7960G3cEeS0BbIdz09jGQ" value="*"/>
         </ownedAttribute>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_B1YgIG5jEeS9WqeZEbJbkg" client="_8VplcG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ" contract="_3sdKwG3SEeS0BbIdz09jGQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_9b9GMG28EeS0BbIdz09jGQ" name="Raum">
         <generalization xmi:type="uml:Generalization" xmi:id="_7vkQUG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
@@ -73,6 +74,7 @@
         <ownedAttribute xmi:type="uml:Property" xmi:id="_0Gtu8G3ZEeS0BbIdz09jGQ" name="fassungsvermoegen" visibility="private">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#int"/>
         </ownedAttribute>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="__9d8QG5iEeS9WqeZEbJbkg" client="_9b9GMG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ" contract="_3sdKwG3SEeS0BbIdz09jGQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_9zh4sG28EeS0BbIdz09jGQ" name="Einladung">
         <generalization xmi:type="uml:Generalization" xmi:id="_e9UL8G3cEeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
@@ -80,6 +82,7 @@
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#boolean"/>
         </ownedAttribute>
         <ownedAttribute xmi:type="uml:Property" xmi:id="_U9C3UG3QEeS0BbIdz09jGQ" name="user" visibility="private" type="_-CuyUG28EeS0BbIdz09jGQ"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_C9y5sG5jEeS9WqeZEbJbkg" client="_9zh4sG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ" contract="_3sdKwG3SEeS0BbIdz09jGQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_-CuyUG28EeS0BbIdz09jGQ" name="User">
         <generalization xmi:type="uml:Generalization" xmi:id="_uB8pwG3REeS0BbIdz09jGQ" general="_d6Jm8G2pEeS0BbIdz09jGQ"/>
@@ -92,12 +95,9 @@
         <ownedAttribute xmi:type="uml:Property" xmi:id="_BitSaG2-EeS0BbIdz09jGQ" name="email" visibility="private">
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/XMLPrimitiveTypes.library.uml#String"/>
         </ownedAttribute>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_Eg65UG5jEeS9WqeZEbJbkg" client="_-CuyUG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ" contract="_3sdKwG3SEeS0BbIdz09jGQ"/>
         <nestedClassifier xmi:type="uml:Class" xmi:id="_dWhqwG3QEeS0BbIdz09jGQ"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_N6kukG3aEeS0BbIdz09jGQ" client="_9b9GMG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_PTmXAG3aEeS0BbIdz09jGQ" client="_-CuyUG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_QBZ4MG3aEeS0BbIdz09jGQ" client="_9zh4sG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_RPjtYG3aEeS0BbIdz09jGQ" client="_8VplcG28EeS0BbIdz09jGQ" supplier="_3sdKwG3SEeS0BbIdz09jGQ"/>
       <packagedElement xmi:type="uml:Association" xmi:id="_oPKf4G3eEeS0BbIdz09jGQ" memberEnd="_oPKf4W3eEeS0BbIdz09jGQ _oPJRwG3eEeS0BbIdz09jGQ">
         <ownedEnd xmi:type="uml:Property" xmi:id="_oPKf4W3eEeS0BbIdz09jGQ" name="belegung" type="_8VplcG28EeS0BbIdz09jGQ" association="_oPKf4G3eEeS0BbIdz09jGQ">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oPKf4m3eEeS0BbIdz09jGQ" value="1"/>
@@ -138,17 +138,20 @@
         <ownedOperation xmi:type="uml:Operation" xmi:id="_C6DRUG3jEeS0BbIdz09jGQ" name="getBoById"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_DQbxAG3jEeS0BbIdz09jGQ" name="deleteBo"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_jr9BIG3jEeS0BbIdz09jGQ" name="EinladungMapper"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_mdZ1EG3jEeS0BbIdz09jGQ" name="UserMapper"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_m7sTkG3jEeS0BbIdz09jGQ" name="RaumMapper"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_jr9BIG3jEeS0BbIdz09jGQ" name="EinladungMapper">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_3683UG5iEeS9WqeZEbJbkg" client="_jr9BIG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_mdZ1EG3jEeS0BbIdz09jGQ" name="UserMapper">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_2oIkkG5iEeS9WqeZEbJbkg" client="_mdZ1EG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_m7sTkG3jEeS0BbIdz09jGQ" name="RaumMapper">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_exJ90G5hEeS9WqeZEbJbkg" client="_m7sTkG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_sjfCgG3jEeS0BbIdz09jGQ" name="BelegungMapper">
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_5YGKwG5iEeS9WqeZEbJbkg" client="_sjfCgG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ" contract="_jItcEG3hEeS0BbIdz09jGQ"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_FJ4wgG3kEeS0BbIdz09jGQ" name="getBoByUser"/>
         <ownedOperation xmi:type="uml:Operation" xmi:id="_HU-vEG3kEeS0BbIdz09jGQ" name="getBoByRaum"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_w7jO8G3jEeS0BbIdz09jGQ" client="_m7sTkG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_yvrfAG3jEeS0BbIdz09jGQ" client="_mdZ1EG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_zwOWAG3jEeS0BbIdz09jGQ" client="_jr9BIG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_0WXwAG3jEeS0BbIdz09jGQ" client="_sjfCgG3jEeS0BbIdz09jGQ" supplier="_jItcEG3hEeS0BbIdz09jGQ"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_aDsJkG3nEeS0BbIdz09jGQ" name="DatabaseConnection">
         <ownedOperation xmi:type="uml:Operation" xmi:id="_fJ7DkG3nEeS0BbIdz09jGQ" name="getConnection"/>
       </packagedElement>
@@ -156,8 +159,8 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_Y35zQG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server">
       <packagedElement xmi:type="uml:Class" xmi:id="_QoLt4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationImpl">
         <generalization xmi:type="uml:Generalization" xmi:id="_DdA3oG3nEeS0BbIdz09jGQ" general="_tjXDwG3mEeS0BbIdz09jGQ"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_HtXAIG5jEeS9WqeZEbJbkg" client="_QoLt4G3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ" contract="_b-zn4G3mEeS0BbIdz09jGQ"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_rmRE8G3mEeS0BbIdz09jGQ" client="_QoLt4G3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_1WxAkG3kEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.mail">
       <packagedElement xmi:type="uml:Class" xmi:id="_zSATgG3kEeS0BbIdz09jGQ" name="MailSender">
@@ -176,25 +179,27 @@
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_JHaEEG3mEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
-      <packagedElement xmi:type="uml:Interface" xmi:id="_b-zn4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministration"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_b-zn4G3mEeS0BbIdz09jGQ" name="RaumplanerAdministration">
+        <generalization xmi:type="uml:Generalization" xmi:id="_UmSaYG5jEeS9WqeZEbJbkg" general="_H8Z0EG3nEeS0BbIdz09jGQ"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_eUnBoG3mEeS0BbIdz09jGQ" name="RaumplanerAdministrationAsync"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_HIj8UG3nEeS0BbIdz09jGQ" client="_eUnBoG3mEeS0BbIdz09jGQ" supplier="_b-zn4G3mEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_NQgyAG3nEeS0BbIdz09jGQ" client="_b-zn4G3mEeS0BbIdz09jGQ" supplier="_H8Z0EG3nEeS0BbIdz09jGQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_tjXDwG3mEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
     <packagedElement xmi:type="uml:Interface" xmi:id="_H8Z0EG3nEeS0BbIdz09jGQ" name="RemoteService"/>
     <packagedElement xmi:type="uml:Interface" xmi:id="_2SPC8G3nEeS0BbIdz09jGQ" name="RemoteService"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_2SPqAG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.shared">
-      <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAW3nEeS0BbIdz09jGQ" name="ReportGenerator"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAW3nEeS0BbIdz09jGQ" name="ReportGenerator">
+        <generalization xmi:type="uml:Generalization" xmi:id="_YCIPIG5jEeS9WqeZEbJbkg" general="_2SPC8G3nEeS0BbIdz09jGQ"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Interface" xmi:id="_2SPqAm3nEeS0BbIdz09jGQ" name="ReportGeneratorAsync"/>
       <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqA23nEeS0BbIdz09jGQ" client="_2SPqAm3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_2SPqBG3nEeS0BbIdz09jGQ" client="_2SPqAW3nEeS0BbIdz09jGQ" supplier="_2SPC8G3nEeS0BbIdz09jGQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_2SQREG3nEeS0BbIdz09jGQ" name="itprojekt.raumplaner.server.report">
       <packagedElement xmi:type="uml:Class" xmi:id="_2SQREW3nEeS0BbIdz09jGQ" name="ReportGeneratorImpl">
         <generalization xmi:type="uml:Generalization" xmi:id="_2SQREm3nEeS0BbIdz09jGQ" general="_2SQRFG3nEeS0BbIdz09jGQ"/>
+        <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_Z448cG5jEeS9WqeZEbJbkg" client="_2SQREW3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ" contract="_2SPqAW3nEeS0BbIdz09jGQ"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="_2SQRE23nEeS0BbIdz09jGQ" client="_2SQREW3nEeS0BbIdz09jGQ" supplier="_2SPqAW3nEeS0BbIdz09jGQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_2SQRFG3nEeS0BbIdz09jGQ" name="RemoteServiceServlet"/>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_qiG14G29EeS0BbIdz09jGQ">
