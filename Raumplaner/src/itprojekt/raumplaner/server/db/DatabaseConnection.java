@@ -16,11 +16,20 @@ public class DatabaseConnection {
 
 	private static Connection connection = null;
 
+	public static boolean isUnitTesting = false;
+
 	private static String url = "jdbc:google:rdbms://lucid-copilot-788/mydb?user=root";
+	private static String urlUnitTest = "jdbc:mysql://173.194.225.11:3306/mydb";
+
 	public static Connection getConnection() {
 
 		if (connection == null) {
 			try {
+				if (isUnitTesting) {
+
+					connection = DriverManager.getConnection(urlUnitTest,
+							"root", "1234");
+				}
 				DriverManager.registerDriver(new AppEngineDriver());
 				connection = DriverManager.getConnection(url);
 			} catch (SQLException e1) {
@@ -28,6 +37,7 @@ public class DatabaseConnection {
 				System.out.println("Database could not bet loaded");
 				e1.printStackTrace();
 			}
+			isUnitTesting = false;
 		}
 		return connection;
 	}

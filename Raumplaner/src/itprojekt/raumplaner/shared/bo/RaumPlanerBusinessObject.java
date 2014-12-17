@@ -10,18 +10,18 @@ import java.util.Date;
  *
  */
 public class RaumPlanerBusinessObject implements Serializable {
-	
+
 	private static final long serialVersionUID = -7768670689158205737L;
 	/** Id */
-	private Long id;
+	private int id;
 	/** Erstelldatum */
 	private Date created;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
