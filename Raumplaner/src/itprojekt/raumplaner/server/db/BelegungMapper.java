@@ -32,25 +32,25 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 	}
 
 	@Override
-	public void updateBo(Belegung bo) {
+	public void update(Belegung bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void insertBo(Belegung bo) {
+	public void insert(Belegung bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Belegung getBoById(Long id) {
+	public Belegung getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteBo(Belegung bo) {
+	public void delete(Belegung bo) {
 		// TODO Auto-generated method stub
 
 	}

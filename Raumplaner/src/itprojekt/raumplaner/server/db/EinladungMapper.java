@@ -32,25 +32,25 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 	}
 
 	@Override
-	public void updateBo(Einladung bo) {
+	public void update(Einladung bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void insertBo(Einladung bo) {
+	public void insert(Einladung bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Einladung getBoById(Long id) {
+	public Einladung getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteBo(Einladung bo) {
+	public void delete(Einladung bo) {
 		// TODO Auto-generated method stub
 
 	}

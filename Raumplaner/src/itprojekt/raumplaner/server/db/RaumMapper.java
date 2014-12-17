@@ -57,25 +57,25 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 	}
 
 	@Override
-	public void insertBo(Raum bo) {
+	public void update(Raum bo) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Raum getBoById(Long id) {
+	public void insert(Raum bo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Raum getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteBo(Raum bo) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void updateBo(Raum bo) {
+	public void delete(Raum bo) {
 		// TODO Auto-generated method stub
 
 	}
