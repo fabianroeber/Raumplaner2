@@ -2,6 +2,7 @@ package itprojekt.raumplaner.server;
 
 import itprojekt.raumplaner.shared.RaumplanerAdministration;
 
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -11,6 +12,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * @author Fabian
  *
  */
+
+@RemoteServiceRelativePath("RaumplanerAdministrationImpl")
 public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 		implements RaumplanerAdministration {
 
