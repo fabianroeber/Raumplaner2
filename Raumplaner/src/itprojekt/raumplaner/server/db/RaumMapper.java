@@ -10,7 +10,7 @@ import java.util.List;
 import itprojekt.raumplaner.shared.bo.Raum;
 
 /**
- * Zugriffsklasse f&uuml;r {@link Raum} Objekte.
+ * Datenbank-Zugriffsklasse f&uuml;r {@link Raum} Objekte.
  * 
  * @author Fabian
  * @author Alex
@@ -48,11 +48,11 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 						resultSet.getInt("fassungsvermoegen"));
 				resultlist.add(raum);
 			}
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return resultlist;
 	}
 
