@@ -29,9 +29,11 @@ public class DatabaseConnection {
 
 					connection = DriverManager.getConnection(urlUnitTest,
 							"root", "1234");
+				} else {
+					DriverManager.registerDriver(new AppEngineDriver());
+					connection = DriverManager.getConnection(url);
 				}
-				DriverManager.registerDriver(new AppEngineDriver());
-				connection = DriverManager.getConnection(url);
+
 			} catch (SQLException e1) {
 				connection = null;
 				System.out.println("Database could not bet loaded");
