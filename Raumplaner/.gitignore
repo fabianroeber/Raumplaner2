@@ -24,5 +24,4 @@ gwt-unitCache/
 #gwt junit compilation files
 www-test/
 /test-classes/
-/test
 /.settings
