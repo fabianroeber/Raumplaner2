@@ -16,7 +16,7 @@ public class DatabaseConnection {
 
 	private static Connection connection = null;
 
-	private static String url;
+	private static String url = "jdbc:google:mysql://lucid-copilot-742:gcsql/raumplanerdb?user=root";
 
 	public static Connection getConnection() {
 
