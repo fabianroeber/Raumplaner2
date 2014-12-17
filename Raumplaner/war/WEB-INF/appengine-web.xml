@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+<<<<<<< HEAD
   <application>lucid-copilot-788</application>
+=======
+  <application>linen-cubist-742</application>
+>>>>>>> branch 'master' of https://github.com/fabianroeber/Raumplaner2
   <version>1</version>
 
   <!--

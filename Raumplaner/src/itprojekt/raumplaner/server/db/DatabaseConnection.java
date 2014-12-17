@@ -10,14 +10,13 @@ import com.google.appengine.api.rdbms.AppEngineDriver;
  * Diese Klasse stellt die Verbindung zur Datenbank her.
  * 
  * @author Fabian
- *
+ * @author Thies
  */
 public class DatabaseConnection {
 
 	private static Connection connection = null;
 
-	private static String url = "jdbc:google:mysql://lucid-copilot-742:gcsql/raumplanerdb?user=root";
-
+	private static String url = "jdbc:google:rdbms://lucid-copilot-788/raumplanerdb?user=root";
 	public static Connection getConnection() {
 
 		if (connection == null) {
