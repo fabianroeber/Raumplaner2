@@ -28,6 +28,26 @@ h1 {
   color: red;
 }
 
+#BegrüßungLabel-id {
+	
+	font-size: 2em;
+	font-weight: bold;
+	font-style: italic;
+	color: red;
+	
+}
+
+#Navigation-id {
+	
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 1.5em;
+	color: white;
+	background-color: red;
+	text-align: center;
+	
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
