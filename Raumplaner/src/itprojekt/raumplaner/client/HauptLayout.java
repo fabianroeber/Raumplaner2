@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 public class HauptLayout extends Composite {
 	
 	private DockPanel dockPanel;
-	private Label begrüßung;
+	Label begrüßung;
 	private Label copyRight;
 	
 //	private Button raumAuswählen;
@@ -50,7 +50,7 @@ public class HauptLayout extends Composite {
 		
 		begrüßung = new Label("Raumreservierungssystem");
 		begrüßung.setPixelSize(500, 20);
-		DOM.setElementAttribute(begrüßung.getElement(), "id", "BegrüßungLabel-id");
+		DOM.setElementAttribute(begrüßung.getElement(), "id", "RRS-id");
 		
 		copyRight = new Label(copyRightZeichen +" Hochschule der Medien");
 		copyRight.setPixelSize(500, 30);
