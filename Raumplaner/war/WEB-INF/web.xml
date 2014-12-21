@@ -5,24 +5,5 @@
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!-- Servlets -->
-	<servlet>
-		<servlet-name>RaumplanerAdministrationImpl</servlet-name>
-		<servlet-class>itprojekt.raumplaner.server.RaumplanerAdministrationImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>RaumplanerAdministrationImpl</servlet-name>
-		<url-pattern>/itprojekt.raumplaner/raumplaner</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>ReportGeneratorImpl</servlet-name>
-		<servlet-class>itprojekt.raumplaner.server.report.ReportGeneratorImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReportGeneratorImpl</servlet-name>
-		<url-pattern>/itprojekt.raumplaner/report</url-pattern>
-	</servlet-mapping>
-	<!-- Default page to serve -->
-	<welcome-file-list>
-		<welcome-file>Raumplaner.html</welcome-file>
-	</welcome-file-list>
+	
 </web-app>
