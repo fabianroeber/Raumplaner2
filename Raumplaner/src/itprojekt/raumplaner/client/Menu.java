@@ -70,7 +70,7 @@ public class Menu extends Composite {
 
 			datumAuswählen.setEnabled(false); // Nach dem 1-maligen Click darf
 												// man nicht nochmal auf
-												// datumAusw�hlen klicken
+												// datumAuswählen klicken
 		}
 
 	}
@@ -110,8 +110,7 @@ public class Menu extends Composite {
 		public void onClick(ClickEvent event) {
 			// Grid verfügbarkeiten = new Grid(25, 25);
 
-			Meldung = new Label(
-					"Diese funktion steht zurzeit leider nicht zur Verfügung");
+			Meldung = new Label("Diese funktion steht zurzeit leider nicht zur Verfügung");
 
 			// verfügbarkeiten.setText(0, 0, "Raum: ");
 			// verfügbarkeiten.setText(1, 0, "00:00");
