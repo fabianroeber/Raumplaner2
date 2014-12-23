@@ -5,12 +5,17 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Login extends Composite {
+	
+/*
+ * VORLÄUFIGE TESTKLASSE FÜR LOGINMANAGER BITTE NICHT LÖSCHEN
+ */
 	
 	private Label anmeldeBegrüßung;
 	private TextBox benutzerName;
@@ -19,21 +24,23 @@ public class Login extends Composite {
 	private Label pwEingeben;
 	private Button anmeldenButton;
 	
+	HorizontalPanel LogPanel = new HorizontalPanel();
+	
 	public Login() {
 		
-		VerticalPanel LogPanel = new VerticalPanel();
+		initWidget(this.LogPanel);
 		
 //		Einen Label, um den User zur Anmeldung aufzufordern 
 		
-		anmeldeBegrüßung = new Label("Bitte melden Sie sich an");
+		anmeldeBegrüßung = new HTML("Bitte melden Sie sich an");
 		anmeldeBegrüßung.setVisible(true);
 		
 //		TextBox und PasswortBox um den User zu ermöglichen, sich anzumelden
 		
-		nameEingeben = new Label("Bitte geben Sie Ihren Nutzernamen ein:");
+		nameEingeben = new HTML("<br><br>"+"Username:");
 		benutzerName = new TextBox();
 		
-		pwEingeben = new Label("Bitte geben Sie Ihr Passwort ein:");
+		pwEingeben = new HTML("<br><br>"+"Password:");
 		benutzerPasswort = new PasswordTextBox();
 		
 //		Button zum Anmelden: mit einem ClickHandler
