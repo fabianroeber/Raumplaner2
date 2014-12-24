@@ -32,7 +32,8 @@ public class Menu extends Composite {
 		// Navi Label hinzufügen:
 
 		nav = new Label("Navigation");
-		DOM.setElementAttribute(nav.getElement(), "id", "Navigation-id");
+//		DOM.setElementAttribute(nav.getElement(), "id", "Navigation-id"); // DEPRECATED
+		nav.getElement().setAttribute("id", "Navigation-id");
 		nav.setPixelSize(200, 30);
 		nav.setVisible(true);
 
