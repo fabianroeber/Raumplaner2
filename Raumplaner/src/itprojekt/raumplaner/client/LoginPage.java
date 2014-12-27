@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class LoginPage extends Composite {
@@ -28,6 +29,8 @@ public class LoginPage extends Composite {
 	
 	TextBox eingabeBenutzerName;
 	PasswordTextBox eingabeBenutzerPasswort;
+	
+	HauptLayout hl1;
 	
 	
 	public LoginPage()  {
@@ -128,7 +131,13 @@ public class LoginPage extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			Window.alert("Sie sind nun angemeldet");
+//			Window.alert("Sie sind nun angemeldet");
+
+//			Versuch den Konstruktor von HauptLayout hier aufzurufen, so dass beim Klicken auf anmelden der Raumplaner geöffnet wird
+			hl1 = new HauptLayout();
+			RootPanel.get().add(hl1);
+			
+//			Funktioniert gerade noch auf der LoginPage. Dieser Bug wird demnächst behoben
 			
 		}
 		
