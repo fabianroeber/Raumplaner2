@@ -2,21 +2,24 @@ package itprojekt.raumplaner.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class LoginPage extends Composite {
 	
-	DecoratorPanel loginPanel = new DecoratorPanel();
+//	DecoratorPanel loginPanel = new DecoratorPanel();
+	VerticalPanel loginPanel2 = new VerticalPanel();
+	
 	
 	private Label anmelden;
 	private Label userName;
@@ -35,7 +38,11 @@ public class LoginPage extends Composite {
 	
 	public LoginPage()  {
 		
-		initWidget(loginPanel);
+		initWidget(loginPanel2);
+		
+		HorizontalPanel loginPanel = new HorizontalPanel();
+		
+		DecoratorPanel loginDecorator = new DecoratorPanel();
 		
 //		Zuerst eine FlexTable für LoginPage erstellen
 		
@@ -63,6 +70,12 @@ public class LoginPage extends Composite {
 //		flexFotos.setWidget(0, 0, neubau1);
 //		flexFotos.setWidget(0, 1, neubau2);
 //		flexFotos.setWidget(0, 2, neubau3);
+		
+// 		Versuch die Klasse LoginFotos als Konstruktor aufzurufen, da sich die Login-kästchen und Bilder in DecoratorPanel überlappen
+		
+		LoginFotos loginTest = new LoginFotos();
+		loginTest.setVisible(true);
+		
 		
 //		Titel der FlexTable hinzufügen
 		
@@ -116,10 +129,19 @@ public class LoginPage extends Composite {
 		
 		flex.setWidget(4, 4, hdmLogo);
 		
+//		Dem DecoratorPanel die Flextable hinzufügen und den DecoratorPanel wiederrum dem HorizontalPanel hinzufügen
 		
-		loginPanel.setWidget(flex);
+		loginDecorator.setWidget(flex);
+		loginPanel.add(loginDecorator);
+		
+//		Den Konstruktor von 
+		
+		loginPanel2.add(loginTest);
+		loginPanel2.add(loginPanel);
+		
+		
+//		loginPanel.setWidget(flex);
 //		loginPanel.setWidget(flexFotos);
-		
 		
 		
 	}
@@ -136,6 +158,7 @@ public class LoginPage extends Composite {
 //			Versuch den Konstruktor von HauptLayout hier aufzurufen, so dass beim Klicken auf anmelden der Raumplaner geöffnet wird
 			hl1 = new HauptLayout();
 			RootPanel.get().add(hl1);
+			loginPanel2.setVisible(false);
 			
 //			Funktioniert gerade noch auf der LoginPage. Dieser Bug wird demnächst behoben
 			
