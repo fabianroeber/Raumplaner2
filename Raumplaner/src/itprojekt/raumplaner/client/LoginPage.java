@@ -136,6 +136,8 @@ public class LoginPage extends Composite {
 		
 //		Den Konstruktor von 
 		
+		loginPanel2.getElement().setAttribute("id", "hdmFotos-id");
+		
 		loginPanel2.add(loginTest);
 		loginPanel2.add(loginPanel);
 		
