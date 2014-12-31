@@ -30,9 +30,9 @@ h1 {
 
 .gwt-DecoratorPanel {
 	
-	margin-left: auto;
+	margin-left: 340px;
 	margin-right: auto;
-	margin-top: 250px;
+	margin-top: 100px;
 	
 }
 
@@ -62,6 +62,13 @@ h1 {
 	font-weight: bold;
 	color: white;
 	background-color: red;
+	
+}
+
+#hdmFotos-id {
+	
+	margin-left: auto;
+	margin-right: auto;
 	
 }
 
