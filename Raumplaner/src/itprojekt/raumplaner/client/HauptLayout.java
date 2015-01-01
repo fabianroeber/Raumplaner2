@@ -31,6 +31,8 @@ public class HauptLayout extends Composite {
 	public HauptLayout() {
 		
 		initWidget(this.vp);
+		vp.getElement().setAttribute("id", "hauptLayoutVp-id"); // Den Raumplaner in der .css einzeln stylen
+		
 		
 		Menu men = new Menu();
 		
