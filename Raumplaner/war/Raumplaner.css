@@ -72,6 +72,13 @@ h1 {
 	
 }
 
+#hauptLayoutVp-id {
+	
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
