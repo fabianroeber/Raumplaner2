@@ -79,6 +79,20 @@ h1 {
 	
 }
 
+#verfügbarPanel-id {
+	
+	background-color: rgb(176, 196, 222);
+	
+}
+
+#uhrZeiten-id {
+	
+	margin-left: 1em;
+	background-color: hsla(214,41%,78%, 0.5);
+	opacity: 1;
+	
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
