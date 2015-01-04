@@ -155,13 +155,20 @@ public class LoginPage extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			
+			if (eingabeBenutzerName.getText().length() == 0 && eingabeBenutzerPasswort.getText().length() == 00) {
+				
+				Window.alert("Sie haben keinen Benutzernamen oder kein Passwort eingegeben");
+				
+			}
+			
 			if (eingabeBenutzerName.getText().equals(new String("Feridun"))) {
 				
 //				Versuch den Konstruktor von HauptLayout hier aufzurufen, so dass beim Klicken auf anmelden der Raumplaner geöffnet wird
 				
 				hl1 = new HauptLayout();
 				RootPanel.get().add(hl1);
-				loginPanel2.setVisible(false);
+				loginPanel2.setVisible(true);
+				
 				
 //				Funktioniert gerade noch auf der LoginPage. Dieser Bug wird demnächst behoben --> ERLEDIGT
 				
@@ -169,7 +176,7 @@ public class LoginPage extends Composite {
 
 				hl1.setVisible(false);
 				Window.alert("Sie haben falschen Benutzernamen eingegeben");
-				
+//				loginPanel2.setVisible(true);
 			
 			}
 			
@@ -182,12 +189,8 @@ public class LoginPage extends Composite {
 				
 				hl1.setVisible(false);
 				Window.alert("Sie haben falsches Passwort eingegeben");
-				
-				
+//				loginPanel2.setVisible(true);
 			}
-				
-			
-
 			
 		}
 		
