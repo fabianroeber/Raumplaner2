@@ -5,5 +5,19 @@
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!-- Servlets -->
-	
+
+	<servlet>
+		<servlet-name>raumplanerAdministration</servlet-name>
+		<servlet-class>itprojekt.raumplaner.server.RaumplanerAdministrationImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>raumplanerAdministration</servlet-name>
+		<url-pattern>/raumplaner/raumplaner</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>Raumplaner.html</welcome-file>
+	</welcome-file-list>
 </web-app>
