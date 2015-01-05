@@ -3,6 +3,7 @@ package itprojekt.raumplaner.client;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -109,9 +110,18 @@ public class Menu extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			
+//			Hier wird eine if-Abfrage kommen, die überprüft ob das Datum und der Raum ausgewählt ist.
+			
+			if (raumAuswählen.isAttached()) {
+			
+			Window.alert("Sie haben noch keinen Raum oder kein Datum ausgewählt");
+			
+			raumVerfügbarkeit.setEnabled(true);
+			
 			// Grid verfügbarkeiten = new Grid(25, 25);
 
-			Meldung = new Label("Diese funktion steht zurzeit leider nicht zur Verfügung");
+//			Meldung = new Label("Bitte wählen Sie einen Raum und ein Datum aus");
 
 			// verfügbarkeiten.setText(0, 0, "Raum: ");
 			// verfügbarkeiten.setText(1, 0, "00:00");
@@ -141,15 +151,22 @@ public class Menu extends Composite {
 			//
 			// verfügbarkeiten.setBorderWidth(1);
 
-			menuPanel.add(Meldung);
+//			menuPanel.add(Meldung);
 
-			raumVerfügbarkeit.setEnabled(false); // Nach dem 1-maligen Click
-													// darf man nicht nochmal
-													// auf datumAuswählen
-													// klicken
+//			raumVerfügbarkeit.setEnabled(false); // Nach dem 1-maligen Click
+//													// darf man nicht nochmal
+//													// auf datumAuswählen
+//													// klicken
 
+			}
+			else {
+				
+				raumVerfügbarkeit.setEnabled(false); // Nach dem 1-maligen Click
+													 // darf man nicht nochmal
+							  						 // auf datumAuswählen
+													 // klicken
+				}
+			}
 		}
 
 	}
-
-}
