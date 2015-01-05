@@ -31,8 +31,11 @@ public class HauptLayout extends Composite {
 	public HauptLayout() {
 		
 		initWidget(this.vp);
+		vp.getElement().setAttribute("id", "hauptLayoutVp-id"); // Den Raumplaner in der .css einzeln stylen
+		
 		
 		Menu men = new Menu();
+		VerfügbarkeitsAnzeige verfügbarkeiten = new VerfügbarkeitsAnzeige();
 		
 		dockPanel = new DockPanel();
 		dockPanel.setSpacing(20);
@@ -77,7 +80,7 @@ public class HauptLayout extends Composite {
 //		dockPanel.add(datumAuswählen, DockPanel.WEST);
 //		dockPanel.add(raumVerfügbarkeit, DockPanel.WEST);
 		dockPanel.add(wiLogo, DockPanel.EAST);
-		dockPanel.add(mitteVorläufig, DockPanel.CENTER);
+		dockPanel.add(verfügbarkeiten, DockPanel.CENTER);
 		
 		vp.add(dockPanel);
 				

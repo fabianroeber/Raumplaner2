@@ -2,6 +2,7 @@ package itprojekt.raumplaner.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -136,9 +137,10 @@ public class LoginPage extends Composite {
 		
 //		Den Konstruktor von 
 		
+		loginPanel2.getElement().setAttribute("id", "hdmFotos-id");
+		
 		loginPanel2.add(loginTest);
 		loginPanel2.add(loginPanel);
-		
 		
 //		loginPanel.setWidget(flex);
 //		loginPanel.setWidget(flexFotos);
@@ -153,14 +155,42 @@ public class LoginPage extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			
-//			Window.alert("Sie sind nun angemeldet");
-
-//			Versuch den Konstruktor von HauptLayout hier aufzurufen, so dass beim Klicken auf anmelden der Raumplaner geöffnet wird
-			hl1 = new HauptLayout();
-			RootPanel.get().add(hl1);
-			loginPanel2.setVisible(false);
+			if (eingabeBenutzerName.getText().length() == 0 && eingabeBenutzerPasswort.getText().length() == 00) {
+				
+				Window.alert("Sie haben keinen Benutzernamen oder kein Passwort eingegeben");
+				
+			}
 			
-//			Funktioniert gerade noch auf der LoginPage. Dieser Bug wird demnächst behoben
+			if (eingabeBenutzerName.getText().equals(new String("Feridun"))) {
+				
+//				Versuch den Konstruktor von HauptLayout hier aufzurufen, so dass beim Klicken auf anmelden der Raumplaner geöffnet wird
+				
+				hl1 = new HauptLayout();
+				RootPanel.get().add(hl1);
+				loginPanel2.setVisible(true);
+				
+				
+//				Funktioniert gerade noch auf der LoginPage. Dieser Bug wird demnächst behoben --> ERLEDIGT
+				
+			} else {
+
+				hl1.setVisible(false);
+				Window.alert("Sie haben falschen Benutzernamen eingegeben");
+//				loginPanel2.setVisible(true);
+			
+			}
+			
+			if (eingabeBenutzerPasswort.getText().equals(new String("12345"))) {
+				
+				hl1 = new HauptLayout();
+				loginPanel2.setVisible(false);
+				
+			} else {
+				
+				hl1.setVisible(false);
+				Window.alert("Sie haben falsches Passwort eingegeben");
+//				loginPanel2.setVisible(true);
+			}
 			
 		}
 		
