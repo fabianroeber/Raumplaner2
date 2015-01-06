@@ -47,8 +47,8 @@ public class Menu extends Composite {
 
 		// Listener hinzufügen
 
-		raumAuswaehlen.addClickHandler(new RaumAuswählenHandler());
-		datumAuswaehlen.addClickHandler(new DatumAuswählenHandler());
+		raumAuswaehlen.addClickHandler(new RaumAuswaehlenHandler());
+		datumAuswaehlen.addClickHandler(new DatumAuswaehlenHandler());
 		raumVerfuegbarkeit.addClickHandler(new RaumVerfuegbarkeitHandler());
 
 		// add-Methoden:
@@ -60,7 +60,7 @@ public class Menu extends Composite {
 
 	}
 
-	public class DatumAuswählenHandler implements ClickHandler {
+	public class DatumAuswaehlenHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -76,7 +76,7 @@ public class Menu extends Composite {
 
 	}
 
-	private class RaumAuswählenHandler implements ClickHandler {
+	private class RaumAuswaehlenHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
