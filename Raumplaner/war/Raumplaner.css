@@ -93,6 +93,12 @@ h1 {
 	
 }
 
+#verfuegbarListe-id {
+	
+	background-color: rgb(220, 220, 220);
+	
+}
+
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
