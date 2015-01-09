@@ -85,6 +85,13 @@ h1 {
 	
 }
 
+#raumHeader-id {
+	
+	background-color: rgb(255, 248, 220);
+	color: red;
+	
+}
+
 #uhrZeiten-id {
 	
 	margin-left: 1em;
@@ -96,6 +103,26 @@ h1 {
 #verfuegbarListe-id {
 	
 	background-color: rgb(220, 220, 220);
+	
+}
+
+#verfuegbarHeader-id {
+	
+	background-color: rgb(255, 248, 220);
+	color: red;
+	
+}
+
+#geBucht-id {
+	
+	background-color: red;
+	color: white;
+	
+}
+
+#freiNormal-id {
+	
+	background-color: white;
 	
 }
 
