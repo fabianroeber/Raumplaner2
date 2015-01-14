@@ -10,15 +10,18 @@ public class Raumplaner implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
+		
+//		neues GUI:
+		
+		Navigation navigation = new Navigation();
+		
+		RootPanel.get().add(navigation);
 
-		// Hier wird noch bearbeitet. Bitte nichts ändern
+//		Für das alte GUI hier ausklammern:
+		
+//		LoginPage anmelden = new LoginPage();
+//
+//		RootPanel.get().add(anmelden);
 
-		LoginPage anmelden = new LoginPage();
-
-		RootPanel.get().add(anmelden);
-
-		// HauptLayout hl = new HauptLayout();
-
-		// RootPanel.get().add(hl);
 	}
 }
