@@ -25,6 +25,7 @@ public class Navigation extends Composite {
 		
 		navHeader = new Label("Navigation");
 		navHeader.getElement().setAttribute("id", "Navigation-id");
+		navHeader.setPixelSize(200, 25);
 		
 		raumBuchung = new Anchor("Raumbuchung");
 		raumBuchung.addClickHandler(new raumBuchungHandler());
