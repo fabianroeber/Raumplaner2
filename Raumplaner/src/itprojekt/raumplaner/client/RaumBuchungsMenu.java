@@ -35,17 +35,22 @@ public class RaumBuchungsMenu extends Composite {
 		raumMenuPanel.add(neueBuchung);
 		raumMenuPanel.add(buchungBearbeiten);
 		
+		
+		
 	} private class neueBuchungHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			neuBuchen = new NeueBuchung();
 			
+			neueBuchung.setVisible(false);
+			
 			raumMenuPanel.add(neuBuchen);
 			
 		}
 		
 		
-	}
+		
+	} 
 
 }
