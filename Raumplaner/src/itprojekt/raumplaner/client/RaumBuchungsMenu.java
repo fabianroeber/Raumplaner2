@@ -27,9 +27,10 @@ public class RaumBuchungsMenu extends Composite {
 		raumBuchungHeader.getElement().setAttribute("id", "raumBuchungHeader-id");
 		
 		neueBuchung = new Anchor("Neue Buchung");
-		neueBuchung.addClickHandler(new neueBuchungHandler());
+		neueBuchung.addClickHandler(new NeueBuchungHandler());
 		
 		buchungBearbeiten = new Anchor("Buchung bearbeiten");
+		buchungBearbeiten.addClickHandler(new BuchungBearbeitenHandler());
 		
 		raumMenuPanel.add(raumBuchungHeader);
 		raumMenuPanel.add(neueBuchung);
@@ -37,13 +38,16 @@ public class RaumBuchungsMenu extends Composite {
 		
 		
 		
-	} private class neueBuchungHandler implements ClickHandler {
+	} private class NeueBuchungHandler implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
 			neuBuchen = new NeueBuchung();
 			
 			neueBuchung.setVisible(false);
+			buchungBearbeiten.setVisible(false);
+			
+			raumBuchungHeader.setText("Neue Buchung");
 			
 			raumMenuPanel.add(neuBuchen);
 			
@@ -51,6 +55,19 @@ public class RaumBuchungsMenu extends Composite {
 		
 		
 		
-	} 
+	} private class BuchungBearbeitenHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			raumBuchungHeader.setText("Buchung bearbeiten");
+			
+			neueBuchung.setVisible(false);
+			buchungBearbeiten.setVisible(false);
+			
+		}
+		
+		
+		
+	}
 
 }
