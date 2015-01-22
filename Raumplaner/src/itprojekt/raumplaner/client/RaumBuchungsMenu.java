@@ -45,7 +45,6 @@ public class RaumBuchungsMenu extends Composite {
 			neuBuchen = new NeueBuchung();
 			
 			neueBuchung.setVisible(false);
-			buchungBearbeiten.setVisible(false);
 			
 			raumBuchungHeader.setText("Neue Buchung");
 			
