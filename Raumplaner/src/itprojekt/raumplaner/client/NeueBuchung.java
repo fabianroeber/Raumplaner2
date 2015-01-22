@@ -2,6 +2,7 @@ package itprojekt.raumplaner.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -22,11 +23,12 @@ public class NeueBuchung extends Composite {
 	ListBox raeumeDropDown; 
 	
 	Label zeitSlot;
-	ListBox ZeitSlotDropDown;
+	ListBox zeitSlotDropDown;
 	
 	Label personenAuswaehlen;
 	SuggestBox personenAuswahl;
 	Button personAdden;
+	Label personen;
 	
 	Label einladungsThema;
 	TextBox themaEintragen;
@@ -53,16 +55,17 @@ public class NeueBuchung extends Composite {
 		
 		zeitSlot = new Label("Zeitslot auswählen:");
 		
-		ZeitSlotDropDown = new ListBox();
+		zeitSlotDropDown = new ListBox();
 		
-		ZeitSlotDropDown.addItem("07:00 - 10:00 Uhr");
-		ZeitSlotDropDown.addItem("10:15 - 13:15 Uhr");
-		ZeitSlotDropDown.addItem("14:15 - 17:15 Uhr");
-		ZeitSlotDropDown.addItem("17:15 - 20:15 Uhr");
+		zeitSlotDropDown.addItem("07:00 - 10:00 Uhr");
+		zeitSlotDropDown.addItem("10:15 - 13:15 Uhr");
+		zeitSlotDropDown.addItem("14:15 - 17:15 Uhr");
+		zeitSlotDropDown.addItem("17:15 - 20:15 Uhr");
 		
 		personenAuswaehlen = new Label("Personen auswählen:");
 		
 		personenAuswahl = new SuggestBox(Personen.personenEinladen());
+		
 		
 		personAdden = new Button("OK");
 		personAdden.setPixelSize(30, 30);
@@ -81,7 +84,7 @@ public class NeueBuchung extends Composite {
 		neueBuchungPnl.add(raumAuswaehlen);
 		neueBuchungPnl.add(raeumeDropDown);
 		neueBuchungPnl.add(zeitSlot);
-		neueBuchungPnl.add(ZeitSlotDropDown);
+		neueBuchungPnl.add(zeitSlotDropDown);
 		neueBuchungPnl.add(personenAuswaehlen);
 		neueBuchungPnl.add(eingeladenePnl);
 		neueBuchungPnl.add(pnlMitUser);
@@ -94,7 +97,16 @@ public class NeueBuchung extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			
-			Label personen = new Label("- " + personenAuswahl.getText() + " ist eingeladen");
+			if (personenAuswahl.getText().length() == 0) {
+				
+				Window.alert("Sie haben keine Teilnehmer hinzugefügt");
+				
+			} else {
+				
+				personen = new Label(personenAuswahl.getText());
+				
+			}
+			
 			
 			eingeladenePnl.add(personen);
 			
