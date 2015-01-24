@@ -18,6 +18,8 @@ public class RaumBuchungsMenu extends Composite {
 	
 	NeueBuchung neuBuchen;
 	
+	BuchungBearbeiten buchungKonstruktor;
+	
 	public RaumBuchungsMenu() {
 		
 		initWidget(this.raumMenuPanel);
@@ -35,6 +37,7 @@ public class RaumBuchungsMenu extends Composite {
 		raumMenuPanel.add(raumBuchungHeader);
 		raumMenuPanel.add(neueBuchung);
 		raumMenuPanel.add(buchungBearbeiten);
+		
 		
 		
 		
@@ -60,8 +63,14 @@ public class RaumBuchungsMenu extends Composite {
 		public void onClick(ClickEvent event) {
 			raumBuchungHeader.setText("Buchung bearbeiten");
 			
+			buchungKonstruktor = new BuchungBearbeiten();
+			raumMenuPanel.add(buchungKonstruktor);
+			
+			neuBuchen.setVisible(false);
 			neueBuchung.setVisible(false);
 			buchungBearbeiten.setVisible(false);
+			
+			
 			
 		}
 		
