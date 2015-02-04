@@ -4,25 +4,34 @@ import itprojekt.raumplaner.server.db.DatabaseConnection;
 import itprojekt.raumplaner.server.db.RaumMapper;
 import itprojekt.raumplaner.shared.bo.Raum;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 
-public class DBTestRaum {
+/**
+ * Test zum Raum Speichern
+ * 
+ * @author Fabian
+ *
+ */
+public class RaumSpeichernTest {
 
 	@Test
 	public void test() {
+
+		Date date = new Date(System.currentTimeMillis());
 
 		RaumMapper raumMapper = RaumMapper.getRaumMapper();
 
 		DatabaseConnection.isUnitTesting = true;
 
-		List<Raum> raums = raumMapper.getAll();
+		Raum raum = new Raum();
+		raum.setBezeichnung("I001");
+		raum.setCreated(date);
+		raum.setFassungsvermoegen(10);
 
-		for (Raum raum : raums) {
-			System.out.println(raum.getBezeichnung());
-			
-		}
+		raumMapper.insert(raum);
+
 	}
-
 }

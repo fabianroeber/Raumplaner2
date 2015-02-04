@@ -1,13 +1,13 @@
 package itprojekt.raumplaner.server.db;
 
+import itprojekt.raumplaner.shared.bo.Raum;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import itprojekt.raumplaner.shared.bo.Raum;
 
 /**
  * Datenbank-Zugriffsklasse f&uuml;r {@link Raum} Objekte.

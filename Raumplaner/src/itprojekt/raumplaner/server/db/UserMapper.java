@@ -51,7 +51,7 @@ public class UserMapper implements DbMapperInterface<User> {
 						resultSet.getString("thema"),
 						resultSet.getInt("Raum_idRaum"));
 				resultlist.add(belegung);
-			}
+			}hallo, dass hier hatte ich noch nicht fertig... is bloß kopiert aus Belegungmapper
 			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
