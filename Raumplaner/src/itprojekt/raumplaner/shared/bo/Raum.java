@@ -17,6 +17,10 @@ public class Raum extends RaumPlanerBusinessObject {
 	/** Fassungsverm&ouml;gen */
 	private int fassungsvermoegen;
 
+	public Raum() {
+
+	}
+
 	public Raum(int id, Date date, String bezeichnung, int fassungsvermoegen) {
 		this.setCreated(date);
 		this.setId(id);
