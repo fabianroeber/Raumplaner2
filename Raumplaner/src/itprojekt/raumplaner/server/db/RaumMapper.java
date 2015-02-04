@@ -58,15 +58,59 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 
 	@Override
 	public void update(Raum bo) {
-		// TODO Auto-generated method stub
+	    Connection connection = DatabaseConnection.getConnection();
 
+	    try {
+	      Statement statement = connection.createStatement();
+
+	      statement.executeUpdate("UPDATE Raum" + "SET bezeichnung=\""
+	          + bo.getBezeichnung() + "\", " + "fassungsvermoegen=\"" + bo.getFassungsvermoegen() + "\", " 
+	          + "created=\"" + bo.getCreated() + "\" "
+	          + "WHERE id=" + bo.getId());
+
+	    }
+	    catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+	    
 	}
 
 	@Override
 	public void insert(Raum bo) {
-		// TODO Auto-generated method stub
+	    Connection connection = DatabaseConnection.getConnection();
 
-	}
+	    try {
+	      Statement statement = connection.createStatement();
+
+	      /*
+	       * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
+	       * PrimÃ¤rschlÃ¼sselwert ist.
+	       */
+	      ResultSet resultSet = statement.executeQuery("SELECT MAX(idRaum) AS maxID "
+	          + "FROM Raum ");
+
+	      // Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
+	      if (resultSet.next()) {
+	        /*
+	         * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
+	         * PrimÃ¤rschlÃ¼ssel.
+	         */
+	        bo.setId(resultSet.getInt("maxID") + 1);
+
+	        statement = connection.createStatement();
+
+	        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
+	        statement.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
+	            + "VALUES (" + bo.getId() + ",'" + bo.getBezeichnung() + "','"
+	            + bo.getFassungsvermoegen() + ",'" + bo.getCreated() + "')");
+	      }
+	    }
+	    catch (SQLException e) {
+	      e.printStackTrace();
+	    }
+
+	  }
+
 
 	@Override
 	public Raum getById(Long id) {
