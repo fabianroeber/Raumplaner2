@@ -101,8 +101,8 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 
 	        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
 	        statement.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
-	            + "VALUES (" + bo.getId() + ",'" + bo.getBezeichnung() + "','"
-	            + bo.getFassungsvermoegen() + ",'" + bo.getCreated() + "')");
+	            + "VALUES (" + bo.getId() + "','" + bo.getBezeichnung() + "','"
+	            + bo.getFassungsvermoegen() + "','" + bo.getCreated() + "')");
 	      }
 	    }
 	    catch (SQLException e) {

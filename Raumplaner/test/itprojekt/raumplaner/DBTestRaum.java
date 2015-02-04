@@ -21,6 +21,7 @@ public class DBTestRaum {
 
 		for (Raum raum : raums) {
 			System.out.println(raum.getBezeichnung());
+			
 		}
 	}
 
