@@ -1,142 +1,110 @@
 /** Add css rules here for your application. */
-
-
 /** Example rules used by the template application (remove for your app) */
 h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+	text-align: center;
 }
 
 .sendButton {
-  display: block;
-  font-size: 16pt;
+	display: block;
+	font-size: 16pt;
 }
 
 /** Most GWT widgets already have a style name defined */
 .gwt-DialogBox {
-  width: 400px;
+	width: 400px;
 }
 
 .dialogVPanel {
-  margin: 5px;
+	margin: 5px;
 }
 
 .serverResponseLabelError {
-  color: red;
+	color: red;
 }
 
 .gwt-DecoratorPanel {
-	
 	margin-left: 340px;
 	margin-right: auto;
 	margin-top: 100px;
-	
 }
 
-
-#RRS-id {
-	
+#header {
 	font-weight: bold;
 	font-size: 2em;
 	font-style: italic;
 	color: red;
-	
 }
 
-#Navigation-id {
-	
+#navigation {
 	font-weight: bold;
 	font-family: sans-serif;
 	font-size: 1.5em;
 	color: white;
 	background-color: red;
 	text-align: center;
-	
 }
 
 #headerAnmelden-id {
-	
 	font-weight: bold;
 	color: white;
 	background-color: red;
-	
 }
 
 #hdmFotos-id {
-	
 	margin-left: auto;
 	margin-right: auto;
-	
 }
 
 #hauptLayoutVp-id {
-	
 	margin-left: auto;
 	margin-right: auto;
-	
 }
 
 #verfügbarPanel-id {
-	
 	background-color: rgb(176, 196, 222);
-	
 }
 
 #raumHeader-id {
-	
 	background-color: rgb(255, 248, 220);
 	color: red;
-	
 }
 
 #uhrZeiten-id {
-	
 	margin-left: 1em;
-	background-color: hsla(214,41%,78%, 0.5);
+	background-color: hsla(214, 41%, 78%, 0.5);
 	opacity: 1;
-	
 }
 
 #verfuegbarListe-id {
-	
 	background-color: rgb(220, 220, 220);
-	
 }
 
 #verfuegbarHeader-id {
-	
 	background-color: rgb(255, 248, 220);
 	color: red;
-	
 }
 
 #geBucht-id {
-	
 	background-color: red;
 	color: white;
-	
 }
 
 #freiNormal-id {
-	
 	background-color: white;
-	
 }
 
 #raumPlanerHeader-id {
-	
 	font-weight: bold;
 	font-size: 2em;
 	font-style: italic;
 	color: red;
-	
 }
 
 #raumBuchungHeader-id {
-	
 	font-style: italic;
 	font-family: sans-serif;
 	font-size: 1.2em;
@@ -147,5 +115,5 @@ h1 {
 
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
-  margin: 15px 6px 6px;
+	margin: 15px 6px 6px;
 }

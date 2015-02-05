@@ -11,24 +11,16 @@ public class Raumplaner implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		
+
 		Label raumplanerHeader = new Label("Raumreservierungssystem");
-		
-		raumplanerHeader.getElement().setAttribute("id", "RRS-id");
-		
+
+		raumplanerHeader.getElement().setAttribute("id", "header");
+
 		RootPanel.get().add(raumplanerHeader);
-		
-//		neues GUI:
-		
+
 		Navigation navigation = new Navigation();
-		
+
 		RootPanel.get().add(navigation);
-		
-//		Für das alte GUI hier ausklammern:
-		
-//		LoginPage anmelden = new LoginPage();
-//
-//		RootPanel.get().add(anmelden);
 
 	}
 }

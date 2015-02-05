@@ -29,7 +29,7 @@ public class Navigation extends Composite {
 		initWidget(this.zusammenPanel);
 		
 		navHeader = new Label("Navigation");
-		navHeader.getElement().setAttribute("id", "Navigation-id");
+		navHeader.getElement().setAttribute("id", "navigation");
 		navHeader.setPixelSize(200, 25);
 		
 		raumBuchung = new Anchor("Raumbuchung");
