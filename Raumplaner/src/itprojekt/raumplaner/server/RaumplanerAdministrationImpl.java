@@ -1,13 +1,13 @@
 package itprojekt.raumplaner.server;
 
-import java.util.List;
-
 import itprojekt.raumplaner.server.db.BelegungMapper;
 import itprojekt.raumplaner.server.db.EinladungMapper;
 import itprojekt.raumplaner.server.db.RaumMapper;
 import itprojekt.raumplaner.server.db.UserMapper;
 import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.bo.Raum;
+
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
