@@ -7,17 +7,31 @@
 	<!-- Servlets -->
 
 	<servlet>
-		<servlet-name>raumplanerAdministration</servlet-name>
+		<servlet-name>raumplanerAdministrationServlet</servlet-name>
 		<servlet-class>itprojekt.raumplaner.server.RaumplanerAdministrationImpl</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>raumplanerAdministration</servlet-name>
-		<url-pattern>/raumplaner/raumplaner</url-pattern>
+		<servlet-name>raumplanerAdministrationServlet</servlet-name>
+		<url-pattern>/raumplaner/raumplanerAdministration</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>Raumplaner.html</welcome-file>
 	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
+		<init-param>
+			<param-name>services</param-name>
+			<param-value />
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SystemServiceServlet</servlet-name>
+		<url-pattern>/_ah/spi/*</url-pattern>
+	</servlet-mapping>
 </web-app>

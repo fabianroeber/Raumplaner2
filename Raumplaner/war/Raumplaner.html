@@ -6,7 +6,7 @@
 
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <!--                                                               -->
 <!-- Consider inlining CSS to reduce the number of requested files -->
@@ -23,8 +23,7 @@
 <!-- If you add any GWT meta tags, they must   -->
 <!-- be added before this line.                -->
 <!--                                  -->
-<script type="text/javascript" language="javascript"
-	src="raumplaner/raumplaner.nocache.js"></script>
+<script type="text/javascript" src="raumplaner/raumplaner.nocache.js"></script>
 </head>
 
 <!--                                           -->
@@ -55,15 +54,19 @@
 	</noscript>
 
 
-	<div id="header" />
 
-	<div id="navigation" />
-
-
-	<div id="raumPlanerHeader-id" />
-
-	<div id="raumBuchungHeader-id" />
-
+	<div id="TopLevelFrame">
+		<div id="header">
+			<h1>Raumreservierungssystem</h1>
+		</div>
+		<table>
+			<tr>
+				<td><div id="navigation"></div></td>
+				<td><div id="content"></div></td>
+			</tr>
+		</table>
+		<div id="Trailer">Copyright Hochschule der Medien, Stuttgart</div>
+	</div>
 
 </body>
 </html>

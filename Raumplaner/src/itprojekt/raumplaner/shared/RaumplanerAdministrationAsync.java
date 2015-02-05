@@ -1,5 +1,11 @@
 package itprojekt.raumplaner.shared;
 
+import itprojekt.raumplaner.shared.bo.Raum;
+
+import java.util.List;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
+
 /**
  * Automatisch generierte asynchrone Schnittstelle
  * 
@@ -7,5 +13,7 @@ package itprojekt.raumplaner.shared;
  *
  */
 public interface RaumplanerAdministrationAsync {
+
+	void getAllRaums(AsyncCallback<List<Raum>> callback);
 
 }

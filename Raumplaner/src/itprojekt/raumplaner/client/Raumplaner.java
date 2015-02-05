@@ -1,8 +1,13 @@
 package itprojekt.raumplaner.client;
 
+import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
+
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -12,15 +17,39 @@ public class Raumplaner implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 
-		Label raumplanerHeader = new Label("Raumreservierungssystem");
+		// Administration holen
+		RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
+				.getRaumplanerAdministration();
 
-		raumplanerHeader.getElement().setAttribute("id", "header");
+		// Neue Navigation erstellen
+		VerticalPanel navigationPanel = new VerticalPanel();
+		// Navigation dem Rootpanel hinzufügen
+		RootPanel.get("navigation").add(navigationPanel);
 
-		RootPanel.get().add(raumplanerHeader);
+		// erster Menupunkt
+		final Button raums = new Button("Räume");
+		navigationPanel.add(raums);
 
-		Navigation navigation = new Navigation();
+		// Clickhandler Räume
 
-		RootPanel.get().add(navigation);
+		raums.addClickHandler(new ClickHandler() {
 
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		// zweiter Menupunkt
+
+		final Button raumbelegungsplan = new Button("Raumbelegunsplan");
+		navigationPanel.add(raumbelegungsplan);
+		raumbelegungsplan.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 }
