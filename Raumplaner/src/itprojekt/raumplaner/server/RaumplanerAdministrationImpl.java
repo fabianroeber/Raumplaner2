@@ -45,7 +45,8 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 
 	@Override
 	public List<Raum> getAllRaums() {
-		return raumMapper.getAll();
+		List<Raum> raums = raumMapper.getAll();
+		return raums;
 	}
 
 }
