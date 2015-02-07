@@ -10,10 +10,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.shared.GWT;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
  * Hier werden alle verfügbaren Räume zur Auswahl angezeigt.
@@ -34,17 +40,52 @@ public class RaumForm extends VerticalPanel {
 
 	public RaumForm() {
 
+		HorizontalPanel raumPanel = new HorizontalPanel();
+		this.add(raumPanel);
 		Button button = new Button("Neuen Raum erstellen");
-		this.add(button);
+		raumPanel.add(button);
+
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
-		Grid raumgrid = new Grid(raums.size(), 2);
-		this.add(raumgrid);
-		for (int i = 0; i < raums.size(); i++) {
-			raumgrid.setText(i, 0, raums.get(i).getBezeichnung());
-			raumgrid.setText(i, 1,
-					Integer.toString(raums.get(i).getFassungsvermoegen()));
-		}
-		this.add(raumgrid);
+
+		CellTable<Raum> raumtable = new CellTable<Raum>();
+		raumtable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
+
+			@Override
+			public String getValue(Raum object) {
+				return object.getBezeichnung();
+			}
+
+		};
+		raumtable.addColumn(bezeichnungColumn, "Bezeichnung");
+
+		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
+
+			@Override
+			public String getValue(Raum object) {
+
+				return Integer.toString(object.getFassungsvermoegen());
+			}
+		};
+		raumtable.addColumn(kapaColumn, "Maximale Teilnehmerzahl");
+
+		final SingleSelectionModel<Raum> selectionModel = new SingleSelectionModel<Raum>();
+		raumtable.setSelectionModel(selectionModel);
+		selectionModel
+				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+					@Override
+					public void onSelectionChange(SelectionChangeEvent event) {
+						selectedRaum = selectionModel.getSelectedObject();
+						if (selectedRaum != null) {
+							Window.alert("selcted:"
+									+ selectedRaum.getBezeichnung());
+						}
+					}
+				});
+		raumtable.setRowCount(raums.size());
+		raumtable.setRowData(0, raums);
+
 	}
 
 	class GetRaumsCallBack implements AsyncCallback<List<Raum>> {
