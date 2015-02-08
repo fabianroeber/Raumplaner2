@@ -16,7 +16,7 @@ import itprojekt.raumplaner.shared.bo.User;
  * 
  * @author Fabian
  * @author Thies
- *
+ * @author Alex
  */
 
 public class UserMapper implements DbMapperInterface<User> {
@@ -35,22 +35,20 @@ public class UserMapper implements DbMapperInterface<User> {
 
 	@Override
 	public List<User> getAll() {
-		//Wird noch überarbeitet -> Alex
 		Connection connection = DatabaseConnection.getConnection();
 		List<User> resultlist = new ArrayList<User>();
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
-					.executeQuery("SELECT idBelegung, thema, startzeit, endzeit, created, Raum_idRaum FROM Belegung "
-							+ " ORDER BY idBelegung");
+					.executeQuery("SELECT idUser, vorname, nachname, email, created FROM User "
+							+ " ORDER BY idUser");
 			while (resultSet.next()) {
-				Belegung belegung = new Belegung(resultSet.getInt("idBelegung"),
+				User user = new User(resultSet.getInt("idUser"),
 						resultSet.getDate("created"),
-						resultSet.getDate("startzeit"),
-						resultSet.getDate("endzeit"),
-						resultSet.getString("thema"),
-						resultSet.getInt("Raum_idRaum"));
-				resultlist.add(belegung);
+						resultSet.getString("vorname"),
+						resultSet.getString("nachname"),
+						resultSet.getString("email"),
+				resultlist.add(user);
 			}
 			resultSet.close();
 		} catch (SQLException e) {
