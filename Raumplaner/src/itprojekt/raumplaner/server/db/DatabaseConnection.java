@@ -18,7 +18,7 @@ public class DatabaseConnection {
 
 	public static boolean isUnitTesting = false;
 
-	private static String url = "jdbc:google:rdbms://lucid-copilot-788/mydb?user=root";
+	private static String url = "jdbc:google:rdbms://lucid-copilot-788:gcsql/mydb?user=root";
 	private static String urlUnitTest = "jdbc:mysql://173.194.225.11:3306/mydb";
 
 	public static Connection getConnection() {
