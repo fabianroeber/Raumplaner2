@@ -47,7 +47,7 @@ public class UserMapper implements DbMapperInterface<User> {
 						resultSet.getDate("created"),
 						resultSet.getString("vorname"),
 						resultSet.getString("nachname"),
-						resultSet.getString("email"),
+						resultSet.getString("email"));
 				resultlist.add(user);
 			}
 			resultSet.close();

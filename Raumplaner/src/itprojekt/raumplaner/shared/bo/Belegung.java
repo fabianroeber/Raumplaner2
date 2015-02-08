@@ -26,6 +26,18 @@ public class Belegung extends RaumPlanerBusinessObject {
 	/** Liste mit Einladungen an alle zugehörigen User */
 	private List<Einladung> einladungen;
 
+	public Belegung() {
+		super();
+	}
+
+	public Belegung(String thema, Date startzeit, Date endzeit, boolean aktiv) {
+		super();
+		this.thema = thema;
+		this.startzeit = startzeit;
+		this.endzeit = endzeit;
+		this.aktiv = aktiv;
+	}
+
 	public String getThema() {
 		return thema;
 	}

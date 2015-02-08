@@ -1,7 +1,6 @@
 package itprojekt.raumplaner.server.db;
 
 import itprojekt.raumplaner.shared.bo.Belegung;
-import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,12 +40,9 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 					.executeQuery("SELECT idBelegung, thema, startzeit, endzeit, created, Raum_idRaum FROM Belegung "
 							+ " ORDER BY idBelegung");
 			while (resultSet.next()) {
-				Belegung belegung = new Belegung(resultSet.getInt("idBelegung"),
-						resultSet.getDate("created"),
-						resultSet.getDate("startzeit"),
-						resultSet.getDate("endzeit"),
-						resultSet.getString("thema"),
-						resultSet.getInt("Raum_idRaum"));
+				Belegung belegung = new Belegung();
+				
+				//TODO
 				resultlist.add(belegung);
 			}
 			resultSet.close();
