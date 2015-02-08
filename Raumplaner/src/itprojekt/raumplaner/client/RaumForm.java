@@ -85,6 +85,7 @@ public class RaumForm extends VerticalPanel {
 				});
 		raumtable.setRowCount(raums.size());
 		raumtable.setRowData(0, raums);
+		raumPanel.add(raumtable);
 
 	}
 
