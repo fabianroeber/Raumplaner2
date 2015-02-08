@@ -8,6 +8,11 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+/**
+ * Meldet den User über den Google Accounts Service an.
+ * 
+ * @author Fabian
+ */
 public class LoginServiceImpl extends RemoteServiceServlet implements
 		LoginService {
 

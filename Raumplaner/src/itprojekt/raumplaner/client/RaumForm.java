@@ -32,6 +32,7 @@ public class RaumForm extends VerticalPanel {
 
 	List<Raum> raums = new ArrayList<>();
 	Raum selectedRaum = null;
+	CellTable<Raum> raumtable = new CellTable<Raum>();
 
 	Logger logger = RpcSettings.getLogger();
 
@@ -45,9 +46,6 @@ public class RaumForm extends VerticalPanel {
 		Button button = new Button("Neuen Raum erstellen");
 		raumPanel.add(button);
 
-		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
-
-		CellTable<Raum> raumtable = new CellTable<Raum>();
 		raumtable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
 
@@ -78,13 +76,13 @@ public class RaumForm extends VerticalPanel {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedRaum = selectionModel.getSelectedObject();
 						if (selectedRaum != null) {
-							Window.alert("selcted:"
+							Window.alert("selected:"
 									+ selectedRaum.getBezeichnung());
 						}
 					}
 				});
-		raumtable.setRowCount(raums.size());
-		raumtable.setRowData(0, raums);
+
+		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
 		raumPanel.add(raumtable);
 
 	}
@@ -99,7 +97,8 @@ public class RaumForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(List<Raum> result) {
-			raums = result;
+			raumtable.setRowCount(result.size());
+			raumtable.setRowData(0, result);
 		}
 
 	}
