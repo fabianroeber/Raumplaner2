@@ -4,7 +4,6 @@ import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Raum;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,7 +12,6 @@ import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -24,15 +22,18 @@ import com.google.gwt.view.client.SingleSelectionModel;
 /**
  * Hier werden alle verfügbaren Räume zur Auswahl angezeigt.
  * 
- * @author Fabian
+ * @author Fabian, Alex
  * @author Rathke, Thies
  *
  */
 public class RaumForm extends VerticalPanel {
 
-	List<Raum> raums = new ArrayList<>();
 	Raum selectedRaum = null;
-	CellTable<Raum> raumtable = new CellTable<Raum>();
+	CellTable<Raum> raumTable = new CellTable<Raum>();
+	HorizontalPanel basePanel = new HorizontalPanel();
+	VerticalPanel raumPanel = new VerticalPanel();
+	VerticalPanel buchungsPanel = new VerticalPanel();
+	Button button = new Button("Neuen Raum erstellen");
 
 	Logger logger = RpcSettings.getLogger();
 
@@ -40,13 +41,11 @@ public class RaumForm extends VerticalPanel {
 			.create(RaumplanerAdministration.class);
 
 	public RaumForm() {
+		this.add(basePanel);
+		basePanel.add(raumPanel);
+		basePanel.add(buchungsPanel);
 
-		HorizontalPanel raumPanel = new HorizontalPanel();
-		this.add(raumPanel);
-		Button button = new Button("Neuen Raum erstellen");
-		raumPanel.add(button);
-
-		raumtable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		raumTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -55,7 +54,7 @@ public class RaumForm extends VerticalPanel {
 			}
 
 		};
-		raumtable.addColumn(bezeichnungColumn, "Bezeichnung");
+		raumTable.addColumn(bezeichnungColumn, "Bezeichnung");
 
 		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
 
@@ -65,10 +64,10 @@ public class RaumForm extends VerticalPanel {
 				return Integer.toString(object.getFassungsvermoegen());
 			}
 		};
-		raumtable.addColumn(kapaColumn, "Maximale Teilnehmerzahl");
+		raumTable.addColumn(kapaColumn, "Maximale Teilnehmerzahl");
 
 		final SingleSelectionModel<Raum> selectionModel = new SingleSelectionModel<Raum>();
-		raumtable.setSelectionModel(selectionModel);
+		raumTable.setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
@@ -76,15 +75,18 @@ public class RaumForm extends VerticalPanel {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedRaum = selectionModel.getSelectedObject();
 						if (selectedRaum != null) {
-							Window.alert("selected:"
-									+ selectedRaum.getBezeichnung());
+							buchungsPanel.clear();
+							buchungsPanel.add(new BelegungForm(selectedRaum));
+							logger.log(Level.INFO,
+									"Raum:" + selectedRaum.getBezeichnung()
+											+ "wurde ausgewählt");
 						}
 					}
 				});
 
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
-		raumPanel.add(raumtable);
-
+		raumPanel.add(raumTable);
+		raumPanel.add(button);
 	}
 
 	class GetRaumsCallBack implements AsyncCallback<List<Raum>> {
@@ -97,8 +99,8 @@ public class RaumForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(List<Raum> result) {
-			raumtable.setRowCount(result.size());
-			raumtable.setRowData(0, result);
+			raumTable.setRowCount(result.size());
+			raumTable.setRowData(0, result);
 		}
 
 	}
