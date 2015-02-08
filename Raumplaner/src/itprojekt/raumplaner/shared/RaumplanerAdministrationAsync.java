@@ -17,6 +17,6 @@ public interface RaumplanerAdministrationAsync {
 
 	void getAllRaums(AsyncCallback<List<Raum>> callback);
 
-	void getAllBelegung(AsyncCallback<List<Belegung>> callback);
+	void getAllBelegungByRaum(Raum raum, AsyncCallback<List<Belegung>> callback);
 
 }

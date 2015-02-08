@@ -39,7 +39,7 @@ public interface DbMapperInterface<T extends RaumPlanerBusinessObject> {
 	 * 
 	 * @param id
 	 */
-	public T getById(Long id);
+	public T getById(int id);
 
 	/**
 	 * L&ouml;scht ein Model aus der Datenbank

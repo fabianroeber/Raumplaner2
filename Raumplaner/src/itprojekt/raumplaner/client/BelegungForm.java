@@ -1,6 +1,5 @@
 package itprojekt.raumplaner.client;
 
-import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -19,6 +17,8 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
+ * Diese Klasse stellt die Buchungen für den selektierten Raum da.
+ * 
  * @author Fabian
  * @author Alex
  *
@@ -33,8 +33,8 @@ public class BelegungForm extends VerticalPanel {
 	CellTable<Belegung> belegungTable = new CellTable<Belegung>();
 	Logger logger = RpcSettings.getLogger();
 
-	RaumplanerAdministrationAsync raumplanerAdministration = GWT
-			.create(RaumplanerAdministration.class);
+	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
+			.getRaumplanerAdministration();
 
 	public BelegungForm(Raum selectedRaum) {
 		actualRaum = selectedRaum;
@@ -52,6 +52,9 @@ public class BelegungForm extends VerticalPanel {
 
 		};
 		belegungTable.addColumn(themaColumn, "Thema");
+
+		raumplanerAdministration.getAllBelegungByRaum(actualRaum,
+				new GetBelegungCallback());
 
 		basePanel.add(belegungTable);
 		basePanel.add(button);

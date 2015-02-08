@@ -44,7 +44,7 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 	}
 
 	@Override
-	public Einladung getById(Long id) {
+	public Einladung getById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

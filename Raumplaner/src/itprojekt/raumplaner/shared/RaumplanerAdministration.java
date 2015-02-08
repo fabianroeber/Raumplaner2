@@ -31,6 +31,6 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * 
 	 * @return
 	 */
-	public List<Belegung> getAllBelegung();
+	public List<Belegung> getAllBelegungByRaum(Raum raum);
 
 }

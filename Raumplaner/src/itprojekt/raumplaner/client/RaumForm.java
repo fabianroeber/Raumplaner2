@@ -37,8 +37,8 @@ public class RaumForm extends VerticalPanel {
 
 	Logger logger = RpcSettings.getLogger();
 
-	RaumplanerAdministrationAsync raumplanerAdministration = GWT
-			.create(RaumplanerAdministration.class);
+	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
+			.getRaumplanerAdministration();
 
 	public RaumForm() {
 		this.add(basePanel);

@@ -1,15 +1,14 @@
 package itprojekt.raumplaner.server.db;
 
+import itprojekt.raumplaner.shared.bo.Einladung;
+import itprojekt.raumplaner.shared.bo.User;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import itprojekt.raumplaner.shared.bo.Belegung;
-import itprojekt.raumplaner.shared.bo.Einladung;
-import itprojekt.raumplaner.shared.bo.User;
 
 /**
  * /** Datenbank-Zugriffsklasse f&uuml;r {@link Einladung} Objekte.
@@ -71,8 +70,26 @@ public class UserMapper implements DbMapperInterface<User> {
 	}
 
 	@Override
-	public User getById(Long id) {
-		// TODO Auto-generated method stub
+	public User getById(int id) {
+		Connection connection = DatabaseConnection.getConnection();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT idUser, vorname, nachname, email, created FROM User "
+							+ "WHERE idUser=" + id);
+			while (resultSet.next()) {
+				User user = new User(resultSet.getInt("idUser"),
+						resultSet.getDate("created"),
+						resultSet.getString("vorname"),
+						resultSet.getString("nachname"),
+						resultSet.getString("email"));
+				return user;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 

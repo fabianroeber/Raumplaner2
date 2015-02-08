@@ -25,17 +25,19 @@ public class Belegung extends RaumPlanerBusinessObject {
 	private boolean aktiv;
 	/** Liste mit Einladungen an alle zugehörigen User */
 	private List<Einladung> einladungen;
+	/** Ersteller der Belegung */
+	private User ersteller;
 
 	public Belegung() {
 		super();
 	}
 
-	public Belegung(String thema, Date startzeit, Date endzeit, boolean aktiv) {
+	public Belegung(String thema, Date startzeit, Date endzeit, Date created) {
 		super();
+		setCreated(created);
 		this.thema = thema;
 		this.startzeit = startzeit;
 		this.endzeit = endzeit;
-		this.aktiv = aktiv;
 	}
 
 	public String getThema() {
@@ -84,6 +86,14 @@ public class Belegung extends RaumPlanerBusinessObject {
 
 	public void setAktiv(boolean aktiv) {
 		this.aktiv = aktiv;
+	}
+
+	public User getErsteller() {
+		return ersteller;
+	}
+
+	public void setErsteller(User ersteller) {
+		this.ersteller = ersteller;
 	}
 
 }

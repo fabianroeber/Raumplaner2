@@ -1,5 +1,6 @@
 package itprojekt.raumplaner.server.db;
 
+import itprojekt.raumplaner.client.RpcSettings;
 import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.sql.Connection;
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Datenbank-Zugriffsklasse f&uuml;r {@link Raum} Objekte.
@@ -21,6 +24,7 @@ import java.util.List;
 public class RaumMapper implements DbMapperInterface<Raum> {
 
 	private static RaumMapper raummapper = null;
+	Logger logger = RpcSettings.getLogger();
 
 	private RaumMapper() {
 	}
@@ -58,64 +62,89 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 
 	@Override
 	public void update(Raum bo) {
-	    Connection connection = DatabaseConnection.getConnection();
+		Connection connection = DatabaseConnection.getConnection();
 
-	    try {
-	      Statement statement = connection.createStatement();
+		try {
+			Statement statement = connection.createStatement();
 
-	      statement.executeUpdate("UPDATE Raum" + "SET bezeichnung=\""
-	          + bo.getBezeichnung() + "\", " + "fassungsvermoegen=\"" + bo.getFassungsvermoegen() + "\", " 
-	          + "created=\"" + bo.getCreated() + "\" "
-	          + "WHERE id=" + bo.getId());
+			statement.executeUpdate("UPDATE Raum" + "SET bezeichnung=\""
+					+ bo.getBezeichnung() + "\", " + "fassungsvermoegen=\""
+					+ bo.getFassungsvermoegen() + "\", " + "created=\""
+					+ bo.getCreated() + "\" " + "WHERE id=" + bo.getId());
 
-	    }
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	    }
-	    
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
 	public void insert(Raum bo) {
-	    Connection connection = DatabaseConnection.getConnection();
+		Connection connection = DatabaseConnection.getConnection();
 
-	    try {
-	      Statement statement = connection.createStatement();
+		try {
+			Statement statement = connection.createStatement();
 
-	      /*
-	       * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
-	       * PrimÃ¤rschlÃ¼sselwert ist.
-	       */
-	      ResultSet resultSet = statement.executeQuery("SELECT MAX(idRaum) AS maxID "
-	          + "FROM Raum ");
+			/*
+			 * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
+			 * PrimÃ¤rschlÃ¼sselwert ist.
+			 */
+			ResultSet resultSet = statement
+					.executeQuery("SELECT MAX(idRaum) AS maxID " + "FROM Raum ");
 
-	      // Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
-	      if (resultSet.next()) {
-	        /*
-	         * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
-	         * PrimÃ¤rschlÃ¼ssel.
-	         */
-	        bo.setId(resultSet.getInt("maxID") + 1);
+			// Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
+			if (resultSet.next()) {
+				/*
+				 * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
+				 * PrimÃ¤rschlÃ¼ssel.
+				 */
+				bo.setId(resultSet.getInt("maxID") + 1);
 
-	        statement = connection.createStatement();
+				statement = connection.createStatement();
 
-	        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
-	        statement.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
-	            + "VALUES (" + bo.getId() + "','" + bo.getBezeichnung() + "','"
-	            + bo.getFassungsvermoegen() + "','" + bo.getCreated() + "')");
-	      }
-	    }
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
+				statement
+						.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
+								+ "VALUES ("
+								+ bo.getId()
+								+ "','"
+								+ bo.getBezeichnung()
+								+ "','"
+								+ bo.getFassungsvermoegen()
+								+ "','"
+								+ bo.getCreated() + "')");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	  }
-
+	}
 
 	@Override
-	public Raum getById(Long id) {
-		// TODO Auto-generated method stub
+	public Raum getById(int id) {
+		Connection connection = DatabaseConnection.getConnection();
+
+		try {
+			Statement statement = connection.createStatement();
+
+			ResultSet resultSet = statement
+					.executeQuery("SELECT idRaum, bezeichnung, fassungsvermoegen, created FROM Raum "
+							+ "WHERE idRaum=" + id + " ORDER BY idRaum");
+
+			if (resultSet.next()) {
+				Raum raum = new Raum(resultSet.getInt("idRaum"),
+						resultSet.getDate("created"),
+						resultSet.getString("bezeichnung"),
+						resultSet.getInt("fassungsvermoegen"));
+				return raum;
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Raum mit der ID: " + id
+					+ " konnte nicht geladen werden", e);
+		}
 		return null;
+
 	}
 
 	@Override

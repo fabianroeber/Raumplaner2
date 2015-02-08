@@ -1,6 +1,8 @@
 package itprojekt.raumplaner.server.db;
 
+import itprojekt.raumplaner.client.RpcSettings;
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Datenbank-Zugriffsklasse f&uuml;r Objekte vom Typ {@link Belegung}.
@@ -20,7 +24,10 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 
 	private static BelegungMapper belegungmapper = null;
 
+	private Logger logger = RpcSettings.getLogger();
+
 	private BelegungMapper() {
+
 	}
 
 	public static BelegungMapper getBelegungMapper() {
@@ -37,79 +44,100 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
-					.executeQuery("SELECT idBelegung, thema, startzeit, endzeit, created, Raum_idRaum FROM Belegung "
+					.executeQuery("SELECT idBelegung, thema, startzeit, endzeit, created, User_idUser, Raum_idRaum FROM Belegung "
 							+ " ORDER BY idBelegung");
 			while (resultSet.next()) {
-				Belegung belegung = new Belegung();
-				
-				//TODO
+
+				Belegung belegung = new Belegung(resultSet.getString("thema"),
+						resultSet.getDate("startzeit"),
+						resultSet.getDate("endzeit"),
+						resultSet.getDate("created"));
+				belegung.setRaum(RaumMapper.getRaumMapper().getById(
+						resultSet.getInt("Raum_idRaum")));
+				belegung.setErsteller(UserMapper.getUserMapper().getById(
+						resultSet.getInt("User_idUser")));
 				resultlist.add(belegung);
 			}
 			resultSet.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.WARNING,
+					"Fehler beim Datenbankzugriff auf alle Buchungen", e);
 		}
 		return resultlist;
 	}
 
 	@Override
 	public void update(Belegung bo) {
-	    Connection connection = DatabaseConnection.getConnection();
+		Connection connection = DatabaseConnection.getConnection();
 
-	    try {
-	      Statement statement = connection.createStatement();
+		try {
+			Statement statement = connection.createStatement();
 
-	      statement.executeUpdate("UPDATE Belegung" + "SET thema=\""
-	          + bo.getThema() + "\", " + "startzeit=\"" + bo.getStartzeit() + "\", " 
-	          + "endzeit=\"" + bo.getEndzeit() + "\", " + "created=\"" + bo.getCreated() + "\", " + "Raum_idRaum=\"" + bo.getRaum() + "\" "
-	          + "WHERE id=" + bo.getId());
+			statement.executeUpdate("UPDATE Belegung" + "SET thema=\""
+					+ bo.getThema() + "\", " + "startzeit=\""
+					+ bo.getStartzeit() + "\", " + "endzeit=\""
+					+ bo.getEndzeit() + "\", " + "created=\"" + bo.getCreated()
+					+ "\", " + "Raum_idRaum=\"" + bo.getRaum() + "\" "
+					+ "WHERE id=" + bo.getId());
 
-	    }
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+		} catch (SQLException e) {
+			logger.log(
+					Level.WARNING,
+					"Fehler beim Schreiben der Belegung mit der Id:"
+							+ bo.getId(), e);
+		}
 
 	}
 
 	@Override
 	public void insert(Belegung bo) {
-	    Connection connection = DatabaseConnection.getConnection();
+		Connection connection = DatabaseConnection.getConnection();
 
-	    try {
-	      Statement statement = connection.createStatement();
+		try {
+			Statement statement = connection.createStatement();
 
-	      /*
-	       * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
-	       * PrimÃ¤rschlÃ¼sselwert ist.
-	       */
-	      ResultSet resultSet = statement.executeQuery("SELECT MAX(idBelegung) AS maxID "
-	          + "FROM Belegung ");
+			/*
+			 * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
+			 * PrimÃ¤rschlÃ¼sselwert ist.
+			 */
+			ResultSet resultSet = statement
+					.executeQuery("SELECT MAX(idBelegung) AS maxID "
+							+ "FROM Belegung ");
 
-	      // Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
-	      if (resultSet.next()) {
-	        /*
-	         * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
-	         * PrimÃ¤rschlÃ¼ssel.
-	         */
-	        bo.setId(resultSet.getInt("maxID") + 1);
+			// Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
+			if (resultSet.next()) {
+				/*
+				 * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
+				 * PrimÃ¤rschlÃ¼ssel.
+				 */
+				bo.setId(resultSet.getInt("maxID") + 1);
 
-	        statement = connection.createStatement();
+				statement = connection.createStatement();
 
-	        // Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
-	        statement.executeUpdate("INSERT INTO Belegung (idBelegung, thema, startzeit, endzeit, created, Raum_idRaum) "
-	            + "VALUES (" + bo.getId() + "','" + bo.getThema() + "','"
-	            + bo.getStartzeit() + "','" + bo.getEndzeit() + "','" + bo.getCreated() + "','" + bo.getRaum() + "')");
-	      }
-	    }
-	    catch (SQLException e) {
-	      e.printStackTrace();
-	    }
+				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
+				statement
+						.executeUpdate("INSERT INTO Belegung (idBelegung, thema, startzeit, endzeit, created, Raum_idRaum) "
+								+ "VALUES ("
+								+ bo.getId()
+								+ "','"
+								+ bo.getThema()
+								+ "','"
+								+ bo.getStartzeit()
+								+ "','"
+								+ bo.getEndzeit()
+								+ "','"
+								+ bo.getCreated() + "','" + bo.getRaum() + "')");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.WARNING,
+					"Fehler beim Schreiben der neuen Belegung mit dem Thema:"
+							+ bo.getThema(), e);
+		}
 
-	  }
+	}
 
 	@Override
-	public Belegung getById(Long id) {
+	public Belegung getById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -120,4 +148,38 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 
 	}
 
+	/**
+	 * Diese Methode gibt eine Liste von Belegungen f�r einen Raum aus.
+	 * 
+	 * @return List<Belegung>
+	 */
+	public List<Belegung> getAllbyRaum(Raum raum) {
+		Connection connection = DatabaseConnection.getConnection();
+		List<Belegung> resultlist = new ArrayList<Belegung>();
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet resultSet = stmt
+					.executeQuery("SELECT Belegung.idBelegung, Belegung.thema, Belegung.startzeit, Belegung.endzeit, Belegung.created, Belegung.Raum_idRaum, Belegung.User_idUser FROM Belegung"
+							+ " WHERE Raum_idRaum=" + raum.getId());
+			while (resultSet.next()) {
+				Belegung belegung = new Belegung(resultSet.getString("thema"),
+						resultSet.getDate("startzeit"),
+						resultSet.getDate("endzeit"),
+						resultSet.getDate("created"));
+				belegung.setRaum(RaumMapper.getRaumMapper().getById(
+						raum.getId()));
+				belegung.setErsteller(UserMapper.getUserMapper().getById(
+						resultSet.getInt("User_idUser")));
+				resultlist.add(belegung);
+			}
+		} catch (SQLException e) {
+			logger.log(
+					Level.WARNING,
+					"Fehler beim Laden aller Buchungen f�r den Raum: "
+							+ raum.getBezeichnung(), e);
+		}
+
+		return resultlist;
+	}
 }
