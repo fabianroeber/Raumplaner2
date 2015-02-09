@@ -1,6 +1,5 @@
 package itprojekt.raumplaner.client;
 
-import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Raum;
 
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -20,7 +18,11 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
- * Hier werden alle verfügbaren Räume zur Auswahl angezeigt.
+ * Hier werden alle verfügbaren Räume zur Auswahl angezeigt. Die Räume werden in
+ * einem Celltable Widget angezeigt. Zeilen in der Celltable können selektiert
+ * werden. Für die selektierte Zeile werden die Belegungen angezeigt (Siehte
+ * {@link BelegungForm}). Es können außerdem neue Räume erzeugt werden oder
+ * gelöscht werden.
  * 
  * @author Fabian, Alex
  * @author Rathke, Thies
@@ -28,24 +30,45 @@ import com.google.gwt.view.client.SingleSelectionModel;
  */
 public class RaumForm extends VerticalPanel {
 
+	/**
+	 * Selektierter Raum
+	 */
 	Raum selectedRaum = null;
-	CellTable<Raum> raumTable = new CellTable<Raum>();
-	HorizontalPanel basePanel = new HorizontalPanel();
-	VerticalPanel raumPanel = new VerticalPanel();
-	VerticalPanel buchungsPanel = new VerticalPanel();
-	Button button = new Button("Neuen Raum erstellen");
 
+	/**
+	 * Tabelle mit {@link Raum} Objekten
+	 */
+	CellTable<Raum> raumTable = new CellTable<Raum>();
+	/**
+	 * Basispanel
+	 */
+	HorizontalPanel basePanel = new HorizontalPanel();
+	/**
+	 * Panel für die Raumtabelle
+	 */
+	VerticalPanel raumPanel = new VerticalPanel();
+	/**
+	 * Panel, in das die {@link BelegungForm} eingefügt wird.
+	 */
+	VerticalPanel buchungsPanel = new VerticalPanel();
+
+	Button button = new Button("Neuen Raum erstellen");
 	Logger logger = RpcSettings.getLogger();
 
 	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
 
+	/**
+	 * Konstruktor für die {@link RaumForm}
+	 */
 	public RaumForm() {
 		this.add(basePanel);
 		basePanel.add(raumPanel);
 		basePanel.add(buchungsPanel);
-
+		// Selektion über Tastatur ermöglichen
 		raumTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+
+		// Spalte für die Bezeichnung
 		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -56,6 +79,7 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(bezeichnungColumn, "Bezeichnung");
 
+		// Spalte für das Fassungsvermögen
 		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -66,11 +90,14 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(kapaColumn, "Maximale Teilnehmerzahl");
 
+		// SelectionModel, dass die Selektion eines Raums ermöglicht
 		final SingleSelectionModel<Raum> selectionModel = new SingleSelectionModel<Raum>();
 		raumTable.setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
+					// Ändert sich die Selektion, wird einen neue Belegungsform
+					// erstellt und der selektierte Raum an diese übergeben.
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedRaum = selectionModel.getSelectedObject();
@@ -84,6 +111,7 @@ public class RaumForm extends VerticalPanel {
 					}
 				});
 
+		// Befüllung der Raumtabelle
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
 		raumPanel.add(raumTable);
 		raumPanel.add(button);

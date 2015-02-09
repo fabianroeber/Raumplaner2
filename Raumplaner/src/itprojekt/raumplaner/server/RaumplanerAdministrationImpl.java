@@ -7,6 +7,7 @@ import itprojekt.raumplaner.server.db.UserMapper;
 import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
+import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.List;
 
@@ -54,6 +55,12 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	public List<Belegung> getAllBelegungByRaum(Raum raum) {
 		List<Belegung> belegungen = belegungMapper.getAllbyRaum(raum);
 		return belegungen;
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		User user = userMapper.getUserByEmail(email);
+		return user;
 	}
 
 }

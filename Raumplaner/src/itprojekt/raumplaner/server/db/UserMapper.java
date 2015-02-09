@@ -1,6 +1,6 @@
 package itprojekt.raumplaner.server.db;
 
-import itprojekt.raumplaner.shared.bo.Einladung;
+import itprojekt.raumplaner.client.RpcSettings;
 import itprojekt.raumplaner.shared.bo.User;
 
 import java.sql.Connection;
@@ -8,10 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * /** Datenbank-Zugriffsklasse f&uuml;r {@link Einladung} Objekte.
+ * /** Datenbank-Zugriffsklasse f&uuml;r {@link User} Objekte.
  * 
  * @author Fabian
  * @author Thies
@@ -21,6 +24,7 @@ import java.util.List;
 public class UserMapper implements DbMapperInterface<User> {
 
 	private static UserMapper usermapper = null;
+	private Logger logger = RpcSettings.getLogger();
 
 	private UserMapper() {
 	}
@@ -51,7 +55,9 @@ public class UserMapper implements DbMapperInterface<User> {
 			}
 			resultSet.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			logger.log(Level.WARNING,
+					"User konnten nicht aus der Datenbank geladen werden", e);
+			e.printStackTrace();
 			e.printStackTrace();
 		}
 		return resultlist;
@@ -65,7 +71,43 @@ public class UserMapper implements DbMapperInterface<User> {
 
 	@Override
 	public void insert(User bo) {
-		// TODO Auto-generated method stub
+		Connection connection = DatabaseConnection.getConnection();
+
+		try {
+			Statement statement = connection.createStatement();
+
+			ResultSet resultSet = statement
+					.executeQuery("SELECT MAX(idUser) AS maxid " + "FROM User ");
+
+			if (resultSet.next()) {
+				// Max ID + 1
+				bo.setId(resultSet.getInt("maxid") + 1);
+
+				statement = connection.createStatement();
+				// Erstelldatum setzen
+				Date created = new Date(System.currentTimeMillis());
+				bo.setCreated(created);
+
+				statement
+						.executeUpdate("INSERT INTO User (idUser, created, email, vorname, nachname) "
+								+ "VALUES ("
+								+ bo.getId()
+								+ ", "
+								+ bo.getCreated()
+								+ ", "
+								+ bo.getEmail()
+								+ ", "
+								+ bo.getVorname()
+								+ ", "
+								+ bo.getNachname()
+								+ ")");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.WARNING,
+					"User mit der Email-Adresse: " + bo.getEmail()
+							+ "konnte nicht gespeichert werden", e);
+			e.printStackTrace();
+		}
 
 	}
 
@@ -87,7 +129,8 @@ public class UserMapper implements DbMapperInterface<User> {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			logger.log(Level.WARNING, "User mit der id: " + id
+					+ " konnte nicht aus der Datenbank geladen werden.", e);
 			e.printStackTrace();
 		}
 		return null;
@@ -99,4 +142,32 @@ public class UserMapper implements DbMapperInterface<User> {
 
 	}
 
+/**
+	 * Gibt ein {@link User) Objekt mit der übergebenen Email-Adresse zurück.
+	 * @param email
+	 * @return
+	 */
+	public User getUserByEmail(String email) {
+		Connection connection = DatabaseConnection.getConnection();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT idUser, vorname, nachname, email, created FROM User "
+							+ "WHERE email LIKE '" + email + "'");
+			while (resultSet.next()) {
+				User user = new User(resultSet.getInt("idUser"),
+						resultSet.getDate("created"),
+						resultSet.getString("vorname"),
+						resultSet.getString("nachname"),
+						resultSet.getString("email"));
+				return user;
+			}
+
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "User mit der E-Mail-Adresse: " + email
+					+ " konnte nicht aus der Datenbank geladen werden.", e);
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

@@ -4,6 +4,7 @@ import itprojekt.raumplaner.shared.LoginInfo;
 import itprojekt.raumplaner.shared.LoginService;
 import itprojekt.raumplaner.shared.LoginServiceAsync;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
+import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,17 +27,20 @@ public class Raumplaner implements EntryPoint {
 
 	private LoginInfo loginInfo = null;
 	private VerticalPanel loginPanel = new VerticalPanel();
+
 	private Label loginLabel = new Label(
 			"Bitte melden Sie sich mit ihrem Google Account an, um Zugang zur Applikation zu bekommen");
+
 	private Anchor signInLink = new Anchor("Anmelden");
 	private Anchor signOutLink = new Anchor("Abmelden");
-	Logger logger;
+
+	Logger logger = RpcSettings.getLogger();
 
 	@Override
 	public void onModuleLoad() {
 
 		// Login wird versucht
-		logger = RpcSettings.getLogger();
+		// Aus den Settings holen wir den UserService
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.getUserInfo(
 				com.google.gwt.core.client.GWT.getHostPageBaseURL(),
@@ -45,10 +49,14 @@ public class Raumplaner implements EntryPoint {
 					@Override
 					public void onSuccess(LoginInfo result) {
 						loginInfo = result;
+
+						// Bei erfolgreichem Login, wir die Anwendnung aufgebaut
 						if (loginInfo.isLoggedIn()) {
 							logger.log(Level.INFO, "Login erfolgreich");
 							loadRaumplaner();
 						} else {
+							// Ist der Nutzer nicht eingeloggt, wird ein Link
+							// zum Google Login angezeigt.
 							loadLogin();
 						}
 
@@ -133,7 +141,8 @@ public class Raumplaner implements EntryPoint {
 	}
 
 	/**
-	 * Diese Methode dient zum Weiterleiten auf den Google Accounts Service
+	 * Diese Methode dient der Darstellung einer Weiterleitung auf den Google
+	 * Accounts Service.
 	 */
 	public void loadLogin() {
 		signInLink.setHref(loginInfo.getLoginUrl());

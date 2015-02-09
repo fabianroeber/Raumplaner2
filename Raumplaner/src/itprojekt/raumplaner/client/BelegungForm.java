@@ -25,9 +25,12 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  */
 public class BelegungForm extends VerticalPanel {
 
+	/**
+	 * Aktuell ausgewähler Raum
+	 */
 	Raum actualRaum = null;
 
-	HorizontalPanel basePanel = new HorizontalPanel();
+	VerticalPanel basePanel = new VerticalPanel();
 	Button button = new Button("Neue Belegung erstellen");
 
 	CellTable<Belegung> belegungTable = new CellTable<Belegung>();

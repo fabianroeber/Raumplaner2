@@ -1,7 +1,15 @@
 package itprojekt.raumplaner.shared;
 
+import itprojekt.raumplaner.shared.bo.User;
+
 import java.io.Serializable;
 
+/**
+ * Diese Klasse enthält alle Daten über die aktuelle Nutzersession
+ * 
+ * @author Fabian
+ *
+ */
 public class LoginInfo implements Serializable {
 
 	private static final long serialVersionUID = -5207880593956618550L;
@@ -9,7 +17,7 @@ public class LoginInfo implements Serializable {
 	private String loginUrl;
 	private String logoutUrl;
 	private String emailAddress;
-	private String nickname;
+	private User user;
 
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -43,11 +51,11 @@ public class LoginInfo implements Serializable {
 		this.emailAddress = emailAddress;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public User getUser() {
+		return user;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

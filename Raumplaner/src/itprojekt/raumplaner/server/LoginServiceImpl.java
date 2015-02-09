@@ -1,5 +1,8 @@
 package itprojekt.raumplaner.server;
 
+import java.sql.SQLException;
+
+import itprojekt.raumplaner.server.db.UserMapper;
 import itprojekt.raumplaner.shared.LoginInfo;
 import itprojekt.raumplaner.shared.LoginService;
 
@@ -20,15 +23,30 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public LoginInfo getUserInfo(String uri) {
+		// Nutzer von Google holen
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
 		LoginInfo loginInfo = new LoginInfo();
 
 		if (user != null) {
+
+			UserMapper userMapper = UserMapper.getUserMapper();
+
 			loginInfo.setLoggedIn(true);
 			loginInfo.setEmailAddress(user.getEmail());
-			loginInfo.setNickname(user.getNickname());
 			loginInfo.setLogoutUrl(userService.createLogoutURL(uri));
+
+			// In der Datenbank nachsehen, ob User schon registiert ist.
+			itprojekt.raumplaner.shared.bo.User raumplanerUser = (userMapper
+					.getUserByEmail(loginInfo.getEmailAddress()));
+			if (raumplanerUser != null) {
+				loginInfo.setUser(raumplanerUser);
+			}
+			// User 'registrieren'
+			else {
+				userMapper.insert(raumplanerUser);
+			}
+
 		} else {
 			loginInfo.setLoggedIn(false);
 			loginInfo.setLoginUrl(userService.createLoginURL(uri));
@@ -36,5 +54,4 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 		return loginInfo;
 
 	}
-
 }
