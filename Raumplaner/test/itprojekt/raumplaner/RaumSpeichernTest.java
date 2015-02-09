@@ -5,7 +5,6 @@ import itprojekt.raumplaner.server.db.RaumMapper;
 import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 

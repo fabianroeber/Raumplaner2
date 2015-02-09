@@ -44,6 +44,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 			}
 			// User 'registrieren'
 			else {
+				raumplanerUser = new itprojekt.raumplaner.shared.bo.User();
+				raumplanerUser.setEmail(loginInfo.getEmailAddress());
 				userMapper.insert(raumplanerUser);
 			}
 

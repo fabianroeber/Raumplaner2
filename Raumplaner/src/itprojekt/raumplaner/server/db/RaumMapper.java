@@ -84,25 +84,13 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 
 		try {
 			Statement statement = connection.createStatement();
-
-			/*
-			 * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
-			 * PrimÃ¤rschlÃ¼sselwert ist.
-			 */
 			ResultSet resultSet = statement
 					.executeQuery("SELECT MAX(idRaum) AS maxID " + "FROM Raum ");
-
-			// Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
+			
+		
 			if (resultSet.next()) {
-				/*
-				 * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
-				 * PrimÃ¤rschlÃ¼ssel.
-				 */
-				bo.setId(resultSet.getInt("maxID") + 1);
-
+						bo.setId(resultSet.getInt("maxID") + 1);
 				statement = connection.createStatement();
-
-				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
 				statement
 						.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
 								+ "VALUES ("
@@ -115,7 +103,8 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 								+ bo.getCreated() + "')");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Raum mit der Bezeichnung: " + bo.getBezeichnung()
+					+ " konnte nicht gespeichert werden", e);
 		}
 
 	}

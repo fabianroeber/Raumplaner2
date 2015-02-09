@@ -7,8 +7,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,23 +84,17 @@ public class UserMapper implements DbMapperInterface<User> {
 				bo.setId(resultSet.getInt("maxid") + 1);
 
 				statement = connection.createStatement();
+
 				// Erstelldatum setzen
-				Date created = new Date(System.currentTimeMillis());
-				bo.setCreated(created);
+				bo.setCreated(DbUtil.getTimeNow());
 
 				statement
-						.executeUpdate("INSERT INTO User (idUser, created, email, vorname, nachname) "
+						.executeUpdate("INSERT INTO User (idUser, created, email) "
 								+ "VALUES ("
 								+ bo.getId()
-								+ ", "
-								+ bo.getCreated()
-								+ ", "
-								+ bo.getEmail()
-								+ ", "
-								+ bo.getVorname()
-								+ ", "
-								+ bo.getNachname()
-								+ ")");
+								+ ", '"
+								+ new Timestamp(bo.getCreated().getTime())
+								+ "', '" + bo.getEmail() + "')");
 			}
 		} catch (SQLException e) {
 			logger.log(Level.WARNING,
