@@ -1,7 +1,5 @@
 package itprojekt.raumplaner.server;
 
-import java.sql.SQLException;
-
 import itprojekt.raumplaner.server.db.UserMapper;
 import itprojekt.raumplaner.shared.LoginInfo;
 import itprojekt.raumplaner.shared.LoginService;
@@ -47,6 +45,8 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 				raumplanerUser = new itprojekt.raumplaner.shared.bo.User();
 				raumplanerUser.setEmail(loginInfo.getEmailAddress());
 				userMapper.insert(raumplanerUser);
+				loginInfo.setUser(userMapper.getUserByEmail(loginInfo
+						.getEmailAddress()));
 			}
 
 		} else {

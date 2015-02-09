@@ -3,6 +3,7 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
+import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +14,6 @@ import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSe
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -24,6 +24,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
  *
  */
 public class BelegungForm extends VerticalPanel {
+
+	/**
+	 * Aktuell eingeloggter User
+	 */
+	User actualUser = null;
 
 	/**
 	 * Aktuell ausgewähler Raum
@@ -39,7 +44,9 @@ public class BelegungForm extends VerticalPanel {
 	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
 
-	public BelegungForm(Raum selectedRaum) {
+	public BelegungForm(Raum selectedRaum, User user) {
+		//User und Raum setzen
+		actualUser = user;
 		actualRaum = selectedRaum;
 		this.add(basePanel);
 

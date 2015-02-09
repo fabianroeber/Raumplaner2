@@ -96,25 +96,18 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		try {
 			Statement statement = connection.createStatement();
 
-			/*
-			 * ZunÃ¤chst schauen wir nach, welches der momentan hÃ¶chste
-			 * PrimÃ¤rschlÃ¼sselwert ist.
-			 */
 			ResultSet resultSet = statement
-					.executeQuery("SELECT MAX(idBelegung) AS maxID "
+					.executeQuery("SELECT MAX(idBelegung) AS maxid "
 							+ "FROM Belegung ");
 
-			// Wenn wir etwas zurÃ¼ckerhalten, kann dies nur einzeilig sein
 			if (resultSet.next()) {
-				/*
-				 * c erhÃ¤lt den bisher maximalen, nun um 1 inkrementierten
-				 * PrimÃ¤rschlÃ¼ssel.
-				 */
-				bo.setId(resultSet.getInt("maxID") + 1);
+
+				bo.setId(resultSet.getInt("maxid") + 1);
+
+				bo.setCreated(DbUtil.getTimeNow());
 
 				statement = connection.createStatement();
 
-				// Jetzt erst erfolgt die tatsÃ¤chliche EinfÃ¼geoperation
 				statement
 						.executeUpdate("INSERT INTO Belegung (idBelegung, thema, startzeit, endzeit, created, Raum_idRaum) "
 								+ "VALUES ("

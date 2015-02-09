@@ -3,8 +3,6 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.LoginInfo;
 import itprojekt.raumplaner.shared.LoginService;
 import itprojekt.raumplaner.shared.LoginServiceAsync;
-import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
-import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,9 +82,6 @@ public class Raumplaner implements EntryPoint {
 		RootPanel.get("logout").add(loggedInlabel);
 		RootPanel.get("logout").add(signOutLink);
 
-		RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
-				.getRaumplanerAdministration();
-
 		// Neue Navigation erstellen
 		VerticalPanel navigationPanel = new VerticalPanel();
 		RootPanel.get("navigation").add(navigationPanel);
@@ -99,7 +94,7 @@ public class Raumplaner implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
-				RaumForm raumForm = new RaumForm();
+				RaumForm raumForm = new RaumForm(loginInfo.getUser());
 				VerticalPanel raumPanel = new VerticalPanel();
 				raumPanel.add(raumForm);
 				RootPanel.get("content").add(raumPanel);

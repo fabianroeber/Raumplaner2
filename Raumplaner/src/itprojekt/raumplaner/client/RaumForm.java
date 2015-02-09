@@ -2,6 +2,7 @@ package itprojekt.raumplaner.client;
 
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Raum;
+import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -30,6 +31,10 @@ import com.google.gwt.view.client.SingleSelectionModel;
  */
 public class RaumForm extends VerticalPanel {
 
+	/**
+	 * Aktuell angemeldeter User
+	 */
+	User actualUser = null;
 	/**
 	 * Selektierter Raum
 	 */
@@ -61,7 +66,10 @@ public class RaumForm extends VerticalPanel {
 	/**
 	 * Konstruktor für die {@link RaumForm}
 	 */
-	public RaumForm() {
+	public RaumForm(User user) {
+		// User setzen
+		actualUser = user;
+
 		this.add(basePanel);
 		basePanel.add(raumPanel);
 		basePanel.add(buchungsPanel);
@@ -103,7 +111,8 @@ public class RaumForm extends VerticalPanel {
 						selectedRaum = selectionModel.getSelectedObject();
 						if (selectedRaum != null) {
 							buchungsPanel.clear();
-							buchungsPanel.add(new BelegungForm(selectedRaum));
+							buchungsPanel.add(new BelegungForm(selectedRaum,
+									actualUser));
 							logger.log(Level.INFO,
 									"Raum:" + selectedRaum.getBezeichnung()
 											+ "wurde ausgewählt");
