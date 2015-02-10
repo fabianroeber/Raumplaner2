@@ -25,21 +25,21 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface RaumplanerAdministration extends RemoteService {
 
 	/**
-	 * Gibt alle R�ume zur�ck.
+	 * Gibt alle Räume zurück.
 	 * 
 	 * @return List<Raum>
 	 */
 	public List<Raum> getAllRaums();
 
 	/**
-	 * Gibt alle Belegungen eines Raums zur�ck.
+	 * Gibt alle Belegungen eines Raums zurück.
 	 * 
 	 * @return List<Belegung>
 	 */
 	public List<Belegung> getAllBelegungByRaum(Raum raum);
 
 	/**
-	 * Gibt eine {@link User} Objekt zu einer Email-Adresse zur�ck.
+	 * Gibt eine {@link User} Objekt zu einer Email-Adresse zurück.
 	 * 
 	 * @param E
 	 *            -Mail Adresse als String

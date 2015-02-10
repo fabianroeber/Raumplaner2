@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.NumberCell;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -37,6 +37,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
  */
 public class RaumForm extends VerticalPanel {
 
+	final RaumForm raumform = this;
 	/**
 	 * Aktuell angemeldeter User
 	 */
@@ -73,6 +74,7 @@ public class RaumForm extends VerticalPanel {
 	 * Konstruktor für die {@link RaumForm}
 	 */
 	public RaumForm(User user) {
+
 		// User setzen
 		actualUser = user;
 
@@ -80,31 +82,54 @@ public class RaumForm extends VerticalPanel {
 		basePanel.add(raumPanel);
 		basePanel.add(buchungsPanel);
 		// Selektion über Tastatur ermöglichen
-		raumTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		// Spalte für die Bezeichnung
-		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
+		Column<Raum, String> bezeichnungColumn = new Column<Raum, String>(
+				new TextCell()) {
 
 			@Override
 			public String getValue(Raum object) {
 				return object.getBezeichnung();
 			}
-
 		};
 		raumTable.addColumn(bezeichnungColumn, "Bezeichnung");
 
 		// Spalte für das Fassungsvermögen
-		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
-
+		Column<Raum, Number> kapaColumn = new Column<Raum, Number>(
+				new NumberCell()) {
 			@Override
-			public String getValue(Raum object) {
-
-				return Integer.toString(object.getFassungsvermoegen());
+			public Number getValue(Raum object) {
+				return object.getFassungsvermoegen();
 			}
 		};
 		raumTable.addColumn(kapaColumn, "Fassungsvermögen");
 
-		// Diese Spalte dient zum Löschen eines Raumobjekts
+		// Spalte, mit Bearbeiten-Button
+		Column<Raum, String> editColumn = new Column<Raum, String>(
+				new ButtonCell()) {
+
+			@Override
+			public String getValue(Raum object) {
+				return "Bearbeiten";
+			}
+		};
+		// Der Fieldupdater wird aufgerufen, wenn der Bearbeiten-Butten gedrückt
+		// wurde.
+		editColumn.setFieldUpdater(new FieldUpdater<Raum, String>() {
+
+			@Override
+			public void update(int index, Raum object, String value) {
+				buchungsPanel.clear();
+				// Das Buchungspanel wird hier auch für das Bearbeiten von
+				// Räumen benutzt.
+				buchungsPanel.add(new RaumEditForm(object, false, raumform));
+			}
+		});
+
+		raumTable.addColumn(editColumn);
+
+		// Diese Spalte dient zum Löschen des in der Spalte enthaltenen
+		// Raumobjekts
 		Column<Raum, String> deleteColumn = new Column<Raum, String>(
 				new ButtonCell()) {
 
@@ -113,6 +138,7 @@ public class RaumForm extends VerticalPanel {
 				return "Löschen";
 			}
 		};
+
 		// Der Fieldupdater wird aufgerufen, wenn der Anwender auf den "Löschen"
 		// - Button clickt
 		deleteColumn.setFieldUpdater(new FieldUpdater<Raum, String>() {
@@ -142,7 +168,7 @@ public class RaumForm extends VerticalPanel {
 									actualUser));
 							logger.log(Level.INFO,
 									"Raum:" + selectedRaum.getBezeichnung()
-											+ "wurde ausgew�hlt");
+											+ "wurde ausgewählt");
 						}
 					}
 				});
@@ -152,16 +178,14 @@ public class RaumForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// Neues Raumobjekt mit Initialdaten übergeben
-				raumplanerAdministration.saveNewRaum(new Raum(
-						"Bitte Bezeichnung eingeben", 20),
-						new SaveNewRaumCallback());
-
+				// Neues Raumobjekt an RaumEditForm übergeben
+				buchungsPanel.clear();
+				buchungsPanel.add(new RaumEditForm(new Raum(), true, raumform));
 			}
 		});
 
 		// Befüllung der Raumtabelle
-		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+		updateTableRaumForm();
 		raumTable.setStyleName("raumtable");
 		Label tableHeader = new Label("Verfügbare Räume");
 		tableHeader.setStyleName("h2");
@@ -195,27 +219,6 @@ public class RaumForm extends VerticalPanel {
 	}
 
 	/**
-	 * Nachdem ein neuer Raum gespeichert wurde, wird die Tabelle neu aus der
-	 * Datenbank geladen.
-	 * 
-	 * @author Fabian, Alex, Simon
-	 *
-	 */
-	class SaveNewRaumCallback implements AsyncCallback<Void> {
-
-		@Override
-		public void onFailure(Throwable caught) {
-			logger.log(Level.WARNING, "Raum konnte nicht gespeichert werden");
-		}
-
-		@Override
-		public void onSuccess(Void result) {
-			raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
-			logger.log(Level.INFO, "Raum wurde erforlgreich gespeichert");
-		}
-	}
-
-	/**
 	 * Nachdem ein Raum gelöscht wurde, werden die Daten neu in die Tablle
 	 * geladen
 	 * 
@@ -232,11 +235,18 @@ public class RaumForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(Void result) {
-			raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+			updateTableRaumForm();
 			logger.log(Level.INFO, "Raum wurde erforlgreich gelöscht");
 
 		}
 
+	}
+
+	/**
+	 * Methode um Tabelle zu aktualisieren
+	 */
+	public void updateTableRaumForm() {
+		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
 	}
 
 }

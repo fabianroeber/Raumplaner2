@@ -87,7 +87,7 @@ public class BelegungForm extends VerticalPanel {
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
-					// Ändert sich die Selektion, wird einen neue
+					// Ändert sich die Selektion, wird eine neue
 					// BelegungEditForm
 					// erstellt und die selektierte Buchung an diese übergeben.
 					@Override
