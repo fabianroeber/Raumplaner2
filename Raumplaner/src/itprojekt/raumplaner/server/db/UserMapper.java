@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -86,15 +85,16 @@ public class UserMapper implements DbMapperInterface<User> {
 				statement = connection.createStatement();
 
 				// Erstelldatum setzen
-				bo.setCreated(DbUtil.getTimeNow());
 
 				statement
 						.executeUpdate("INSERT INTO User (idUser, created, email) "
 								+ "VALUES ("
 								+ bo.getId()
 								+ ", '"
-								+ new Timestamp(bo.getCreated().getTime())
-								+ "', '" + bo.getEmail() + "')");
+								+ DbUtil.getTimeNow()
+								+ "', '"
+								+ bo.getEmail()
+								+ "')");
 			}
 		} catch (SQLException e) {
 			logger.log(Level.WARNING,

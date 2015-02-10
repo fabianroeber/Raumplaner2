@@ -37,9 +37,15 @@ public interface RaumplanerAdministration extends RemoteService {
 	/**
 	 * Gibt eine {@link User} Objekt zu einer Email-Adresse zurück.
 	 * 
-	 * @param user
-	 * @return User
+	 * @param E
+	 *            -Mail Adresse als String
+	 * @return {@link User}
 	 */
 	public User getUserByEmail(String user);
+
+	/**
+	 * Speichert einen neuen Raum
+	 */
+	public void saveNewRaum(Raum raum);
 
 }

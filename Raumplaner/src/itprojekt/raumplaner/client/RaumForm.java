@@ -8,9 +8,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.Cell;
+import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.dom.builder.shared.TableSectionBuilder;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.TableRowElement;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.Header;
@@ -26,11 +31,11 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
- * Hier werden alle verf�gbaren R�ume zur Auswahl angezeigt. Die R�ume werden in
- * einem Celltable Widget angezeigt. Zeilen in der Celltable k�nnen selektiert
- * werden. F�r die selektierte Zeile werden die Belegungen angezeigt (Siehte
- * {@link BelegungForm}). Es k�nnen au�erdem neue R�ume erzeugt werden oder
- * gel�scht werden.
+ * Hier werden alle verfügbaren Räume zur Auswahl angezeigt. Die Räume werden in
+ * einem Celltable Widget angezeigt. Zeilen in der Celltable können selektiert
+ * werden. Für die selektierte Zeile werden die Belegungen angezeigt (Siehte
+ * {@link BelegungForm}). Es können außerdem neue Räume erzeugt werden oder
+ * gelöscht werden.
  * 
  * @author Fabian, Alex
  * @author Rathke, Thies
@@ -60,7 +65,7 @@ public class RaumForm extends VerticalPanel {
 	 */
 	VerticalPanel raumPanel = new VerticalPanel();
 	/**
-	 * Panel, in das die {@link BelegungForm} eingef�gt wird.
+	 * Panel, in das die {@link BelegungForm} eingefügt wird.
 	 */
 	VerticalPanel buchungsPanel = new VerticalPanel();
 
@@ -71,7 +76,7 @@ public class RaumForm extends VerticalPanel {
 			.getRaumplanerAdministration();
 
 	/**
-	 * Konstruktor f�r die {@link RaumForm}
+	 * Konstruktor für die {@link RaumForm}
 	 */
 	public RaumForm(User user) {
 		// User setzen
@@ -94,7 +99,7 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(bezeichnungColumn, "Bezeichnung");
 
-		// Spalte für das Fassungsverm�gen
+		// Spalte für das Fassungsvermögen
 		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -105,7 +110,18 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(kapaColumn, "Fassungsvermögen");
 
-		// SelectionModel, dass die Selektion eines Raums erm�glicht
+		Column<Raum, String> deleteColumn = new Column<Raum, String>(
+				new ButtonCell()) {
+
+			@Override
+			public String getValue(Raum object) {
+
+				return "Löschen";
+			}
+		};
+		raumTable.addColumn(deleteColumn);
+
+		// SelectionModel, dass die Selektion eines Raums ermöglicht
 		final SingleSelectionModel<Raum> selectionModel = new SingleSelectionModel<Raum>();
 		raumTable.setSelectionModel(selectionModel);
 		selectionModel
@@ -127,16 +143,34 @@ public class RaumForm extends VerticalPanel {
 					}
 				});
 
+		// Clickhandler, um einen neuen Raum zu erstellen
+		button.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				raumplanerAdministration.saveNewRaum(new Raum("", 5),
+						new SaveNewRaumCallback());
+
+			}
+		});
+
 		// Befüllung der Raumtabelle
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
 		raumTable.setStyleName("raumtable");
-		Label tableHeader = new Label("Verfübare Räume");
+		Label tableHeader = new Label("Verfügbare Räume");
 		tableHeader.setStyleName("h2");
 		raumPanel.add(tableHeader);
 		raumPanel.add(raumTable);
 		raumPanel.add(button);
 	}
 
+	/**
+	 * Nachdem alle Räume aus der Datenbank geladen wurden, werder sie der
+	 * Tabelle zugewiesen.
+	 * 
+	 * @author Fabian
+	 *
+	 */
 	class GetRaumsCallBack implements AsyncCallback<List<Raum>> {
 
 		@Override
@@ -149,6 +183,27 @@ public class RaumForm extends VerticalPanel {
 		public void onSuccess(List<Raum> result) {
 			raumTable.setRowCount(result.size());
 			raumTable.setRowData(0, result);
+		}
+
+	}
+
+	/**
+	 * Nachdem ein neuer Account gespeichert wurde, wird die Tabelle neu aus der
+	 * Datenbank geladen.
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class SaveNewRaumCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Raum konnte nicht gespeichert werden");
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
 		}
 
 	}

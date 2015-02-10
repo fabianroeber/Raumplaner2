@@ -86,25 +86,25 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement
 					.executeQuery("SELECT MAX(idRaum) AS maxID " + "FROM Raum ");
-			
-		
+
 			if (resultSet.next()) {
-						bo.setId(resultSet.getInt("maxID") + 1);
+				bo.setId(resultSet.getInt("maxID") + 1);
 				statement = connection.createStatement();
 				statement
 						.executeUpdate("INSERT INTO Raum (idRaum, bezeichnung, fassungsvermoegen, created) "
 								+ "VALUES ("
 								+ bo.getId()
-								+ "','"
+								+ ", '"
 								+ bo.getBezeichnung()
-								+ "','"
+								+ "', '"
 								+ bo.getFassungsvermoegen()
-								+ "','"
-								+ bo.getCreated() + "')");
+								+ "', '"
+								+ DbUtil.getTimeNow() + "')");
 			}
 		} catch (SQLException e) {
-			logger.log(Level.WARNING, "Raum mit der Bezeichnung: " + bo.getBezeichnung()
-					+ " konnte nicht gespeichert werden", e);
+			logger.log(Level.WARNING,
+					"Raum mit der Bezeichnung: " + bo.getBezeichnung()
+							+ " konnte nicht gespeichert werden", e);
 		}
 
 	}

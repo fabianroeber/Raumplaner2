@@ -22,4 +22,6 @@ public interface RaumplanerAdministrationAsync {
 
 	void getUserByEmail(String user, AsyncCallback<User> callback);
 
+	void saveNewRaum(Raum raum, AsyncCallback<Void> callback);
+
 }

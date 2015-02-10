@@ -63,4 +63,9 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 		return user;
 	}
 
+	@Override
+	public void saveNewRaum(Raum raum) {
+		raumMapper.insert(raum);
+	}
+
 }

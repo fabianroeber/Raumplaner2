@@ -5,6 +5,8 @@ import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +44,7 @@ public class BelegungForm extends VerticalPanel {
 	Belegung selectedBelegung = null;
 
 	/**
-	 * Aktuell ausgew�hler Raum
+	 * Aktuell ausgewähler Raum
 	 */
 	Raum actualRaum = null;
 
@@ -85,14 +87,18 @@ public class BelegungForm extends VerticalPanel {
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
-					// �ndert sich die Selektion, wird einen neue
+					// Ändert sich die Selektion, wird einen neue
 					// BelegungEditForm
-					// erstellt und die selektierte Buchung an diese �bergeben.
+					// erstellt und die selektierte Buchung an diese übergeben.
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedBelegung = selectionModel.getSelectedObject();
 						if (selectedBelegung != null) {
 							belegungEditPanel.clear();
+							// Prüfung, ob der angemeldete User der Ersteller
+							// der Belegung ist. Wenn nicht, wird die
+							// Bearbeitungsansicht zur reinen Anzeige, in der
+							// nichts bearbeitet werden kann.
 							if (selectedBelegung.getErsteller().equals(
 									actualUser.getEmail())) {
 								belegungEditPanel.add(new BelegungEditForm(
@@ -107,6 +113,7 @@ public class BelegungForm extends VerticalPanel {
 					}
 				});
 
+		// Neue Belegung erstellen
 		button.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -117,16 +124,28 @@ public class BelegungForm extends VerticalPanel {
 
 			}
 		});
-
+		// Alle Belegunen des Raums laden und der Tabelle zuweisen
 		raumplanerAdministration.getAllBelegungByRaum(actualRaum,
 				new GetBelegungCallback());
+
+		// Tabellenüberschrift
 		Label tableHeader = new Label("Belegungen");
 		tableHeader.setStyleName("h2");
+
+		// Widgets der Form hinzufügen
 		belegunAnsichtPanel.add(tableHeader);
 		belegunAnsichtPanel.add(belegungTable);
 		belegunAnsichtPanel.add(button);
 	}
 
+	/**
+	 * Dieses Callback befüllt die Tabelle mit den aus der Datenbank geladenen
+	 * Buchungen. Es wird geprüft, ob die Belegungen bereits in der
+	 * Vergangenheit liegen. Die vergangenen Belegungen werden herausgefiltert.
+	 * 
+	 * @author Fabian, Alex
+	 * 
+	 */
 	class GetBelegungCallback implements AsyncCallback<List<Belegung>> {
 
 		@Override
@@ -138,11 +157,19 @@ public class BelegungForm extends VerticalPanel {
 
 		@Override
 		public void onSuccess(List<Belegung> result) {
-			belegungTable.setRowData(result);
-			logger.log(Level.INFO, "Buchen f�r Raum" + actualRaum
+			List<Belegung> aktuelleBelegunen = new ArrayList<Belegung>();
+			// Vergleiche alle Belegunen mit der aktuellen Serverzeit
+			for (Belegung belegung : result) {
+				if (belegung.getEndzeit().after(
+						new Date(System.currentTimeMillis()))) {
+					aktuelleBelegunen.add(belegung);
+				}
+			}
+			// Gefilterte Buchungen in die Tabelle laden.
+			belegungTable.setRowData(aktuelleBelegunen);
+			logger.log(Level.INFO, "Belegungen für Raum" + actualRaum
 					+ "wurden erfolgreich geladen");
 		}
-
 	}
 
 }

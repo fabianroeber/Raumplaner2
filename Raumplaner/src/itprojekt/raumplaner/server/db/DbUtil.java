@@ -1,5 +1,6 @@
 package itprojekt.raumplaner.server.db;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -11,13 +12,13 @@ import java.util.Date;
 public class DbUtil {
 
 	/**
-	 * Gibt die aktuelle Serverzeit als Date-Objekt zurück
+	 * Gibt die aktuelle Serverzeit als {@link Timestamp}-Objekt zurück
 	 * 
-	 * @return {@link Date}
+	 * @return {@link Timestamp}
 	 */
-	public static Date getTimeNow() {
+	public static Timestamp getTimeNow() {
 		Date created = new Date(System.currentTimeMillis());
-		return created;
+		return new Timestamp(created.getTime());
 	}
 
 }
