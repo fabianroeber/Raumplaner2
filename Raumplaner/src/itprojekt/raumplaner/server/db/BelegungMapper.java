@@ -95,16 +95,14 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 
 		try {
 			Statement statement = connection.createStatement();
-
+			// Höchste ID auslesen
 			ResultSet resultSet = statement
 					.executeQuery("SELECT MAX(idBelegung) AS maxid "
 							+ "FROM Belegung ");
 
 			if (resultSet.next()) {
-
+				// Höchste ID + 1 ist die ID für unser neues Projekt
 				bo.setId(resultSet.getInt("maxid") + 1);
-
-				bo.setCreated(DbUtil.getTimeNow());
 
 				statement = connection.createStatement();
 
@@ -119,7 +117,10 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 								+ "','"
 								+ bo.getEndzeit()
 								+ "','"
-								+ bo.getCreated() + "','" + bo.getRaum() + "')");
+								+ DbUtil.getTimeNow()
+								+ "','"
+								+ bo.getRaum()
+								+ "')");
 			}
 		} catch (SQLException e) {
 			logger.log(Level.WARNING,
@@ -137,12 +138,21 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 
 	@Override
 	public void delete(Belegung bo) {
-		// TODO Auto-generated method stub
+		Connection connection = DatabaseConnection.getConnection();
+		try {
+			Statement statement = connection.createStatement();
 
+			statement.executeUpdate("DELETE FROM Belegung "
+					+ "WHERE idBelegung=" + bo.getId());
+
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Belegung mit der ID: " + bo.getId()
+					+ " konnte nicht gelöscht werden", e);
+		}
 	}
 
 	/**
-	 * Diese Methode gibt eine Liste von Belegungen f�r einen Raum aus.
+	 * Diese Methode gibt eine Liste von Belegungen für einen Raum aus.
 	 * 
 	 * @return List<Belegung>
 	 */
@@ -169,7 +179,7 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		} catch (SQLException e) {
 			logger.log(
 					Level.WARNING,
-					"Fehler beim Laden aller Buchungen f�r den Raum: "
+					"Fehler beim Laden aller Buchungen f�r den Raum: "
 							+ raum.getBezeichnung(), e);
 		}
 

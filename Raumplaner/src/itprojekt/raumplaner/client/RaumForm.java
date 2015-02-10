@@ -9,17 +9,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gwt.cell.client.ButtonCell;
-import com.google.gwt.cell.client.Cell;
-import com.google.gwt.cell.client.EditTextCell;
-import com.google.gwt.dom.builder.shared.TableSectionBuilder;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.TableRowElement;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
-import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.cellview.client.HeaderBuilder;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -110,15 +104,25 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(kapaColumn, "Fassungsvermögen");
 
+		// Diese Spalte dient zum Löschen eines Raumobjekts
 		Column<Raum, String> deleteColumn = new Column<Raum, String>(
 				new ButtonCell()) {
 
 			@Override
 			public String getValue(Raum object) {
-
 				return "Löschen";
 			}
 		};
+		// Der Fieldupdater wird aufgerufen, wenn der Anwender auf den "Löschen"
+		// - Button clickt
+		deleteColumn.setFieldUpdater(new FieldUpdater<Raum, String>() {
+
+			@Override
+			public void update(int index, Raum object, String value) {
+				raumplanerAdministration.deleteRaum(object,
+						new DeleteRaumCallback());
+			}
+		});
 		raumTable.addColumn(deleteColumn);
 
 		// SelectionModel, dass die Selektion eines Raums ermöglicht
@@ -148,7 +152,9 @@ public class RaumForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				raumplanerAdministration.saveNewRaum(new Raum("", 5),
+				// Neues Raumobjekt mit Initialdaten übergeben
+				raumplanerAdministration.saveNewRaum(new Raum(
+						"Bitte Bezeichnung eingeben", 20),
 						new SaveNewRaumCallback());
 
 			}
@@ -183,15 +189,16 @@ public class RaumForm extends VerticalPanel {
 		public void onSuccess(List<Raum> result) {
 			raumTable.setRowCount(result.size());
 			raumTable.setRowData(0, result);
+			logger.log(Level.INFO, "Räume wurden erforlgreich geladen");
 		}
 
 	}
 
 	/**
-	 * Nachdem ein neuer Account gespeichert wurde, wird die Tabelle neu aus der
+	 * Nachdem ein neuer Raum gespeichert wurde, wird die Tabelle neu aus der
 	 * Datenbank geladen.
 	 * 
-	 * @author Fabian
+	 * @author Fabian, Alex, Simon
 	 *
 	 */
 	class SaveNewRaumCallback implements AsyncCallback<Void> {
@@ -204,6 +211,30 @@ public class RaumForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+			logger.log(Level.INFO, "Raum wurde erforlgreich gespeichert");
+		}
+	}
+
+	/**
+	 * Nachdem ein Raum gelöscht wurde, werden die Daten neu in die Tablle
+	 * geladen
+	 * 
+	 * @author Fabian, Alex, Simon
+	 *
+	 */
+	class DeleteRaumCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Raum konnte nicht gelöscht werden");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+			logger.log(Level.INFO, "Raum wurde erforlgreich gelöscht");
+
 		}
 
 	}

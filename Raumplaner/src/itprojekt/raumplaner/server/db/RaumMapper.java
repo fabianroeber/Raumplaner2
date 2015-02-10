@@ -1,6 +1,7 @@
 package itprojekt.raumplaner.server.db;
 
 import itprojekt.raumplaner.client.RpcSettings;
+import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.sql.Connection;
@@ -138,8 +139,31 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 
 	@Override
 	public void delete(Raum bo) {
-		// TODO Auto-generated method stub
+		Connection connection = DatabaseConnection.getConnection();
+
+		// Zunächst müssen alle Belegungen des Raums gelöscht werden.
+		BelegungMapper belegungMapper = BelegungMapper.getBelegungMapper();
+		try {
+			List<Belegung> belegungen = belegungMapper.getAllbyRaum(bo);
+			if (belegungen != null) {
+				for (Belegung belegung : belegungen) {
+					belegungMapper.delete(belegung);
+				}
+			}
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "Belegungen für den Raum mit der ID: "
+					+ bo.getId() + " konnten nicht gelöscht werden", e);
+		}
+		try {
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate("DELETE FROM Raum " + "WHERE idRaum="
+					+ bo.getId());
+
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Raum mit der ID: " + bo.getId()
+					+ " konnte nicht gelöscht werden", e);
+		}
 
 	}
-
 }

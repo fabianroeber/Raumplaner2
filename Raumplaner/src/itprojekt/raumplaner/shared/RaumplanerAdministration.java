@@ -1,11 +1,11 @@
 package itprojekt.raumplaner.shared;
 
-import java.util.List;
-
-import itprojekt.raumplaner.server.RaumplanerAdministrationImpl;
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
+
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -17,25 +17,29 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * @author Fabian
  *
  */
+/**
+ * @author Fabian
+ *
+ */
 @RemoteServiceRelativePath("raumplanerAdministration")
 public interface RaumplanerAdministration extends RemoteService {
 
 	/**
-	 * Gibt alle R�ume zur�ck.
+	 * Gibt alle R�ume zur�ck.
 	 * 
 	 * @return List<Raum>
 	 */
 	public List<Raum> getAllRaums();
 
 	/**
-	 * Gibt alle Belegungen eines Raums zur�ck.
+	 * Gibt alle Belegungen eines Raums zur�ck.
 	 * 
 	 * @return List<Belegung>
 	 */
 	public List<Belegung> getAllBelegungByRaum(Raum raum);
 
 	/**
-	 * Gibt eine {@link User} Objekt zu einer Email-Adresse zur�ck.
+	 * Gibt eine {@link User} Objekt zu einer Email-Adresse zur�ck.
 	 * 
 	 * @param E
 	 *            -Mail Adresse als String
@@ -48,4 +52,50 @@ public interface RaumplanerAdministration extends RemoteService {
 	 */
 	public void saveNewRaum(Raum raum);
 
+	/**
+	 * Löscht einen Raum
+	 * 
+	 * @param raum
+	 */
+	public void deleteRaum(Raum raum);
+
+	/**
+	 * Speichert Änderungen an einem Raum
+	 * 
+	 * @param raum
+	 */
+	public void updateRaum(Raum raum);
+
+	/**
+	 * Speichert eine neue Belegung
+	 */
+	public void saveNewBelegung(Belegung belegung);
+
+	/**
+	 * Speichert Änderungen an einer Belegung
+	 * 
+	 * @param belegung
+	 */
+	public void updateBelegung(Belegung belegung);
+
+	/**
+	 * Löscht eine Belegung
+	 * 
+	 * @param belegung
+	 */
+	public void deleteBelegung(Belegung belegung);
+
+	/**
+	 * Lädt alle Einladungen nach der zugehörigen Belegung
+	 * 
+	 * @return Liste von {@link Einladung}
+	 */
+	public List<Einladung> getEinladungenByBelegung();
+
+	/**
+	 * Lädt alle Einladungen für einen User.
+	 * 
+	 * @return
+	 */
+	public List<Einladung> getEinladungenByUser();
 }

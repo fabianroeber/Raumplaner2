@@ -6,6 +6,7 @@ import itprojekt.raumplaner.server.db.RaumMapper;
 import itprojekt.raumplaner.server.db.UserMapper;
 import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
@@ -15,7 +16,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
- * Verwaltungsklasse f&uuml;r die Raumplaner Benutzeroberfläche. Hier werden
+ * Verwaltungsklasse f&uuml;r die Raumplaner Benutzeroberflï¿½che. Hier werden
  * alle notwendigen Daten bereigestellt, jedoch keine neuen Daten erstellt.
  * 
  * @author Fabian
@@ -66,6 +67,48 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public void saveNewRaum(Raum raum) {
 		raumMapper.insert(raum);
+	}
+
+	@Override
+	public void deleteRaum(Raum raum) {
+		raumMapper.delete(raum);
+
+	}
+
+	@Override
+	public void updateRaum(Raum raum) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void saveNewBelegung(Belegung belegung) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateBelegung(Belegung belegung) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void deleteBelegung(Belegung belegung) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<Einladung> getEinladungenByBelegung() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Einladung> getEinladungenByUser() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

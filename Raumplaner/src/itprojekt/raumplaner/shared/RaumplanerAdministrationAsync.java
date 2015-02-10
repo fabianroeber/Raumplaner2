@@ -1,6 +1,7 @@
 package itprojekt.raumplaner.shared;
 
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
@@ -23,5 +24,19 @@ public interface RaumplanerAdministrationAsync {
 	void getUserByEmail(String user, AsyncCallback<User> callback);
 
 	void saveNewRaum(Raum raum, AsyncCallback<Void> callback);
+
+	void deleteRaum(Raum raum, AsyncCallback<Void> callback);
+
+	void updateRaum(Raum raum, AsyncCallback<Void> callback);
+
+	void saveNewBelegung(Belegung belegung, AsyncCallback<Void> callback);
+
+	void updateBelegung(Belegung belegung, AsyncCallback<Void> callback);
+
+	void deleteBelegung(Belegung belegung, AsyncCallback<Void> callback);
+
+	void getEinladungenByBelegung(AsyncCallback<List<Einladung>> callback);
+
+	void getEinladungenByUser(AsyncCallback<List<Einladung>> callback);
 
 }

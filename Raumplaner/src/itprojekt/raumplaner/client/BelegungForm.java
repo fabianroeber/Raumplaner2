@@ -25,7 +25,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
- * Diese Klasse stellt die Buchungen f�r den selektierten Raum da.
+ * Diese Klasse stellt die Buchungen für den selektierten Raum da.
  * 
  * @author Fabian
  * @author Alex
