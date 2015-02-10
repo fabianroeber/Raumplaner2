@@ -18,6 +18,18 @@ h1 {
 	font-style: normal;
 }
 
+.raumEditPanel {
+	margin-top: 30px;
+}
+
+.inputField {
+	width: 150px;
+}
+
+.inputlabel {
+	width: 130px;
+}
+
 .raumtable {
 	margin: 5px 5px 5px 5px;
 }

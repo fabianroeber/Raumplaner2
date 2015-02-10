@@ -77,25 +77,24 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 
 	@Override
 	public void updateRaum(Raum raum) {
-		// TODO Auto-generated method stub
+		raumMapper.update(raum);
 
 	}
 
 	@Override
 	public void saveNewBelegung(Belegung belegung) {
-		// TODO Auto-generated method stub
-
+		belegungMapper.insert(belegung);
 	}
 
 	@Override
 	public void updateBelegung(Belegung belegung) {
-		// TODO Auto-generated method stub
+		belegungMapper.update(belegung);
 
 	}
 
 	@Override
 	public void deleteBelegung(Belegung belegung) {
-		// TODO Auto-generated method stub
+		belegungMapper.delete(belegung);
 
 	}
 

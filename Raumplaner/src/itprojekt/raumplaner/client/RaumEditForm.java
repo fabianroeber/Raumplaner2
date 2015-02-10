@@ -11,6 +11,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.IntegerBox;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -41,6 +44,9 @@ public class RaumEditForm extends VerticalPanel {
 			.getRaumplanerAdministration();
 
 	/**
+	 * Dieser Konstruktor erstellt die Editierungs-Form für einen Raum in
+	 * Abhängigkeit der übergebenen Werte.
+	 * 
 	 * @param raum
 	 *            - Raum der zu bearbeiten ist
 	 * @param raumform
@@ -56,18 +62,50 @@ public class RaumEditForm extends VerticalPanel {
 		actualRaum = raum;
 		actualRaumform = raumform;
 
-		// Panel für Raumbezeichnung
+		// Basis-Panel
 		VerticalPanel basePanel = new VerticalPanel();
-		HorizontalPanel raumbezeichnung = new HorizontalPanel();
 
-		HorizontalPanel raumkapa = new HorizontalPanel();
+		// Überschrift der Bearbeitungsansicht
+		HorizontalPanel headerPanel = new HorizontalPanel();
+		Label pageheader = new Label();
+		pageheader.setStyleName("h2");
+		if (isNewRaum) {
+			pageheader.setText("Neuer Raum");
+		} else {
+			pageheader.setText("Raum bearbeiten");
+		}
+		headerPanel.add(pageheader);
 
+		// Bereich für Raumbezeichnung
+		HorizontalPanel raumbezeichnungPanel = new HorizontalPanel();
+		Label bezLabel = new Label("Bezeichnung: ");
+		bezLabel.setStyleName("inputlabel");
+		raumbezeichnungPanel.add(bezLabel);
+		final TextBox bezInput = new TextBox();
+		bezInput.setStyleName("inputField");
+		raumbezeichnungPanel.setStyleName("raumEditPanel");
+		raumbezeichnungPanel.add(bezInput);
+
+		// Bereich für das Fassungsvermögen
+		HorizontalPanel raumkapaPanel = new HorizontalPanel();
+		Label kapaLabel = new Label("Fassungsvermögen: ");
+		kapaLabel.setStyleName("inputlabel");
+		raumkapaPanel.add(kapaLabel);
+		final IntegerBox kapaInput = new IntegerBox();
+		kapaInput.setStyleName("inputField");
+		raumkapaPanel.add(kapaInput);
+
+		// Speichern Button + Clickhandler
 		HorizontalPanel buttonPanel = new HorizontalPanel();
 		Button speichern = new Button("Speichern");
 		speichern.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				// Eingaben des Benutzers verwerten
+
+				actualRaum.setBezeichnung(bezInput.getValue());
+				actualRaum.setFassungsvermoegen((int) kapaInput.getValue());
 				if (isNewRaum) {
 					raumPlanerAdministration.saveNewRaum(actualRaum,
 							new SaveRaumCallback());
@@ -75,15 +113,17 @@ public class RaumEditForm extends VerticalPanel {
 					raumPlanerAdministration.updateRaum(actualRaum,
 							new SaveRaumCallback());
 			}
+
 		});
 
-		Button abbrechen = new Button("Speichern");
+		Button abbrechen = new Button("Abbrechen");
 		buttonPanel.add(speichern);
 		buttonPanel.add(abbrechen);
 
 		this.add(basePanel);
-		basePanel.add(raumbezeichnung);
-		basePanel.add(raumkapa);
+		basePanel.add(headerPanel);
+		basePanel.add(raumbezeichnungPanel);
+		basePanel.add(raumkapaPanel);
 		basePanel.add(buttonPanel);
 	}
 
@@ -104,6 +144,7 @@ public class RaumEditForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			actualRaumform.updateTableRaumForm();
+			actualRaumform.clearBelegungPanel();
 			logger.log(Level.INFO, "Raum wurde erforlgreich gespeichert");
 		}
 	}

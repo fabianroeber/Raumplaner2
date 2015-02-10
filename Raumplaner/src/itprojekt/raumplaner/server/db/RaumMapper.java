@@ -68,10 +68,10 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 		try {
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("UPDATE Raum" + "SET bezeichnung=\""
-					+ bo.getBezeichnung() + "\", " + "fassungsvermoegen=\""
-					+ bo.getFassungsvermoegen() + "\", " + "created=\""
-					+ bo.getCreated() + "\" " + "WHERE id=" + bo.getId());
+			statement.executeUpdate("UPDATE Raum" + "SET bezeichnung='"
+					+ bo.getBezeichnung() + "', " + "fassungsvermoegen='"
+					+ bo.getFassungsvermoegen() + "'\", " + "created='"
+					+ bo.getCreated() + "' " + "WHERE idRaum=" + bo.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();

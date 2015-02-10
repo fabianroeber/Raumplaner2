@@ -62,7 +62,7 @@ public class RaumForm extends VerticalPanel {
 	/**
 	 * Panel, in das die {@link BelegungForm} eingefügt wird.
 	 */
-	VerticalPanel buchungsPanel = new VerticalPanel();
+	VerticalPanel belegungsPanel = new VerticalPanel();
 
 	Button button = new Button("Neuen Raum erstellen");
 	Logger logger = RpcSettings.getLogger();
@@ -80,7 +80,7 @@ public class RaumForm extends VerticalPanel {
 
 		this.add(basePanel);
 		basePanel.add(raumPanel);
-		basePanel.add(buchungsPanel);
+		basePanel.add(belegungsPanel);
 		// Selektion über Tastatur ermöglichen
 
 		// Spalte für die Bezeichnung
@@ -119,10 +119,10 @@ public class RaumForm extends VerticalPanel {
 
 			@Override
 			public void update(int index, Raum object, String value) {
-				buchungsPanel.clear();
+				belegungsPanel.clear();
 				// Das Buchungspanel wird hier auch für das Bearbeiten von
 				// Räumen benutzt.
-				buchungsPanel.add(new RaumEditForm(object, false, raumform));
+				belegungsPanel.add(new RaumEditForm(object, false, raumform));
 			}
 		});
 
@@ -163,8 +163,8 @@ public class RaumForm extends VerticalPanel {
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedRaum = selectionModel.getSelectedObject();
 						if (selectedRaum != null) {
-							buchungsPanel.clear();
-							buchungsPanel.add(new BelegungForm(selectedRaum,
+							belegungsPanel.clear();
+							belegungsPanel.add(new BelegungForm(selectedRaum,
 									actualUser));
 							logger.log(Level.INFO,
 									"Raum:" + selectedRaum.getBezeichnung()
@@ -179,8 +179,8 @@ public class RaumForm extends VerticalPanel {
 			@Override
 			public void onClick(ClickEvent event) {
 				// Neues Raumobjekt an RaumEditForm übergeben
-				buchungsPanel.clear();
-				buchungsPanel.add(new RaumEditForm(new Raum(), true, raumform));
+				belegungsPanel.clear();
+				belegungsPanel.add(new RaumEditForm(new Raum(), true, raumform));
 			}
 		});
 
@@ -247,6 +247,13 @@ public class RaumForm extends VerticalPanel {
 	 */
 	public void updateTableRaumForm() {
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+	}
+
+	/**
+	 * Methode um das Belegungspanel zurückzusetzen
+	 */
+	public void clearBelegungPanel() {
+		belegungsPanel.clear();
 	}
 
 }
