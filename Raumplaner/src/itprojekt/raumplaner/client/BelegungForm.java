@@ -17,12 +17,13 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
- * Diese Klasse stellt die Buchungen für den selektierten Raum da.
+ * Diese Klasse stellt die Buchungen fï¿½r den selektierten Raum da.
  * 
  * @author Fabian
  * @author Alex
@@ -41,7 +42,7 @@ public class BelegungForm extends VerticalPanel {
 	Belegung selectedBelegung = null;
 
 	/**
-	 * Aktuell ausgewähler Raum
+	 * Aktuell ausgewï¿½hler Raum
 	 */
 	Raum actualRaum = null;
 
@@ -78,15 +79,15 @@ public class BelegungForm extends VerticalPanel {
 		};
 		belegungTable.addColumn(themaColumn, "Thema");
 
-		// SelectionModel, dass die Selektion einer Belegung ermöglicht
+		// SelectionModel, dass die Selektion einer Belegung ermï¿½glicht
 		final SingleSelectionModel<Belegung> selectionModel = new SingleSelectionModel<Belegung>();
 		belegungTable.setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
-					// Ändert sich die Selektion, wird einen neue
+					// ï¿½ndert sich die Selektion, wird einen neue
 					// BelegungEditForm
-					// erstellt und die selektierte Buchung an diese übergeben.
+					// erstellt und die selektierte Buchung an diese ï¿½bergeben.
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedBelegung = selectionModel.getSelectedObject();
@@ -119,7 +120,9 @@ public class BelegungForm extends VerticalPanel {
 
 		raumplanerAdministration.getAllBelegungByRaum(actualRaum,
 				new GetBelegungCallback());
-
+		Label tableHeader = new Label("Belegungen");
+		tableHeader.setStyleName("h2");
+		belegunAnsichtPanel.add(tableHeader);
 		belegunAnsichtPanel.add(belegungTable);
 		belegunAnsichtPanel.add(button);
 	}
@@ -136,7 +139,7 @@ public class BelegungForm extends VerticalPanel {
 		@Override
 		public void onSuccess(List<Belegung> result) {
 			belegungTable.setRowData(result);
-			logger.log(Level.INFO, "Buchen für Raum" + actualRaum
+			logger.log(Level.INFO, "Buchen fï¿½r Raum" + actualRaum
 					+ "wurden erfolgreich geladen");
 		}
 

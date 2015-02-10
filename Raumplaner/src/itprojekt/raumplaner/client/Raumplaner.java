@@ -88,6 +88,7 @@ public class Raumplaner implements EntryPoint {
 
 		// Menupunkte
 		final Button raumbuchungen = new Button("Raumbuchungen");
+		raumbuchungen.setWidth("200px");
 		navigationPanel.add(raumbuchungen);
 		raumbuchungen.addClickHandler(new ClickHandler() {
 
@@ -102,6 +103,7 @@ public class Raumplaner implements EntryPoint {
 		});
 
 		final Button raumbelegungsplan = new Button("Raumbelegunsplan");
+		raumbelegungsplan.setWidth("200px");
 		navigationPanel.add(raumbelegungsplan);
 		raumbelegungsplan.addClickHandler(new ClickHandler() {
 
@@ -112,6 +114,7 @@ public class Raumplaner implements EntryPoint {
 		});
 
 		final Button userBelegungen = new Button("Meine Buchungen");
+		userBelegungen.setWidth("200px");
 		navigationPanel.add(userBelegungen);
 		userBelegungen.addClickHandler(new ClickHandler() {
 
@@ -123,6 +126,7 @@ public class Raumplaner implements EntryPoint {
 		});
 
 		final Button userEinladungen = new Button("Meine Einladungen");
+		userEinladungen.setWidth("200px");
 		navigationPanel.add(userEinladungen);
 		userEinladungen.addClickHandler(new ClickHandler() {
 

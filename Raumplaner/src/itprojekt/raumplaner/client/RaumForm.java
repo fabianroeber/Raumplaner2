@@ -8,22 +8,29 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.dom.builder.shared.TableSectionBuilder;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.TableRowElement;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.cellview.client.HeaderBuilder;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 /**
- * Hier werden alle verfügbaren Räume zur Auswahl angezeigt. Die Räume werden in
- * einem Celltable Widget angezeigt. Zeilen in der Celltable können selektiert
- * werden. Für die selektierte Zeile werden die Belegungen angezeigt (Siehte
- * {@link BelegungForm}). Es können außerdem neue Räume erzeugt werden oder
- * gelöscht werden.
+ * Hier werden alle verfï¿½gbaren Rï¿½ume zur Auswahl angezeigt. Die Rï¿½ume werden in
+ * einem Celltable Widget angezeigt. Zeilen in der Celltable kï¿½nnen selektiert
+ * werden. Fï¿½r die selektierte Zeile werden die Belegungen angezeigt (Siehte
+ * {@link BelegungForm}). Es kï¿½nnen auï¿½erdem neue Rï¿½ume erzeugt werden oder
+ * gelï¿½scht werden.
  * 
  * @author Fabian, Alex
  * @author Rathke, Thies
@@ -49,11 +56,11 @@ public class RaumForm extends VerticalPanel {
 	 */
 	HorizontalPanel basePanel = new HorizontalPanel();
 	/**
-	 * Panel für die Raumtabelle
+	 * Panel fï¿½r die Raumtabelle
 	 */
 	VerticalPanel raumPanel = new VerticalPanel();
 	/**
-	 * Panel, in das die {@link BelegungForm} eingefügt wird.
+	 * Panel, in das die {@link BelegungForm} eingefï¿½gt wird.
 	 */
 	VerticalPanel buchungsPanel = new VerticalPanel();
 
@@ -64,7 +71,7 @@ public class RaumForm extends VerticalPanel {
 			.getRaumplanerAdministration();
 
 	/**
-	 * Konstruktor für die {@link RaumForm}
+	 * Konstruktor fï¿½r die {@link RaumForm}
 	 */
 	public RaumForm(User user) {
 		// User setzen
@@ -73,10 +80,10 @@ public class RaumForm extends VerticalPanel {
 		this.add(basePanel);
 		basePanel.add(raumPanel);
 		basePanel.add(buchungsPanel);
-		// Selektion über Tastatur ermöglichen
+		// Selektion Ã¼ber Tastatur ermÃ¶glichen
 		raumTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-		// Spalte für die Bezeichnung
+		// Spalte fÃ¼r die Bezeichnung
 		TextColumn<Raum> bezeichnungColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -87,7 +94,7 @@ public class RaumForm extends VerticalPanel {
 		};
 		raumTable.addColumn(bezeichnungColumn, "Bezeichnung");
 
-		// Spalte für das Fassungsvermögen
+		// Spalte fÃ¼r das Fassungsvermï¿½gen
 		TextColumn<Raum> kapaColumn = new TextColumn<Raum>() {
 
 			@Override
@@ -96,16 +103,16 @@ public class RaumForm extends VerticalPanel {
 				return Integer.toString(object.getFassungsvermoegen());
 			}
 		};
-		raumTable.addColumn(kapaColumn, "Maximale Teilnehmerzahl");
+		raumTable.addColumn(kapaColumn, "FassungsvermÃ¶gen");
 
-		// SelectionModel, dass die Selektion eines Raums ermöglicht
+		// SelectionModel, dass die Selektion eines Raums ermï¿½glicht
 		final SingleSelectionModel<Raum> selectionModel = new SingleSelectionModel<Raum>();
 		raumTable.setSelectionModel(selectionModel);
 		selectionModel
 				.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 
-					// Ändert sich die Selektion, wird einen neue Belegungsform
-					// erstellt und der selektierte Raum an diese übergeben.
+					// Ã„ndert sich die Selektion, wird einen neue Belegungsform
+					// erstellt und der selektierte Raum an diese Ã¼bergeben.
 					@Override
 					public void onSelectionChange(SelectionChangeEvent event) {
 						selectedRaum = selectionModel.getSelectedObject();
@@ -115,13 +122,17 @@ public class RaumForm extends VerticalPanel {
 									actualUser));
 							logger.log(Level.INFO,
 									"Raum:" + selectedRaum.getBezeichnung()
-											+ "wurde ausgewählt");
+											+ "wurde ausgewï¿½hlt");
 						}
 					}
 				});
 
-		// Befüllung der Raumtabelle
+		// BefÃ¼llung der Raumtabelle
 		raumplanerAdministration.getAllRaums(new GetRaumsCallBack());
+		raumTable.setStyleName("raumtable");
+		Label tableHeader = new Label("VerfÃ¼bare RÃ¤ume");
+		tableHeader.setStyleName("h2");
+		raumPanel.add(tableHeader);
 		raumPanel.add(raumTable);
 		raumPanel.add(button);
 	}
@@ -131,7 +142,7 @@ public class RaumForm extends VerticalPanel {
 		@Override
 		public void onFailure(Throwable caught) {
 
-			logger.log(Level.WARNING, "Räume konnten nicht geladen werden");
+			logger.log(Level.WARNING, "RÃ¤ume konnten nicht geladen werden");
 		}
 
 		@Override
