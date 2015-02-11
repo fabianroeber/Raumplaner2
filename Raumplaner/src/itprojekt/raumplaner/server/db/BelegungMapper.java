@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -73,12 +74,12 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		try {
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("UPDATE Belegung" + "SET thema=\""
-					+ bo.getThema() + "\", " + "startzeit=\""
-					+ bo.getStartzeit() + "\", " + "endzeit=\""
-					+ bo.getEndzeit() + "\", " + "created=\"" + bo.getCreated()
-					+ "\", " + "Raum_idRaum=\"" + bo.getRaum() + "\" "
-					+ "WHERE id=" + bo.getId());
+			statement.executeUpdate("UPDATE Belegung" + "SET thema='"
+					+ bo.getThema() + "', " + "startzeit='" + bo.getStartzeit()
+					+ "', " + "endzeit='" + bo.getEndzeit() + "', "
+					+ "created='" + new Timestamp(bo.getCreated().getTime())
+					+ "', " + "Raum_idRaum='" + bo.getRaum() + "' "
+					+ "WHERE idBelegung=" + bo.getId());
 
 		} catch (SQLException e) {
 			logger.log(

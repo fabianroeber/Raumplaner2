@@ -3,6 +3,9 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.User;
 
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 /**
@@ -45,12 +48,41 @@ public class BelegungEditForm extends VerticalPanel {
 
 		actualBelegungForm = belegungForm;
 		selectedBelegung = belegung;
-		
+
+		// Basis-Panel
+		VerticalPanel basePanel = new VerticalPanel();
+		// Header-Panel (dynamisch, je nach Berechtigung oder neues/editiertes
+		// Objekt)
+		HorizontalPanel headerPanel = new HorizontalPanel();
+		Label pageheader = new Label();
+		pageheader.setStyleName("h2");
+		if (isNew) {
+			pageheader.setText("Neue Belegung");
+		} else if (!isNew && isEdit) {
+			pageheader.setText("Belegung bearbeiten");
+		} else {
+			pageheader.setText("Details der Belegung");
+		}
+		headerPanel.add(pageheader);
+
+		// Bereich für Thema der Belegung
+		HorizontalPanel themaPanel = new HorizontalPanel();
+		Label bezLabel = new Label("Bezeichnung: ");
+		bezLabel.setStyleName("inputlabel");
+		themaPanel.add(bezLabel);
+		final TextBox bezInput = new TextBox();
+		bezInput.setStyleName("inputField");
+		themaPanel.setStyleName("raumEditPanel");
+		themaPanel.add(bezInput);
+
 		if (isEdit) {
 			// HIER BEARBEITEN
 
 		} else {
 			// HIER NUR ANZEIGE
 		}
+		this.add(basePanel);
+		basePanel.add(headerPanel);
+		basePanel.add(themaPanel);
 	}
 }

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -102,16 +103,21 @@ public class RaumEditForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// Eingaben des Benutzers verwerten
-
-				selectedRaum.setBezeichnung(bezInput.getValue());
-				selectedRaum.setFassungsvermoegen((int) kapaInput.getValue());
-				if (isNewRaum) {
-					raumPlanerAdministration.saveNewRaum(selectedRaum,
-							new SaveRaumCallback());
-				} else
-					raumPlanerAdministration.updateRaum(selectedRaum,
-							new SaveRaumCallback());
+				// Eingaben des Benutzers verwerten. Vorher Prüfen, ob beide
+				// Felder ausgefüllt sind
+				if (bezInput.getValue() == null || kapaInput.getValue() == null) {
+					Window.alert("Bitte geben Sie eine Bezeichnung und ein Fassungsvermögen an!");
+				} else {
+					selectedRaum.setBezeichnung(bezInput.getValue());
+					selectedRaum.setFassungsvermoegen((int) kapaInput
+							.getValue());
+					if (isNewRaum) {
+						raumPlanerAdministration.saveNewRaum(selectedRaum,
+								new SaveRaumCallback());
+					} else
+						raumPlanerAdministration.updateRaum(selectedRaum,
+								new SaveRaumCallback());
+				}
 			}
 
 		});
@@ -126,8 +132,8 @@ public class RaumEditForm extends VerticalPanel {
 		});
 		buttonPanel.add(speichernButton);
 		buttonPanel.add(abbrechenButton);
-		
-		//Anordnung der Widgets
+
+		// Anordnung der Widgets
 		this.add(basePanel);
 		basePanel.add(headerPanel);
 		basePanel.add(raumbezeichnungPanel);

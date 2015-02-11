@@ -1,6 +1,5 @@
 package itprojekt.raumplaner.client;
 
-import itprojekt.raumplaner.client.RaumForm.DeleteRaumCallback;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
@@ -116,40 +115,6 @@ public class BelegungForm extends VerticalPanel {
 		};
 		belegungTable.addColumn(endColumn, "Ende");
 
-		// Spalte mit Bearbeiten-Button
-		Column<Belegung, String> editColumn = new Column<Belegung, String>(
-				new ButtonCell()) {
-
-			@Override
-			public String getValue(Belegung object) {
-				if (hasUserEditRights(object)) {
-					return "Bearbeiten";
-				} else {
-					return "Details";
-				}
-			}
-		};
-		// Der Fieldupdater wird aufgerufen, wenn der Bearbeiten-Butten gedrückt
-		// wurde.
-		editColumn.setFieldUpdater(new FieldUpdater<Belegung, String>() {
-
-			@Override
-			public void update(int index, Belegung object, String value) {
-				belegungEditPanel.clear();
-				if (hasUserEditRights(object)) {
-					// editierbare Edit-Form wird geöffnet
-					belegungEditPanel.add(new BelegungEditForm(false, true,
-							object, actualUser, belegungForm));
-				} else {
-					// nicht editierbare Edit-Form wird geöffnet
-					belegungEditPanel.add(new BelegungEditForm(false, false,
-							object, actualUser, belegungForm));
-				}
-			}
-		});
-
-		belegungTable.addColumn(editColumn);
-
 		// Diese Spalte dient zum Löschen des in der Spalte enthaltenen
 		// Belegungsobjekts
 		Column<Belegung, String> deleteColumn = new Column<Belegung, String>(
@@ -197,10 +162,12 @@ public class BelegungForm extends VerticalPanel {
 							// Bearbeitungsansicht zur reinen Anzeige, in der
 							// nichts bearbeitet werden kann.
 							if (hasUserEditRights(selectedBelegung)) {
+								// editierbare Edit-Form wird geöffnet
 								belegungEditPanel.add(new BelegungEditForm(
 										false, true, selectedBelegung,
 										actualUser, belegungForm));
 							} else {
+								// nicht editierbare Edit-Form wird geöffnet
 								belegungEditPanel.add(new BelegungEditForm(
 										false, false, selectedBelegung,
 										actualUser, belegungForm));
@@ -242,7 +209,7 @@ public class BelegungForm extends VerticalPanel {
 	 * @return boolean
 	 */
 	private boolean hasUserEditRights(Belegung belegung) {
-		if (actualUser.getEmail().equals(belegung.getErsteller())) {
+		if (actualUser.equals(belegung.getErsteller())) {
 			return true;
 		} else
 			return false;
