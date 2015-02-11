@@ -1,5 +1,7 @@
 package itprojekt.raumplaner.shared.bo;
 
+import java.sql.Date;
+
 /**
  * Dieses Model enth&auml;lt alle relevanten Informationen zu einer Einladung.
  * 
@@ -12,8 +14,15 @@ public class Einladung extends RaumPlanerBusinessObject {
 
 	/** Nutzer */
 	User user;
+	
 	/** Zeigt an, ob die Einladung akzeptiert */
 	Boolean akzeptiert;
+	
+	/** Zeigt, an welche Belegung zugehörig ist */
+	Belegung belegung;
+	
+
+
 
 	public User getUser() {
 		return user;
@@ -29,6 +38,14 @@ public class Einladung extends RaumPlanerBusinessObject {
 
 	public void setAkzeptiert(Boolean akzeptiert) {
 		this.akzeptiert = akzeptiert;
+	}
+
+	public void setBelegung(Belegung belegung) {
+		this.belegung = belegung;
+	}
+	
+	public Belegung getBelegung() {
+		return belegung;
 	}
 
 }
