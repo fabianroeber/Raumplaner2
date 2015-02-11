@@ -92,7 +92,7 @@ public class BelegungForm extends VerticalPanel {
 
 		// DateFormat zur Anzeige der Zeiten
 		final DateTimeFormat format = DateTimeFormat
-				.getFormat("EEEE, MMMM dd, yyyy HH:mm");
+				.getFormat("dd.MM.yyyy, HH:mm");
 
 		// Spalte Startzeit
 		Column<Belegung, String> startColumn = new Column<Belegung, String>(

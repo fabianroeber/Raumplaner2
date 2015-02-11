@@ -2,8 +2,12 @@ package itprojekt.raumplaner.client;
 
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.User;
+import itprojekt.raumplaner.shared.bo.Zeitslot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -11,6 +15,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
@@ -51,8 +56,8 @@ public class BelegungEditForm extends VerticalPanel {
 	 * @param user
 	 *            - Der aktuell eingeloggte User als Objekt
 	 */
-	public BelegungEditForm(final boolean isNew, boolean isEdit, Belegung belegung,
-			User user, BelegungForm belegungForm) {
+	public BelegungEditForm(final boolean isNew, boolean isEdit,
+			Belegung belegung, User user, BelegungForm belegungForm) {
 
 		actualBelegungForm = belegungForm;
 		selectedBelegung = belegung;
@@ -85,7 +90,9 @@ public class BelegungEditForm extends VerticalPanel {
 		HorizontalPanel datumPanel = new HorizontalPanel();
 
 		Label datumLabel = new Label("Datum: ");
+		datumLabel.setStyleName("inputLabel");
 		final DateBox datebox = new DateBox();
+
 		// Startzeit der aktuellen Belegung zuweisen
 		datebox.setValue(selectedBelegung.getStartzeit());
 		// Format der Datumsanzeige deffinieren
@@ -98,6 +105,17 @@ public class BelegungEditForm extends VerticalPanel {
 
 		// Auswahl der Zeitslots
 		HorizontalPanel zeitslotPanel = new HorizontalPanel();
+		final Label zeitslotLabel = new Label("Zeitslot: ");
+
+		zeitslotPanel.add(zeitslotLabel);
+
+		// Listbox für Zeitslotauswahl
+		final ListBox zeitslotBox = new ListBox();
+		List<Zeitslot> zeitslots = new ArrayList<Zeitslot>();
+		zeitslots = Arrays.asList(Zeitslot.values());
+		for (Zeitslot zeitslot : zeitslots) {
+			zeitslotBox.addItem(zeitslot.getText());
+		}
 
 		// Hier wird mit Änderungen am Wert des Datums umgegangen
 		datebox.getDatePicker().addValueChangeHandler(
@@ -124,25 +142,33 @@ public class BelegungEditForm extends VerticalPanel {
 		datumPanel.add(datumLabel);
 		datumPanel.add(datebox);
 
-		// Bereich für die Zeitslots
-
 		bezInput.setStyleName("inputField");
 		themaPanel.setStyleName("raumEditPanel");
+
+		// DateFormat zur Anzeige der Zeiten
+		final DateTimeFormat format = DateTimeFormat.getFormat("HH:mm");
 
 		// Wenn der User keine Edit Rechte hat, werden die Attribute einer
 		// Belegung nur angezeigt
 		if (isEdit) {
 			themaPanel.add(bezInput);
+			zeitslotPanel.add(zeitslotBox);
+
 		} else {
 			// Thema wird nur als Label angezeigt
 			bezLabel.setText("Thema: " + selectedBelegung.getThema());
 			// Deaktieren der Datumsauswahl
 			datebox.setEnabled(false);
+			// Anzeigen des Zeitslots
+			zeitslotLabel.setText("Zeitslot: "
+					+ format.format(selectedBelegung.getStartzeit()) + " bis "
+					+ format.format(selectedBelegung.getEndzeit()));
 		}
-
+		// Anordnung der Panels
 		this.add(basePanel);
 		basePanel.add(headerPanel);
 		basePanel.add(themaPanel);
 		basePanel.add(datumPanel);
+		basePanel.add(zeitslotPanel);
 	}
 }
