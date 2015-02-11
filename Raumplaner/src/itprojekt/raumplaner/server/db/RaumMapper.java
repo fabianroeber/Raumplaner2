@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -68,10 +69,11 @@ public class RaumMapper implements DbMapperInterface<Raum> {
 		try {
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("UPDATE Raum" + "SET bezeichnung='"
+			statement.executeUpdate("UPDATE Raum SET " + "bezeichnung='"
 					+ bo.getBezeichnung() + "', " + "fassungsvermoegen='"
-					+ bo.getFassungsvermoegen() + "'\", " + "created='"
-					+ bo.getCreated() + "' " + "WHERE idRaum=" + bo.getId());
+					+ bo.getFassungsvermoegen() + "', " + "created='"
+					+ new Timestamp(bo.getCreated().getTime()) + "' "
+					+ "WHERE idRaum=" + bo.getId());
 
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -36,7 +36,7 @@ public class RaumEditForm extends VerticalPanel {
 	/**
 	 * Selektierter Raum
 	 */
-	final Raum actualRaum;
+	final Raum selectedRaum;
 
 	Logger logger = RpcSettings.getLogger();
 
@@ -59,7 +59,7 @@ public class RaumEditForm extends VerticalPanel {
 	public RaumEditForm(Raum raum, boolean isNew, RaumForm raumform) {
 		// Setzen der aktuellen Referenzen
 		isNewRaum = isNew;
-		actualRaum = raum;
+		selectedRaum = raum;
 		actualRaumform = raumform;
 
 		// Basis-Panel
@@ -97,29 +97,37 @@ public class RaumEditForm extends VerticalPanel {
 
 		// Speichern Button + Clickhandler
 		HorizontalPanel buttonPanel = new HorizontalPanel();
-		Button speichern = new Button("Speichern");
-		speichern.addClickHandler(new ClickHandler() {
+		Button speichernButton = new Button("Speichern");
+		speichernButton.addClickHandler(new ClickHandler() {
 
 			@Override
 			public void onClick(ClickEvent event) {
 				// Eingaben des Benutzers verwerten
 
-				actualRaum.setBezeichnung(bezInput.getValue());
-				actualRaum.setFassungsvermoegen((int) kapaInput.getValue());
+				selectedRaum.setBezeichnung(bezInput.getValue());
+				selectedRaum.setFassungsvermoegen((int) kapaInput.getValue());
 				if (isNewRaum) {
-					raumPlanerAdministration.saveNewRaum(actualRaum,
+					raumPlanerAdministration.saveNewRaum(selectedRaum,
 							new SaveRaumCallback());
 				} else
-					raumPlanerAdministration.updateRaum(actualRaum,
+					raumPlanerAdministration.updateRaum(selectedRaum,
 							new SaveRaumCallback());
 			}
 
 		});
+		// Bei Abbruch wird das Panel zurückgesetzt
+		Button abbrechenButton = new Button("Abbrechen");
+		abbrechenButton.addClickHandler(new ClickHandler() {
 
-		Button abbrechen = new Button("Abbrechen");
-		buttonPanel.add(speichern);
-		buttonPanel.add(abbrechen);
-
+			@Override
+			public void onClick(ClickEvent event) {
+				actualRaumform.clearBelegungPanel();
+			}
+		});
+		buttonPanel.add(speichernButton);
+		buttonPanel.add(abbrechenButton);
+		
+		//Anordnung der Widgets
 		this.add(basePanel);
 		basePanel.add(headerPanel);
 		basePanel.add(raumbezeichnungPanel);

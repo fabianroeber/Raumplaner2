@@ -1,5 +1,6 @@
 package itprojekt.raumplaner.shared.bo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Belegung extends RaumPlanerBusinessObject {
 	private Raum raum = null;
 	/** Zeigt, ob die Veranstaltung aktiv ist */
 	private boolean aktiv;
-	/** Liste mit Einladungen an alle zugehörigen User */
+	/** Liste mit Einladungen an alle zugehï¿½rigen User */
 	private List<Einladung> einladungen;
 	/** Ersteller der Belegung */
 	private User ersteller;

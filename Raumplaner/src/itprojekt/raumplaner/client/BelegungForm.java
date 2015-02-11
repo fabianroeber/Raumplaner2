@@ -1,5 +1,6 @@
 package itprojekt.raumplaner.client;
 
+import itprojekt.raumplaner.client.RaumForm.DeleteRaumCallback;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Raum;
@@ -11,11 +12,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -32,6 +39,8 @@ import com.google.gwt.view.client.SingleSelectionModel;
  *
  */
 public class BelegungForm extends VerticalPanel {
+
+	final BelegungForm belegungForm = this;
 
 	/**
 	 * Aktuell eingeloggter User
@@ -71,6 +80,7 @@ public class BelegungForm extends VerticalPanel {
 		belegungTable
 				.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
+		// Spalte für Thema
 		TextColumn<Belegung> themaColumn = new TextColumn<Belegung>() {
 
 			@Override
@@ -80,6 +90,93 @@ public class BelegungForm extends VerticalPanel {
 
 		};
 		belegungTable.addColumn(themaColumn, "Thema");
+
+		// DateFormat zur Anzeige der Zeiten
+		final DateTimeFormat format = DateTimeFormat
+				.getFormat("EEEE, MMMM dd, yyyy HH:mm");
+
+		// Spalte Startzeit
+		Column<Belegung, String> startColumn = new Column<Belegung, String>(
+				new TextCell()) {
+
+			@Override
+			public String getValue(Belegung object) {
+				return format.format(object.getStartzeit());
+			}
+		};
+		belegungTable.addColumn(startColumn, "Beginn");
+		// Spalte Endzeit
+		Column<Belegung, String> endColumn = new Column<Belegung, String>(
+				new TextCell()) {
+
+			@Override
+			public String getValue(Belegung object) {
+				return format.format(object.getEndzeit());
+			}
+		};
+		belegungTable.addColumn(endColumn, "Ende");
+
+		// Spalte mit Bearbeiten-Button
+		Column<Belegung, String> editColumn = new Column<Belegung, String>(
+				new ButtonCell()) {
+
+			@Override
+			public String getValue(Belegung object) {
+				if (hasUserEditRights(object)) {
+					return "Bearbeiten";
+				} else {
+					return "Details";
+				}
+			}
+		};
+		// Der Fieldupdater wird aufgerufen, wenn der Bearbeiten-Butten gedrückt
+		// wurde.
+		editColumn.setFieldUpdater(new FieldUpdater<Belegung, String>() {
+
+			@Override
+			public void update(int index, Belegung object, String value) {
+				belegungEditPanel.clear();
+				if (hasUserEditRights(object)) {
+					// editierbare Edit-Form wird geöffnet
+					belegungEditPanel.add(new BelegungEditForm(false, true,
+							object, actualUser, belegungForm));
+				} else {
+					// nicht editierbare Edit-Form wird geöffnet
+					belegungEditPanel.add(new BelegungEditForm(false, false,
+							object, actualUser, belegungForm));
+				}
+			}
+		});
+
+		belegungTable.addColumn(editColumn);
+
+		// Diese Spalte dient zum Löschen des in der Spalte enthaltenen
+		// Belegungsobjekts
+		Column<Belegung, String> deleteColumn = new Column<Belegung, String>(
+				new ButtonCell()) {
+
+			@Override
+			public String getValue(Belegung object) {
+				return "Löschen";
+			}
+		};
+
+		// Der Fieldupdater wird aufgerufen, wenn der Anwender auf den "Löschen"
+		// - Button clickt
+		deleteColumn.setFieldUpdater(new FieldUpdater<Belegung, String>() {
+
+			@Override
+			public void update(int index, Belegung object, String value) {
+				if (hasUserEditRights(object)) {
+					raumplanerAdministration.deleteBelegung(object,
+							new DeleteBelegungCallBack());
+				} else {
+					Window.alert("Sie haben keine Berechtigung, diese Belegung zu löschen! Dies kann nur durch den Ersteller erfolgen");
+				}
+			}
+		});
+
+		belegungTable.addColumn(deleteColumn);
 
 		// SelectionModel, dass die Selektion einer Belegung erm�glicht
 		final SingleSelectionModel<Belegung> selectionModel = new SingleSelectionModel<Belegung>();
@@ -99,15 +196,14 @@ public class BelegungForm extends VerticalPanel {
 							// der Belegung ist. Wenn nicht, wird die
 							// Bearbeitungsansicht zur reinen Anzeige, in der
 							// nichts bearbeitet werden kann.
-							if (selectedBelegung.getErsteller().equals(
-									actualUser.getEmail())) {
+							if (hasUserEditRights(selectedBelegung)) {
 								belegungEditPanel.add(new BelegungEditForm(
 										false, true, selectedBelegung,
-										actualUser));
+										actualUser, belegungForm));
 							} else {
 								belegungEditPanel.add(new BelegungEditForm(
 										false, false, selectedBelegung,
-										actualUser));
+										actualUser, belegungForm));
 							}
 						}
 					}
@@ -120,7 +216,7 @@ public class BelegungForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				belegungEditPanel.clear();
 				belegungEditPanel.add(new BelegungEditForm(true, true,
-						new Belegung(), actualUser));
+						new Belegung(), actualUser, belegungForm));
 
 			}
 		});
@@ -136,6 +232,20 @@ public class BelegungForm extends VerticalPanel {
 		belegunAnsichtPanel.add(tableHeader);
 		belegunAnsichtPanel.add(belegungTable);
 		belegunAnsichtPanel.add(button);
+	}
+
+	/**
+	 * Diese Methode prüft, ob ein Nutzer das Recht hat, eine Belegung zu
+	 * editieren.
+	 * 
+	 * @param Belegung
+	 * @return boolean
+	 */
+	private boolean hasUserEditRights(Belegung belegung) {
+		if (actualUser.getEmail().equals(belegung.getErsteller())) {
+			return true;
+		} else
+			return false;
 	}
 
 	/**
@@ -172,4 +282,47 @@ public class BelegungForm extends VerticalPanel {
 		}
 	}
 
+	/**
+	 * Callback für das Speichern einer Belegung
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class SaveBelegungCallBack implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
+
+		}
+	}
+
+	/**
+	 * Callback für das Löschen einer Belegung
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class DeleteBelegungCallBack implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING,
+					"Belegungen konnten nicht gelöscht werden.");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			raumplanerAdministration.getAllBelegungByRaum(actualRaum,
+					new GetBelegungCallback());
+		}
+
+	}
 }

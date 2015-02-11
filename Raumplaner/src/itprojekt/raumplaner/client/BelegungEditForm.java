@@ -15,6 +15,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class BelegungEditForm extends VerticalPanel {
 
 	/**
+	 * Selektierte Belegung
+	 */
+	Belegung selectedBelegung;
+
+	/**
+	 * Aktuelle Belegunsform, von der aus diese Form geöffnet wird
+	 */
+	BelegungForm actualBelegungForm;
+
+	/**
 	 * 
 	 * Dieser Konstruktor erstellt eine neue Bearbeitungsansicht für eine
 	 * Buchung. Je nach Übergabeparamenter kann diese Ansicht anders aussehen.
@@ -31,8 +41,11 @@ public class BelegungEditForm extends VerticalPanel {
 	 *            - Der aktuell eingeloggte User als Objekt
 	 */
 	public BelegungEditForm(boolean isNew, boolean isEdit, Belegung belegung,
-			User user) {
+			User user, BelegungForm belegungForm) {
 
+		actualBelegungForm = belegungForm;
+		selectedBelegung = belegung;
+		
 		if (isEdit) {
 			// HIER BEARBEITEN
 

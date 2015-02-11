@@ -37,6 +37,9 @@ import com.google.gwt.view.client.SingleSelectionModel;
  */
 public class RaumForm extends VerticalPanel {
 
+	/**
+	 * Referenz auf diese Klasse, um diese an die Editierungs-Form zu übergeben
+	 */
 	final RaumForm raumform = this;
 	/**
 	 * Aktuell angemeldeter User
@@ -180,7 +183,8 @@ public class RaumForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				// Neues Raumobjekt an RaumEditForm übergeben
 				belegungsPanel.clear();
-				belegungsPanel.add(new RaumEditForm(new Raum(), true, raumform));
+				belegungsPanel
+						.add(new RaumEditForm(new Raum(), true, raumform));
 			}
 		});
 
