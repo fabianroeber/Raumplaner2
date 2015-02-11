@@ -3,11 +3,18 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.gwt.user.datepicker.client.DateBox;
 
 /**
@@ -85,8 +92,37 @@ public class BelegungEditForm extends VerticalPanel {
 		// Format der Datumsanzeige deffinieren
 		datebox.setFormat(new DateBox.DefaultFormat((DateTimeFormat
 				.getFormat("dd.MM.yyyy"))));
+		// Heutiges Datum ermitteln. Hier müssen veraltete Methoden der
+		// Date-Klasse verwendet werden, da die Calendar Klasse von GWT nicht
+		// unterstützt wird.
+		final Date today = new Date();
+		today.setHours(0);
+		today.setMinutes(0);
+		today.setSeconds(0);
+
+		// Auswahl der Zeitslots
+		HorizontalPanel zeitslotPanel = new HorizontalPanel();
+
+		// Hier wird mit Änderungen am Wert des Datums umgegangen
+		datebox.getDatePicker().addValueChangeHandler(
+				new ValueChangeHandler<Date>() {
+
+					@Override
+					public void onValueChange(ValueChangeEvent<Date> event) {
+						// Vergangenheitsbuchungen verhindern
+						if (CalendarUtil.isSameDate(event.getValue(), today)
+								|| !event.getValue().before(today)) {
+
+						} else {
+							Window.alert("Räume können nicht in der Vergangenheit gebucht werden!");
+						}
+
+					}
+				});
 		datumPanel.add(datumLabel);
 		datumPanel.add(datebox);
+
+		// Bereich für die Zeitslots
 
 		bezInput.setStyleName("inputField");
 		themaPanel.setStyleName("raumEditPanel");
