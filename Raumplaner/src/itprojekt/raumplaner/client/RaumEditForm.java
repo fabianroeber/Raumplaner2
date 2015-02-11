@@ -83,6 +83,7 @@ public class RaumEditForm extends VerticalPanel {
 		bezLabel.setStyleName("inputlabel");
 		raumbezeichnungPanel.add(bezLabel);
 		final TextBox bezInput = new TextBox();
+		bezInput.setValue(selectedRaum.getBezeichnung());
 		bezInput.setStyleName("inputField");
 		raumbezeichnungPanel.setStyleName("raumEditPanel");
 		raumbezeichnungPanel.add(bezInput);
@@ -93,6 +94,7 @@ public class RaumEditForm extends VerticalPanel {
 		kapaLabel.setStyleName("inputlabel");
 		raumkapaPanel.add(kapaLabel);
 		final IntegerBox kapaInput = new IntegerBox();
+		kapaInput.setValue(selectedRaum.getFassungsvermoegen());
 		kapaInput.setStyleName("inputField");
 		raumkapaPanel.add(kapaInput);
 
@@ -106,7 +108,7 @@ public class RaumEditForm extends VerticalPanel {
 				// Eingaben des Benutzers verwerten. Vorher Prüfen, ob beide
 				// Felder ausgefüllt sind
 				if (bezInput.getValue() == null || kapaInput.getValue() == null) {
-					Window.alert("Bitte geben Sie eine Bezeichnung und ein Fassungsvermögen an!");
+					Window.alert("Bitte geben Sie eine Bezeichnung und ein Fassungsvermögen an! Geben Sie beim Fassungsvermögen nur Ziffern an!");
 				} else {
 					selectedRaum.setBezeichnung(bezInput.getValue());
 					selectedRaum.setFassungsvermoegen((int) kapaInput
@@ -142,8 +144,8 @@ public class RaumEditForm extends VerticalPanel {
 	}
 
 	/**
-	 * Nachdem ein neuer Raum gespeichert wurde, wird die Tabelle neu aus der
-	 * Datenbank geladen.
+	 * Nachdem ein neuer Raum gespeichert wurde, wird die Tabelle in der
+	 * RaumForm neu aus der Datenbank geladen.
 	 * 
 	 * @author Fabian, Alex, Simon
 	 *

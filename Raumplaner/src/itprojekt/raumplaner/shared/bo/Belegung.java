@@ -1,6 +1,5 @@
 package itprojekt.raumplaner.shared.bo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 

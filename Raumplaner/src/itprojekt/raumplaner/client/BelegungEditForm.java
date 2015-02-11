@@ -3,10 +3,12 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.User;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 /**
  * Dies ist der Bereich in dem Buchungen bearbeitet oder eingesehen werden
@@ -67,22 +69,42 @@ public class BelegungEditForm extends VerticalPanel {
 
 		// Bereich für Thema der Belegung
 		HorizontalPanel themaPanel = new HorizontalPanel();
-		Label bezLabel = new Label("Bezeichnung: ");
+		Label bezLabel = new Label("Thema: ");
 		bezLabel.setStyleName("inputlabel");
 		themaPanel.add(bezLabel);
 		final TextBox bezInput = new TextBox();
+		bezInput.setValue(selectedBelegung.getThema());
+
+		// Bereich für Datum
+		HorizontalPanel datumPanel = new HorizontalPanel();
+
+		Label datumLabel = new Label("Datum: ");
+		final DateBox datebox = new DateBox();
+		// Startzeit der aktuellen Belegung zuweisen
+		datebox.setValue(selectedBelegung.getStartzeit());
+		// Format der Datumsanzeige deffinieren
+		datebox.setFormat(new DateBox.DefaultFormat((DateTimeFormat
+				.getFormat("dd.MM.yyyy"))));
+		datumPanel.add(datumLabel);
+		datumPanel.add(datebox);
+
 		bezInput.setStyleName("inputField");
 		themaPanel.setStyleName("raumEditPanel");
-		themaPanel.add(bezInput);
 
+		// Wenn der User keine Edit Rechte hat, werden die Attribute einer
+		// Belegung nur angezeigt
 		if (isEdit) {
-			// HIER BEARBEITEN
-
+			themaPanel.add(bezInput);
 		} else {
-			// HIER NUR ANZEIGE
+			// Thema wird nur als Label angezeigt
+			bezLabel.setText("Thema: " + selectedBelegung.getThema());
+			// Deaktieren der Datumsauswahl
+			datebox.setEnabled(false);
 		}
+
 		this.add(basePanel);
 		basePanel.add(headerPanel);
 		basePanel.add(themaPanel);
+		basePanel.add(datumPanel);
 	}
 }

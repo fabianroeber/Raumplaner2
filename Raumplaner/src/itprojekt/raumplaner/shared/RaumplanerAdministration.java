@@ -98,4 +98,5 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * @return
 	 */
 	public List<Einladung> getEinladungenByUser();
+
 }
