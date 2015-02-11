@@ -3,7 +3,6 @@ package itprojekt.raumplaner.client;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.User;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -52,7 +51,7 @@ public class BelegungEditForm extends VerticalPanel {
 	 * @param user
 	 *            - Der aktuell eingeloggte User als Objekt
 	 */
-	public BelegungEditForm(boolean isNew, boolean isEdit, Belegung belegung,
+	public BelegungEditForm(final boolean isNew, boolean isEdit, Belegung belegung,
 			User user, BelegungForm belegungForm) {
 
 		actualBelegungForm = belegungForm;
@@ -95,10 +94,7 @@ public class BelegungEditForm extends VerticalPanel {
 		// Heutiges Datum ermitteln. Hier müssen veraltete Methoden der
 		// Date-Klasse verwendet werden, da die Calendar Klasse von GWT nicht
 		// unterstützt wird.
-		final Date today = new Date();
-		today.setHours(0);
-		today.setMinutes(0);
-		today.setSeconds(0);
+		final Date today = new Date(System.currentTimeMillis());
 
 		// Auswahl der Zeitslots
 		HorizontalPanel zeitslotPanel = new HorizontalPanel();
@@ -112,9 +108,15 @@ public class BelegungEditForm extends VerticalPanel {
 						// Vergangenheitsbuchungen verhindern
 						if (CalendarUtil.isSameDate(event.getValue(), today)
 								|| !event.getValue().before(today)) {
-
 						} else {
 							Window.alert("Räume können nicht in der Vergangenheit gebucht werden!");
+							if (isNew) {
+								datebox.setValue(today);
+							} else {
+								datebox.setValue(selectedBelegung
+										.getStartzeit());
+							}
+
 						}
 
 					}
