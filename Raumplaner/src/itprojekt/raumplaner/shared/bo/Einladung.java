@@ -14,15 +14,17 @@ public class Einladung extends RaumPlanerBusinessObject {
 
 	/** Nutzer */
 	User user;
-	
+
 	/** Zeigt an, ob die Einladung akzeptiert */
 	Boolean akzeptiert;
-	
+
 	/** Zeigt, an welche Belegung zugehörig ist */
 	Belegung belegung;
-	
 
-
+	/**
+	 * Kennzeichner für neues Objekt
+	 */
+	boolean isNew;
 
 	public User getUser() {
 		return user;
@@ -43,9 +45,17 @@ public class Einladung extends RaumPlanerBusinessObject {
 	public void setBelegung(Belegung belegung) {
 		this.belegung = belegung;
 	}
-	
+
 	public Belegung getBelegung() {
 		return belegung;
+	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
 	}
 
 }

@@ -128,4 +128,10 @@ public interface RaumplanerAdministration extends RemoteService {
 	 */
 	public List<Belegung> getAllBelegung();
 
+	/**
+	 * Diese Methode löscht eine Einladung
+	 * 
+	 * @param einladung
+	 */
+	public void deleteEinladung(Einladung einladung);
 }

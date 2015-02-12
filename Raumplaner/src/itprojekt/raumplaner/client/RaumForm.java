@@ -40,37 +40,37 @@ public class RaumForm extends VerticalPanel {
 	/**
 	 * Referenz auf diese Klasse, um diese an die Editierungs-Form zu übergeben
 	 */
-	final RaumForm raumform = this;
+	private final RaumForm raumform = this;
 	/**
 	 * Aktuell angemeldeter User
 	 */
-	User actualUser = null;
+	private User actualUser = null;
 	/**
 	 * Selektierter Raum
 	 */
-	Raum selectedRaum = null;
+	private Raum selectedRaum = null;
 
 	/**
 	 * Tabelle mit {@link Raum} Objekten
 	 */
-	CellTable<Raum> raumTable = new CellTable<Raum>();
+	private CellTable<Raum> raumTable = new CellTable<Raum>();
 	/**
 	 * Basispanel
 	 */
-	HorizontalPanel basePanel = new HorizontalPanel();
+	private HorizontalPanel basePanel = new HorizontalPanel();
 	/**
 	 * Panel f�r die Raumtabelle
 	 */
-	VerticalPanel raumPanel = new VerticalPanel();
+	private VerticalPanel raumPanel = new VerticalPanel();
 	/**
 	 * Panel, in das die {@link BelegungForm} eingefügt wird.
 	 */
-	VerticalPanel belegungsPanel = new VerticalPanel();
+	private VerticalPanel belegungsPanel = new VerticalPanel();
 
-	Button button = new Button("Neuen Raum erstellen");
-	Logger logger = RpcSettings.getLogger();
+	private Button button = new Button("Neuen Raum erstellen");
+	private Logger logger = RpcSettings.getLogger();
 
-	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
+	private RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
 
 	/**

@@ -2,6 +2,7 @@ package itprojekt.raumplaner.server.db;
 
 import itprojekt.raumplaner.client.RpcSettings;
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 
 import java.sql.Connection;
@@ -84,6 +85,18 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 					+ " User_idUser=" + bo.getErsteller().getId()
 					+ " WHERE idBelegung=" + bo.getId());
 
+			if (bo.getEinladungen() != null) {
+
+				for (Einladung einladung : bo.getEinladungen()) {
+					if (einladung.isNew()) {
+						EinladungMapper.getEinladungMapper().insert(einladung);
+					} else {
+						EinladungMapper.getEinladungMapper().update(einladung);
+					}
+
+				}
+			}
+
 		} catch (SQLException e) {
 			logger.log(
 					Level.WARNING,
@@ -126,6 +139,13 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 								+ bo.getRaum().getId()
 								+ ", "
 								+ bo.getErsteller().getId() + ")");
+
+				if (bo.getEinladungen() != null) {
+
+					for (Einladung einladung : bo.getEinladungen()) {
+						EinladungMapper.getEinladungMapper().insert(einladung);
+					}
+				}
 			}
 		} catch (SQLException e) {
 			logger.log(Level.WARNING,
@@ -137,8 +157,33 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 
 	@Override
 	public Belegung getById(int id) {
-		// TODO Auto-generated method stub
+		Connection connection = DatabaseConnection.getConnection();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT idBelegung, thema, startzeit, endzeit, created, User_idUser, Raum_idRaum FROM Belegung "
+							+ " WHERE idBelegung=" + id);
+			while (resultSet.next()) {
+
+				Belegung belegung = new Belegung(resultSet.getString("thema"),
+						resultSet.getTimestamp("startzeit"),
+						resultSet.getTimestamp("endzeit"),
+						resultSet.getTimestamp("created"));
+				belegung.setId(resultSet.getInt("idBelegung"));
+				belegung.setRaum(RaumMapper.getRaumMapper().getById(
+						resultSet.getInt("Raum_idRaum")));
+				belegung.setErsteller(UserMapper.getUserMapper().getById(
+						resultSet.getInt("User_idUser")));
+				return belegung;
+			}
+			resultSet.close();
+		} catch (SQLException e) {
+			logger.log(Level.WARNING,
+					"Fehler beim Datenbankzugriff auf die Belegung mit der ID: "
+							+ id, e);
+		}
 		return null;
+
 	}
 
 	@Override
@@ -181,6 +226,8 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 				belegung.setErsteller(UserMapper.getUserMapper().getById(
 						resultSet.getInt("User_idUser")));
 				resultlist.add(belegung);
+				belegung.setEinladungen(EinladungMapper.getEinladungMapper()
+						.getAllByBelegung(belegung));
 			}
 		} catch (SQLException e) {
 			logger.log(

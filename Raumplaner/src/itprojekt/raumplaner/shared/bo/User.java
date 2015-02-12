@@ -23,6 +23,11 @@ public class User extends RaumPlanerBusinessObject {
 		super();
 	}
 
+	public User(String email) {
+		super();
+		this.email = email;
+	}
+
 	public User(int id, Date created, String vorname, String nachname,
 			String email) {
 		super();

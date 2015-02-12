@@ -28,20 +28,20 @@ public class RaumEditForm extends VerticalPanel {
 	/**
 	 * Kennzeichner, ob es ein neues, nicht persistierter Raum ist
 	 */
-	final boolean isNewRaum;
+	private final boolean isNewRaum;
 
 	/**
 	 * Aktelle Raumform mit der Raumtablle
 	 */
-	RaumForm actualRaumform;
+	private RaumForm actualRaumform;
 	/**
 	 * Selektierter Raum
 	 */
-	final Raum selectedRaum;
+	private final Raum selectedRaum;
 
-	Logger logger = RpcSettings.getLogger();
+	private Logger logger = RpcSettings.getLogger();
 
-	RaumplanerAdministrationAsync raumPlanerAdministration = RpcSettings
+	private RaumplanerAdministrationAsync raumPlanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
 
 	/**

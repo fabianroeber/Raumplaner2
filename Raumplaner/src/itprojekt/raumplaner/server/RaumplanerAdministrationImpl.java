@@ -186,4 +186,10 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	public List<Belegung> getAllBelegung() {
 		return belegungMapper.getAll();
 	}
+
+	@Override
+	public void deleteEinladung(Einladung einladung) {
+		einladungMapper.delete(einladung);
+
+	}
 }

@@ -164,7 +164,7 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 				einladung.setUser(UserMapper.getUserMapper().getById(
 						user.getId()));
 				einladung.setBelegung(BelegungMapper.getBelegungMapper()
-						.getById(resultSet.getInt("User_idUser")));
+						.getById(resultSet.getInt("Belegung_idBelegung")));
 				resultlist.add(einladung);
 			}
 		} catch (SQLException e) {
@@ -198,7 +198,7 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 				einladung.setUser(UserMapper.getUserMapper().getById(
 						resultSet.getInt("User_idUser")));
 				einladung.setBelegung(BelegungMapper.getBelegungMapper()
-						.getById(resultSet.getInt("User_idUser")));
+						.getById(resultSet.getInt("Belegung_idBelegung")));
 				resultlist.add(einladung);
 			}
 		} catch (SQLException e) {
