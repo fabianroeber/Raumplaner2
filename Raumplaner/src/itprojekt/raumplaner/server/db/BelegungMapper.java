@@ -59,6 +59,8 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 						resultSet.getInt("Raum_idRaum")));
 				belegung.setErsteller(UserMapper.getUserMapper().getById(
 						resultSet.getInt("User_idUser")));
+				belegung.setEinladungen(EinladungMapper.getEinladungMapper()
+						.getAllByBelegung(belegung));
 				resultlist.add(belegung);
 			}
 			resultSet.close();

@@ -46,7 +46,7 @@ public class Belegung extends RaumPlanerBusinessObject {
 	public String getTeilnehmerAsString() {
 		StringBuffer stringBuffer = new StringBuffer();
 		for (Einladung einladung : einladungen) {
-			stringBuffer.append(einladung.getUser().getEmail() + "\n");
+			stringBuffer.append(einladung.getUser().getEmail() + ", ");
 		}
 		return stringBuffer.toString();
 	}

@@ -8,11 +8,9 @@ import itprojekt.raumplaner.shared.LoginService;
 import itprojekt.raumplaner.shared.LoginServiceAsync;
 import itprojekt.raumplaner.shared.RaumplanerAdministration;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
-import itprojekt.raumplaner.shared.ReportGenerator;
-import itprojekt.raumplaner.shared.ReportGeneratorAsync;
 
 /**
- * Klasse mit Eigenschaften und Diensten, die für alle Client-seitigen Klassen
+ * Klasse mit Eigenschaften und Diensten, die fï¿½r alle Client-seitigen Klassen
  * relevant sind. Hier werden alle RPC-Klassen als Singletons verwaltet.
  * 
  * @author Fabian
@@ -25,12 +23,10 @@ public class RpcSettings {
 
 	private static LoginServiceAsync loginService = null;
 
-	private static ReportGeneratorAsync reportGenerator;
-
 	private static final Logger log = Logger.getLogger("Raumplaner Logger");
 
 	/**
-	 * Gibt den Logger zurück
+	 * Gibt den Logger zurï¿½ck
 	 * 
 	 * @return eindeutige Instanz des Typs {@link Logger}
 	 */
@@ -39,7 +35,7 @@ public class RpcSettings {
 	}
 
 	/**
-	 * Gibt den LoginService zurück.
+	 * Gibt den LoginService zurï¿½ck.
 	 * 
 	 * @return eindeutige Instanz vom Typ {@link LoginServiceAsync}
 	 */
@@ -51,19 +47,7 @@ public class RpcSettings {
 	}
 
 	/**
-	 * Gibt der Reportgenerator zusrück.
-	 * 
-	 * @return eindeutige Instanz vom Typ {@link ReportGeneratorAsync}
-	 */
-	public static ReportGeneratorAsync getReportGenerator() {
-		if (reportGenerator == null) {
-			reportGenerator = GWT.create(ReportGenerator.class);
-		}
-		return reportGenerator;
-	}
-
-	/**
-	 * Gibt die RaumplanerAdministraion zurück und erstellt diese bei Bedarf.
+	 * Gibt die RaumplanerAdministraion zurï¿½ck und erstellt diese bei Bedarf.
 	 * 
 	 * @return eindeutige Instanz vom Typ {@link RaumplanerAdministrationAsync}
 	 */

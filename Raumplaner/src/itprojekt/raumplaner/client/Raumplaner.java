@@ -102,6 +102,8 @@ public class Raumplaner implements EntryPoint {
 			}
 		});
 
+		
+		// Menupunkt für den Raumbelegunsplan
 		final Button raumbelegungsplan = new Button("Raumbelegunsplan");
 		raumbelegungsplan.setWidth("200px");
 		navigationPanel.add(raumbelegungsplan);
@@ -110,6 +112,9 @@ public class Raumplaner implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
+				VerticalPanel belegunsplanPanel = new VerticalPanel();
+				belegunsplanPanel.add(new BelegungsplanForm());
+				RootPanel.get("content").add(belegunsplanPanel);
 			}
 		});
 
