@@ -1,6 +1,5 @@
 package itprojekt.raumplaner.shared.bo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,7 +42,7 @@ public enum Zeitslot {
 	 * @param startzeit
 	 * @return {@link Zeitslot}
 	 */
-	public Zeitslot getZeitSlotForStart(int start) {
+	public static Zeitslot getZeitSlotForStart(int start) {
 		List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
 		for (Zeitslot zeitslot : zeitslots) {
 			if (zeitslot.getStart() == start) {

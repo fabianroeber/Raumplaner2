@@ -59,6 +59,12 @@ public class BelegungEditForm extends VerticalPanel {
 	 */
 	final ListBox zeitslotBox = new ListBox();
 
+	/**
+	 * Hier werden alle Möglichen Werte des Enums Zeitslot der Listbox zu //
+	 * Verfügung gestellt.
+	 */
+	final List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
+
 	Logger logger = RpcSettings.getLogger();
 	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
@@ -87,7 +93,8 @@ public class BelegungEditForm extends VerticalPanel {
 	 *            - Der aktuelle Raum
 	 */
 	public BelegungEditForm(final boolean isNew, boolean isEdit,
-			Belegung belegung, User user, BelegungForm belegungForm, Raum raum) {
+			Belegung belegung, final User user, BelegungForm belegungForm,
+			Raum raum) {
 
 		actualBelegungForm = belegungForm;
 		selectedBelegung = belegung;
@@ -140,12 +147,15 @@ public class BelegungEditForm extends VerticalPanel {
 
 		zeitslotPanel.add(zeitslotLabel);
 
-		// Hier werden alle Möglichen Werte des Enums Zeitslot der Listbox zu
-		// Verfügung gestellt.
-		final List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
 		for (Zeitslot zeitslot : zeitslots) {
 			zeitslotBox.addItem(zeitslot.getText());
 		}
+		// Suchen des aktuellen Zeitslots, wenn keiner ausgwählt wurde, dann
+		// wird der Dummy Slot eingefügt
+		int index = zeitslots
+				.indexOf(Zeitslot.getZeitSlotForStart(selectedBelegung
+						.getStartzeit().getHours()));
+		zeitslotBox.setSelectedIndex(index);
 
 		zeitslotBox.addChangeHandler(new ChangeHandler() {
 
@@ -187,6 +197,9 @@ public class BelegungEditForm extends VerticalPanel {
 		datumPanel.add(datumLabel);
 		datumPanel.add(datebox);
 
+		// User zur Belegung einladen
+		HorizontalPanel userPanel = new HorizontalPanel();
+
 		bezInput.setStyleName("inputField");
 		themaPanel.setStyleName("raumEditPanel");
 
@@ -218,16 +231,40 @@ public class BelegungEditForm extends VerticalPanel {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				// Der Dummmy Zeitslot darf nicht ausgewählt sein.
+				// Der Dummmy Zeitslot darf nicht ausgewählt sein (=kein
+				// Zeitslot ausgewählt)
 				if (zeitslotBox.getSelectedIndex() == 0) {
 					Window.alert("Bitte legen Sie einen Zeitslot fest.");
 
 				} else {
+					// Zeiten setzen
+					selectedBelegung.setStartzeit(datebox.getValue());
+					selectedBelegung.setEndzeit(datebox.getValue());
+					selectedBelegung.getStartzeit().setHours(
+							zeitslots.get(zeitslotBox.getSelectedIndex())
+									.getStart());
+					selectedBelegung.getStartzeit().setHours(
+							zeitslots.get(zeitslotBox.getSelectedIndex())
+									.getEnd());
 
+					selectedBelegung.setThema(bezInput.getValue());
+					selectedBelegung.setErsteller(user);
+					selectedBelegung.setRaum(actualRaum);
+
+					// Neue Belegung speichern
+					if (isNew) {
+						raumplanerAdministration.saveNewBelegung(
+								selectedBelegung, new SaveBelegungCallBack());
+					}// Belegung editieren
+					else {
+						raumplanerAdministration.updateBelegung(
+								selectedBelegung, new SaveBelegungCallBack());
+					}
 				}
 
 			}
 		});
+		// Bei Abbruch wird das Panel resettet!
 		abbrechenButton.addClickHandler(new ClickHandler() {
 
 			@Override
@@ -247,6 +284,7 @@ public class BelegungEditForm extends VerticalPanel {
 		basePanel.add(themaPanel);
 		basePanel.add(datumPanel);
 		basePanel.add(zeitslotPanel);
+		basePanel.add(userPanel);
 		basePanel.add(buttonPanel);
 	}
 
@@ -269,12 +307,38 @@ public class BelegungEditForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Boolean result) {
 			if (result == true) {
-				Window.alert("Der Raum ist zu diesem Zeitpunkt bereits belegt");
-				// Im index 0 befindet sich ein Dummy Zeitslot, mit dem die
-				// Belegung nicht gespeichert werden kann
-				zeitslotBox.setSelectedIndex(0);
+				if (Zeitslot.getZeitSlotForStart(
+						selectedBelegung.getStartzeit().getHours()).getStart() != zeitslots
+						.get(zeitslotBox.getSelectedIndex()).getStart()) {
+					Window.alert("Der Raum ist zu diesem Zeitpunkt bereits belegt");
+					// Im index 0 befindet sich ein Dummy Zeitslot, mit dem die
+					// Belegung nicht gespeichert werden kann
+					zeitslotBox.setSelectedIndex(0);
+				}
+
 			}
 
+		}
+	}
+
+	/**
+	 * Callback für das Speichern einer Belegung
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class SaveBelegungCallBack implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Fehler beim Speichern der Raumbelegung");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			actualBelegungForm.updateBelegungen();
+			actualBelegungForm.clearBelegungsEditPanel();
 		}
 
 	}
