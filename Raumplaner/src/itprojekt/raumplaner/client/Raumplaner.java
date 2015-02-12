@@ -104,7 +104,7 @@ public class Raumplaner implements EntryPoint {
 
 		
 		// Menupunkt für den Raumbelegunsplan
-		final Button raumbelegungsplan = new Button("Raumbelegunsplan");
+		final Button raumbelegungsplan = new Button("Raumbelegungsplan");
 		raumbelegungsplan.setWidth("200px");
 		navigationPanel.add(raumbelegungsplan);
 		raumbelegungsplan.addClickHandler(new ClickHandler() {
