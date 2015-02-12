@@ -189,9 +189,10 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	}
 
 	@Override
-	public void deleteEinladung(Einladung einladung) {
-		einladungMapper.delete(einladung);
-
+	public void deleteEinladung(List<Einladung> einladungen) {
+		for (Einladung einladung : einladungen) {
+			einladungMapper.delete(einladung);
+		}
 	}
 
 	@Override
@@ -208,5 +209,10 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 			MailSender.sendDeclineMail(user, belegung);
 		}
 
+	}
+
+	@Override
+	public void updateEinladung(Einladung einladung) {
+		einladungMapper.update(einladung);
 	}
 }

@@ -51,12 +51,15 @@ public interface RaumplanerAdministrationAsync {
 
 	void getAllBelegung(AsyncCallback<List<Belegung>> callback);
 
-	void deleteEinladung(Einladung einladung, AsyncCallback<Void> callback);
+	void deleteEinladung(List<Einladung> einladungen,
+			AsyncCallback<Void> callback);
 
 	void SendDeclineMails(List<User> users, Belegung belegung,
 			AsyncCallback<Void> callback);
 
 	void SendInvitationMails(List<User> users, Belegung belegung,
 			AsyncCallback<Void> callback);
+
+	void updateEinladung(Einladung einladung, AsyncCallback<Void> callback);
 
 }

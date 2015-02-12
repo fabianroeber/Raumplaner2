@@ -133,7 +133,13 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * 
 	 * @param einladung
 	 */
-	public void deleteEinladung(Einladung einladung);
+	public void deleteEinladung(List<Einladung> einladungen);
+	
+	/**
+	 * Speichert eine Einladung
+	 * @param einladung
+	 */
+	public void updateEinladung(Einladung einladung);
 
 	/**
 	 * Versendet alle EinladungsMails für eine Liste von Usern zu einer Belegung
@@ -152,4 +158,5 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * @param belegung
 	 */
 	public void SendDeclineMails(List<User> users, Belegung belegung);
+
 }

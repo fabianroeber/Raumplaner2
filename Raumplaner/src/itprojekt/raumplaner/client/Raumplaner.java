@@ -113,19 +113,9 @@ public class Raumplaner implements EntryPoint {
 			}
 		});
 
-		final Button userBelegungen = new Button("Meine Buchungen");
-		userBelegungen.setWidth("200px");
-		navigationPanel.add(userBelegungen);
-		userBelegungen.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				RootPanel.get("content").clear();
-
-			}
-		});
-
-		final Button userEinladungen = new Button("Meine Einladungen");
+		// Menupunkt für die Buchungsübersicht eines Users und zum Bestätigen
+		// der Einladungen
+		final Button userEinladungen = new Button("Mein Belegungsplan");
 		userEinladungen.setWidth("200px");
 		navigationPanel.add(userEinladungen);
 		userEinladungen.addClickHandler(new ClickHandler() {
@@ -133,7 +123,9 @@ public class Raumplaner implements EntryPoint {
 			@Override
 			public void onClick(ClickEvent event) {
 				RootPanel.get("content").clear();
-
+				VerticalPanel einladungsPanel = new VerticalPanel();
+				einladungsPanel.add(new EinladungForm(loginInfo.getUser()));
+				RootPanel.get("content").add(einladungsPanel);
 			}
 		});
 

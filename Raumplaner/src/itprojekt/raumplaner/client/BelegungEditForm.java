@@ -472,7 +472,7 @@ public class BelegungEditForm extends VerticalPanel {
 										userListe, selectedBelegung,
 										new InvitationMailCallback());
 							}
-							
+
 							raumplanerAdministration.saveNewBelegung(
 									selectedBelegung,
 									new SaveBelegungCallBack());
@@ -507,12 +507,13 @@ public class BelegungEditForm extends VerticalPanel {
 								// AusladungsMails löschen und Einladungen
 								// löschen
 								List<User> declineUserList = new ArrayList<User>();
-								for (Einladung einladung : deleteList) {
-									declineUserList.add(einladung.getUser());
-									raumplanerAdministration.deleteEinladung(
-											einladung,
-											new DeleteEinladungCallback());
+								for (Einladung deleteEinladung : deleteList) {
+									declineUserList.add(deleteEinladung
+											.getUser());
 								}
+								raumplanerAdministration.deleteEinladung(
+										deleteList,
+										new DeleteEinladungCallback());
 								raumplanerAdministration.SendDeclineMails(
 										declineUserList, selectedBelegung,
 										new DeclineMailCallback());
