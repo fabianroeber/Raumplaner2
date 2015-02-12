@@ -190,6 +190,13 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 	public void delete(Belegung bo) {
 		Connection connection = DatabaseConnection.getConnection();
 		try {
+			// Zuerste werden alle Child-Elemente (in diesem Fall Einladungen)
+			// gelsöcht
+			if (bo.getEinladungen() != null) {
+				for (Einladung einladung : bo.getEinladungen()) {
+					EinladungMapper.getEinladungMapper().delete(einladung);
+				}
+			}
 			Statement statement = connection.createStatement();
 
 			statement.executeUpdate("DELETE FROM Belegung "

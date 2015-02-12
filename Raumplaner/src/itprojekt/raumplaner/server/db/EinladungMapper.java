@@ -60,8 +60,8 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 			}
 
 			statement.executeUpdate("UPDATE Einladung" + " SET User_idUser="
-					+ bo.getUser() + ", " + "Belegung_idBelegung='"
-					+ bo.getBelegung() + "', " + "created='"
+					+ bo.getUser().getId() + ", " + "Belegung_idBelegung="
+					+ bo.getBelegung().getId() + ", " + "created='"
 					+ DbUtil.getTimeNow() + "', " + "akzeptiert='" + akzeptiert
 					+ "' " + "WHERE idEinladung=" + bo.getId());
 
@@ -109,7 +109,7 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 								+ bo.getUser().getId()
 								+ ", "
 								+ bo.getBelegung().getId()
-								+ "', '"
+								+ ", '"
 								+ DbUtil.getTimeNow() + "')");
 			}
 		} catch (SQLException e) {
@@ -142,6 +142,12 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 
 	}
 
+	/**
+	 * Gibt alle Einladungen zu einem User zurück.
+	 * 
+	 * @param user
+	 * @return Liste von {@link Einladung}
+	 */
 	public List<Einladung> getAllByUser(User user) {
 
 		Connection connection = DatabaseConnection.getConnection();
@@ -177,6 +183,12 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 		return resultlist;
 	}
 
+	/**
+	 * Gibt alle Einladungen zu einer Belegung zurück
+	 * 
+	 * @param belegung
+	 * @return Liste von {@link Einladung}
+	 */
 	public List<Einladung> getAllByBelegung(Belegung belegung) {
 		Connection connection = DatabaseConnection.getConnection();
 		List<Einladung> resultlist = new ArrayList<Einladung>();
@@ -202,12 +214,11 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 				resultlist.add(einladung);
 			}
 		} catch (SQLException e) {
-			logger.log(
-					Level.WARNING,
+			logger.log(Level.WARNING,
 					"Fehler beim Laden aller Einladungen für den User: "
 							+ belegung.getId(), e);
 		}
 		return resultlist;
 	}
-	
+
 }

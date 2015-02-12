@@ -150,7 +150,8 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 		List<User> freeUsers = new ArrayList<User>();
 		List<Belegung> belegungen = getAllBelegung();
 		List<Einladung> einladungen = getEinladungenByBelegung(selectedBelegung);
-
+		// Alle User und Belegungen durchgehen, Datum vergleichen, Uhrzeit
+		// vergleihen
 		for (User user : users) {
 			for (Belegung belegung : belegungen) {
 				Calendar startzeit = Calendar.getInstance();
@@ -190,6 +191,22 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public void deleteEinladung(Einladung einladung) {
 		einladungMapper.delete(einladung);
+
+	}
+
+	@Override
+	public void SendInvitationMails(List<User> users, Belegung belegung) {
+		for (User user : users) {
+			MailSender.sendInvitationMail(user, belegung);
+		}
+
+	}
+
+	@Override
+	public void SendDeclineMails(List<User> users, Belegung belegung) {
+		for (User user : users) {
+			MailSender.sendDeclineMail(user, belegung);
+		}
 
 	}
 }

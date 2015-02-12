@@ -1,5 +1,6 @@
 package itprojekt.raumplaner.client;
 
+import itprojekt.raumplaner.server.MailSender;
 import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
 import itprojekt.raumplaner.shared.bo.Einladung;
@@ -42,6 +43,10 @@ import com.google.gwt.user.datepicker.client.DateBox;
  * können.
  * 
  * @author Fabian, Alex, Simon, Feridun
+ *
+ */
+/**
+ * @author Fabian
  *
  */
 public class BelegungEditForm extends VerticalPanel {
@@ -351,7 +356,10 @@ public class BelegungEditForm extends VerticalPanel {
 						einladungTable.setRowData(einladungen);
 					}
 				});
-		einladungTable.addColumn(einladungDeleteColum);
+		// Diese Spalte gibt es nur Für Benutzer mit Edit-Recht
+		if (isEdit) {
+			einladungTable.addColumn(einladungDeleteColum);
+		}
 
 		// Spalte Akzeptiert für die Einladungsspalte
 		Column<Einladung, String> akzeptiertColumn = new Column<Einladung, String>(
@@ -455,11 +463,16 @@ public class BelegungEditForm extends VerticalPanel {
 									einladung.setBelegung(selectedBelegung);
 									einladung.setUser(user);
 									newEinladungen.add(einladung);
-
 									selectedBelegung
 											.setEinladungen(newEinladungen);
+
 								}
+								// Einladungen versenden
+								raumplanerAdministration.SendInvitationMails(
+										userListe, selectedBelegung,
+										new InvitationMailCallback());
 							}
+							
 							raumplanerAdministration.saveNewBelegung(
 									selectedBelegung,
 									new SaveBelegungCallBack());
@@ -476,7 +489,12 @@ public class BelegungEditForm extends VerticalPanel {
 									einladung.setUser(user);
 									einladung.setNew(true);
 									newEinladungen2.add(einladung);
+
 								}
+								// Einladungen versenden
+								raumplanerAdministration.SendInvitationMails(
+										userListe, selectedBelegung,
+										new InvitationMailCallback());
 							}
 							List<Einladung> oldEinladungen = einladungen;
 							newEinladungen2.addAll(oldEinladungen);
@@ -486,11 +504,18 @@ public class BelegungEditForm extends VerticalPanel {
 									new SaveBelegungCallBack());
 							// Zu löschende Einladungen löschen
 							if (deleteList != null) {
+								// AusladungsMails löschen und Einladungen
+								// löschen
+								List<User> declineUserList = new ArrayList<User>();
 								for (Einladung einladung : deleteList) {
+									declineUserList.add(einladung.getUser());
 									raumplanerAdministration.deleteEinladung(
 											einladung,
 											new DeleteEinladungCallback());
 								}
+								raumplanerAdministration.SendDeclineMails(
+										declineUserList, selectedBelegung,
+										new DeclineMailCallback());
 							}
 						}
 					}
@@ -629,6 +654,50 @@ public class BelegungEditForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Void result) {
 			logger.log(Level.INFO, "Erfolgreichens Löschen der Einladung");
+
+		}
+
+	}
+
+	/**
+	 * Callback für die Einladungsmails
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class InvitationMailCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Mails wurden nicht versendet");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			logger.log(Level.INFO, "Mails wurden erfolgreich versendet");
+
+		}
+
+	}
+
+	/**
+	 * Callback für die Ausladungsmails
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class DeclineMailCallback implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Mails wurden nicht versendet");
+
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			logger.log(Level.INFO, "Mails wurden erfolgreich versendet");
 
 		}
 
