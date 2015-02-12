@@ -5,6 +5,7 @@ import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -98,5 +99,12 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * @return
 	 */
 	public List<Einladung> getEinladungenByUser();
+
+	/**
+	 * Abfrage, ob Raum zum Zeitpunkt belegt ist
+	 * 
+	 * @return
+	 */
+	public boolean isRaumBelegt(Raum raum, Date date, int start, int end);
 
 }

@@ -165,12 +165,12 @@ public class BelegungForm extends VerticalPanel {
 								// editierbare Edit-Form wird geöffnet
 								belegungEditPanel.add(new BelegungEditForm(
 										false, true, selectedBelegung,
-										actualUser, belegungForm));
+										actualUser, belegungForm, actualRaum));
 							} else {
 								// nicht editierbare Edit-Form wird geöffnet
 								belegungEditPanel.add(new BelegungEditForm(
 										false, false, selectedBelegung,
-										actualUser, belegungForm));
+										actualUser, belegungForm, actualRaum));
 							}
 						}
 					}
@@ -183,7 +183,7 @@ public class BelegungForm extends VerticalPanel {
 			public void onClick(ClickEvent event) {
 				belegungEditPanel.clear();
 				belegungEditPanel.add(new BelegungEditForm(true, true,
-						new Belegung(), actualUser, belegungForm));
+						new Belegung(), actualUser, belegungForm, actualRaum));
 
 			}
 		});
@@ -199,6 +199,21 @@ public class BelegungForm extends VerticalPanel {
 		belegunAnsichtPanel.add(tableHeader);
 		belegunAnsichtPanel.add(belegungTable);
 		belegunAnsichtPanel.add(button);
+	}
+
+	/**
+	 * Lädt die Tabelle mit den Belegungen neu.
+	 */
+	public void updateBelegungen() {
+		raumplanerAdministration.getAllBelegungByRaum(actualRaum,
+				new GetBelegungCallback());
+	}
+
+	/**
+	 * Löscht die Edit Form 
+	 */
+	public void clearBelegungsEditPanel() {
+		belegungEditPanel.clear();
 	}
 
 	/**

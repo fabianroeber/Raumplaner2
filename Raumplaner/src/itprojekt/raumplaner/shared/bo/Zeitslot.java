@@ -1,5 +1,9 @@
 package itprojekt.raumplaner.shared.bo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Dieses Enum legt fest, zu welchen Uhrzeiten Räume gebucht werden können.
  * 
@@ -8,8 +12,9 @@ package itprojekt.raumplaner.shared.bo;
  */
 public enum Zeitslot {
 
-	FIRST(8, 10, "8:00 - 10:00"), SECOND(10, 12, "10:00 - 12:00"), THIRD(13,
-			15, "13:00 - 15:00"), FOURTH(15, 18, "15:00 - 18:00");
+	NOSLOT(0, 0, "Kein Zeitslot ausgewählt"), FIRST(8, 10, "8:00 - 10:00"), SECOND(
+			10, 12, "10:00 - 12:00"), THIRD(13, 15, "13:00 - 15:00"), FOURTH(
+			15, 18, "15:00 - 18:00");
 
 	private Zeitslot(int i, int i2, String text) {
 		start = i;
@@ -31,6 +36,23 @@ public enum Zeitslot {
 	 * Endzeit (Stunde)
 	 */
 	private int end;
+
+	/**
+	 * Gibt einen Zeitslot zu einer Startzeit zurück
+	 * 
+	 * @param startzeit
+	 * @return {@link Zeitslot}
+	 */
+	public Zeitslot getZeitSlotForStart(int start) {
+		List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
+		for (Zeitslot zeitslot : zeitslots) {
+			if (zeitslot.getStart() == start) {
+				return zeitslot;
+			}
+		}
+		return Zeitslot.NOSLOT;
+
+	}
 
 	public int getStart() {
 		return start;

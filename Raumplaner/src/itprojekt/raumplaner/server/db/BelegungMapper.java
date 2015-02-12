@@ -168,9 +168,9 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 							+ " WHERE Raum_idRaum=" + raum.getId());
 			while (resultSet.next()) {
 				Belegung belegung = new Belegung(resultSet.getString("thema"),
-						resultSet.getDate("startzeit"),
-						resultSet.getDate("endzeit"),
-						resultSet.getDate("created"));
+						resultSet.getTimestamp("startzeit"),
+						resultSet.getTimestamp("endzeit"),
+						resultSet.getTimestamp("created"));
 				belegung.setRaum(RaumMapper.getRaumMapper().getById(
 						raum.getId()));
 				belegung.setErsteller(UserMapper.getUserMapper().getById(
@@ -180,7 +180,7 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		} catch (SQLException e) {
 			logger.log(
 					Level.WARNING,
-					"Fehler beim Laden aller Buchungen f�r den Raum: "
+					"Fehler beim Laden aller Buchungen für den Raum: "
 							+ raum.getBezeichnung(), e);
 		}
 

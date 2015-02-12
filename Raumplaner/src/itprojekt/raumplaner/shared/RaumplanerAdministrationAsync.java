@@ -5,6 +5,7 @@ import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -38,5 +39,8 @@ public interface RaumplanerAdministrationAsync {
 	void getEinladungenByBelegung(AsyncCallback<List<Einladung>> callback);
 
 	void getEinladungenByUser(AsyncCallback<List<Einladung>> callback);
+
+	void isRaumBelegt(Raum raum, Date date, int start, int end,
+			AsyncCallback<Boolean> callback);
 
 }

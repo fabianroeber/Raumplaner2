@@ -1,18 +1,27 @@
 package itprojekt.raumplaner.client;
 
+import itprojekt.raumplaner.shared.RaumplanerAdministrationAsync;
 import itprojekt.raumplaner.shared.bo.Belegung;
+import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 import itprojekt.raumplaner.shared.bo.Zeitslot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -41,6 +50,20 @@ public class BelegungEditForm extends VerticalPanel {
 	BelegungForm actualBelegungForm;
 
 	/**
+	 * Aktueller Raum
+	 */
+	final Raum actualRaum;
+
+	/**
+	 * Listbox für Zeitslotauswahl
+	 */
+	final ListBox zeitslotBox = new ListBox();
+
+	Logger logger = RpcSettings.getLogger();
+	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
+			.getRaumplanerAdministration();
+
+	/**
 	 * 
 	 * Dieser Konstruktor erstellt eine neue Bearbeitungsansicht für eine
 	 * Buchung. Je nach Übergabeparamenter kann diese Ansicht anders aussehen.
@@ -55,12 +78,20 @@ public class BelegungEditForm extends VerticalPanel {
 	 *            - Die Belegung als Objekt
 	 * @param user
 	 *            - Der aktuell eingeloggte User als Objekt
+	 * 
+	 * @param belegungForm
+	 *            - Zum Zugriff auf die untergeordnete BelegungForm, um z.B. die
+	 *            Buchungstabelle zu aktualisieren
+	 * 
+	 * @param raum
+	 *            - Der aktuelle Raum
 	 */
 	public BelegungEditForm(final boolean isNew, boolean isEdit,
-			Belegung belegung, User user, BelegungForm belegungForm) {
+			Belegung belegung, User user, BelegungForm belegungForm, Raum raum) {
 
 		actualBelegungForm = belegungForm;
 		selectedBelegung = belegung;
+		actualRaum = raum;
 
 		// Basis-Panel
 		VerticalPanel basePanel = new VerticalPanel();
@@ -109,13 +140,27 @@ public class BelegungEditForm extends VerticalPanel {
 
 		zeitslotPanel.add(zeitslotLabel);
 
-		// Listbox für Zeitslotauswahl
-		final ListBox zeitslotBox = new ListBox();
-		List<Zeitslot> zeitslots = new ArrayList<Zeitslot>();
-		zeitslots = Arrays.asList(Zeitslot.values());
+		// Hier werden alle Möglichen Werte des Enums Zeitslot der Listbox zu
+		// Verfügung gestellt.
+		final List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
 		for (Zeitslot zeitslot : zeitslots) {
 			zeitslotBox.addItem(zeitslot.getText());
 		}
+
+		zeitslotBox.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				Zeitslot zeitslot = zeitslots.get(zeitslotBox
+						.getSelectedIndex());
+				// RPC Aufruf, der den Raum nach bereits belegten Buchungen
+				// durchsucht
+				raumplanerAdministration.isRaumBelegt(actualRaum,
+						selectedBelegung.getStartzeit(), zeitslot.getStart(),
+						zeitslot.getEnd(), new IsRaumBelegtCallback());
+
+			}
+		});
 
 		// Hier wird mit Änderungen am Wert des Datums umgegangen
 		datebox.getDatePicker().addValueChangeHandler(
@@ -164,11 +209,73 @@ public class BelegungEditForm extends VerticalPanel {
 					+ format.format(selectedBelegung.getStartzeit()) + " bis "
 					+ format.format(selectedBelegung.getEndzeit()));
 		}
+
+		// Buttons
+		HorizontalPanel buttonPanel = new HorizontalPanel();
+		Button speichernButton = new Button("Speichern");
+		Button abbrechenButton = new Button("Abbrechen");
+		speichernButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				// Der Dummmy Zeitslot darf nicht ausgewählt sein.
+				if (zeitslotBox.getSelectedIndex() == 0) {
+					Window.alert("Bitte legen Sie einen Zeitslot fest.");
+
+				} else {
+
+				}
+
+			}
+		});
+		abbrechenButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				actualBelegungForm.clearBelegungsEditPanel();
+			}
+		});
+
+		if (isEdit) {
+			buttonPanel.add(speichernButton);
+		}
+		buttonPanel.add(abbrechenButton);
+
 		// Anordnung der Panels
 		this.add(basePanel);
 		basePanel.add(headerPanel);
 		basePanel.add(themaPanel);
 		basePanel.add(datumPanel);
 		basePanel.add(zeitslotPanel);
+		basePanel.add(buttonPanel);
+	}
+
+	/**
+	 * Nachdem geprüft wurde, ob ein Raum bereits belegt ist, wird hier mit dem
+	 * Ergebnis umgegangen.
+	 * 
+	 * @author Fabian
+	 *
+	 */
+	class IsRaumBelegtCallback implements AsyncCallback<Boolean> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING,
+					"Fehler beim Überprüfen der Raumbelegungen");
+
+		}
+
+		@Override
+		public void onSuccess(Boolean result) {
+			if (result == true) {
+				Window.alert("Der Raum ist zu diesem Zeitpunkt bereits belegt");
+				// Im index 0 befindet sich ein Dummy Zeitslot, mit dem die
+				// Belegung nicht gespeichert werden kann
+				zeitslotBox.setSelectedIndex(0);
+			}
+
+		}
+
 	}
 }

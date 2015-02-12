@@ -10,6 +10,8 @@ import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -108,6 +110,33 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	public List<Einladung> getEinladungenByUser() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isRaumBelegt(Raum raum, Date date, int start, int end) {
+		List<Belegung> belegungen = getAllBelegungByRaum(raum);
+		for (Belegung belegung : belegungen) {
+
+			Calendar startzeit = Calendar.getInstance();
+			Calendar actDatum = Calendar.getInstance();
+			Calendar endZeit = Calendar.getInstance();
+			startzeit.setTime(belegung.getStartzeit());
+			actDatum.setTime(date);
+			endZeit.setTime(belegung.getEndzeit());
+			
+			//Zunächst nur Datum vergleichen
+			if (startzeit.get(Calendar.YEAR) == actDatum.get(Calendar.YEAR)
+					&& startzeit.get(Calendar.DAY_OF_YEAR) == actDatum
+							.get(Calendar.DAY_OF_YEAR)) {
+				// Bei gleichem Datum --> Zeitslot vergleichen
+				if (startzeit.get(Calendar.HOUR_OF_DAY) == start
+						&& endZeit.get(Calendar.HOUR_OF_DAY) == end) {
+					return true;
+				}
+			}
+		}
+		return false;
+
 	}
 
 }
