@@ -188,6 +188,8 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public List<Belegung> getAllBelegung() {
 		List<Belegung> belegungen = belegungMapper.getAll();
+		
+		// Die Belegungen werden nach Datum und Uhrzeit sortiert
 		Collections.sort(belegungen, new Comparator<Belegung>() {
 
 			@Override
