@@ -74,12 +74,14 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 		try {
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("UPDATE Belegung" + "SET thema='"
-					+ bo.getThema() + "', " + "startzeit='" + bo.getStartzeit()
-					+ "', " + "endzeit='" + bo.getEndzeit() + "', "
-					+ "created='" + new Timestamp(bo.getCreated().getTime())
-					+ "', " + "Raum_idRaum='" + bo.getRaum() + "' "
-					+ "WHERE idBelegung=" + bo.getId());
+			statement.executeUpdate("UPDATE Belegung" + " SET thema='"
+					+ bo.getThema() + "', " + "startzeit='"
+					+ new Timestamp(bo.getStartzeit().getTime()) + "', "
+					+ "endzeit='" + new Timestamp(bo.getEndzeit().getTime())
+					+ "', " + "created='" + DbUtil.getTimeNow() + "', "
+					+ "Raum_idRaum=" + bo.getRaum().getId() + ", "
+					+ " User_idUser=" + bo.getErsteller().getId()
+					+ " WHERE idBelegung=" + bo.getId());
 
 		} catch (SQLException e) {
 			logger.log(
@@ -108,20 +110,21 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 				statement = connection.createStatement();
 
 				statement
-						.executeUpdate("INSERT INTO Belegung (idBelegung, thema, startzeit, endzeit, created, Raum_idRaum) "
+						.executeUpdate("INSERT INTO Belegung (idBelegung, thema, startzeit, endzeit, created, Raum_idRaum, User_idUser) "
 								+ "VALUES ("
 								+ bo.getId()
-								+ "','"
+								+ ", '"
 								+ bo.getThema()
-								+ "','"
-								+ bo.getStartzeit()
-								+ "','"
-								+ bo.getEndzeit()
-								+ "','"
+								+ "', '"
+								+ new Timestamp(bo.getStartzeit().getTime())
+								+ "', '"
+								+ new Timestamp(bo.getEndzeit().getTime())
+								+ "', '"
 								+ DbUtil.getTimeNow()
-								+ "','"
-								+ bo.getRaum()
-								+ "')");
+								+ "', "
+								+ bo.getRaum().getId()
+								+ ", "
+								+ bo.getErsteller().getId() + ")");
 			}
 		} catch (SQLException e) {
 			logger.log(Level.WARNING,
@@ -171,6 +174,7 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 						resultSet.getTimestamp("startzeit"),
 						resultSet.getTimestamp("endzeit"),
 						resultSet.getTimestamp("created"));
+				belegung.setId(resultSet.getInt("idBelegung"));
 				belegung.setRaum(RaumMapper.getRaumMapper().getById(
 						raum.getId()));
 				belegung.setErsteller(UserMapper.getUserMapper().getById(

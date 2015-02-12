@@ -65,6 +65,11 @@ public class BelegungEditForm extends VerticalPanel {
 	 */
 	final List<Zeitslot> zeitslots = Arrays.asList(Zeitslot.values());
 
+	/**
+	 * Kennzeichner, ob es sich um eien neuen Raum handelt.
+	 */
+	final boolean isRaumNew;
+
 	Logger logger = RpcSettings.getLogger();
 	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
 			.getRaumplanerAdministration();
@@ -99,6 +104,7 @@ public class BelegungEditForm extends VerticalPanel {
 		actualBelegungForm = belegungForm;
 		selectedBelegung = belegung;
 		actualRaum = raum;
+		isRaumNew = isNew;
 
 		// Basis-Panel
 		VerticalPanel basePanel = new VerticalPanel();
@@ -142,7 +148,7 @@ public class BelegungEditForm extends VerticalPanel {
 		final Date today = new Date(System.currentTimeMillis());
 
 		// Auswahl der Zeitslots
-		HorizontalPanel zeitslotPanel = new HorizontalPanel();
+		final HorizontalPanel zeitslotPanel = new HorizontalPanel();
 		final Label zeitslotLabel = new Label("Zeitslot: ");
 
 		zeitslotPanel.add(zeitslotLabel);
@@ -152,10 +158,15 @@ public class BelegungEditForm extends VerticalPanel {
 		}
 		// Suchen des aktuellen Zeitslots, wenn keiner ausgwählt wurde, dann
 		// wird der Dummy Slot eingefügt
-		int index = zeitslots
-				.indexOf(Zeitslot.getZeitSlotForStart(selectedBelegung
-						.getStartzeit().getHours()));
-		zeitslotBox.setSelectedIndex(index);
+		if (selectedBelegung.getStartzeit() != null) {
+			int index = zeitslots.indexOf(Zeitslot
+					.getZeitSlotForStart(selectedBelegung.getStartzeit()
+							.getHours()));
+			zeitslotBox.setSelectedIndex(index);
+		} else {
+			// Ist kein Zeitslot angegeben, Dummy Item einsetzen
+			zeitslotBox.setSelectedIndex(0);
+		}
 
 		zeitslotBox.addChangeHandler(new ChangeHandler() {
 
@@ -165,8 +176,9 @@ public class BelegungEditForm extends VerticalPanel {
 						.getSelectedIndex());
 				// RPC Aufruf, der den Raum nach bereits belegten Buchungen
 				// durchsucht
+
 				raumplanerAdministration.isRaumBelegt(actualRaum,
-						selectedBelegung.getStartzeit(), zeitslot.getStart(),
+						datebox.getValue(), zeitslot.getStart(),
 						zeitslot.getEnd(), new IsRaumBelegtCallback());
 
 			}
@@ -185,13 +197,15 @@ public class BelegungEditForm extends VerticalPanel {
 							Window.alert("Räume können nicht in der Vergangenheit gebucht werden!");
 							if (isNew) {
 								datebox.setValue(today);
+								
 							} else {
 								datebox.setValue(selectedBelegung
 										.getStartzeit());
 							}
 
 						}
-
+						zeitslotPanel.add(zeitslotBox);
+						zeitslotBox.setSelectedIndex(0);
 					}
 				});
 		datumPanel.add(datumLabel);
@@ -210,8 +224,11 @@ public class BelegungEditForm extends VerticalPanel {
 		// Belegung nur angezeigt
 		if (isEdit) {
 			themaPanel.add(bezInput);
-			zeitslotPanel.add(zeitslotBox);
-
+			// Bei neuen Objekten wir die Zeitslotauswahl erst beim Auswählen
+			// des Datums hinzugefügt
+			if (!isNew) {
+				zeitslotPanel.add(zeitslotBox);
+			}
 		} else {
 			// Thema wird nur als Label angezeigt
 			bezLabel.setText("Thema: " + selectedBelegung.getThema());
@@ -243,7 +260,7 @@ public class BelegungEditForm extends VerticalPanel {
 					selectedBelegung.getStartzeit().setHours(
 							zeitslots.get(zeitslotBox.getSelectedIndex())
 									.getStart());
-					selectedBelegung.getStartzeit().setHours(
+					selectedBelegung.getEndzeit().setHours(
 							zeitslots.get(zeitslotBox.getSelectedIndex())
 									.getEnd());
 
@@ -307,9 +324,12 @@ public class BelegungEditForm extends VerticalPanel {
 		@Override
 		public void onSuccess(Boolean result) {
 			if (result == true) {
-				if (Zeitslot.getZeitSlotForStart(
-						selectedBelegung.getStartzeit().getHours()).getStart() != zeitslots
-						.get(zeitslotBox.getSelectedIndex()).getStart()) {
+
+				if (isRaumNew
+						|| Zeitslot.getZeitSlotForStart(
+								selectedBelegung.getStartzeit().getHours())
+								.getStart() != zeitslots.get(
+								zeitslotBox.getSelectedIndex()).getStart()) {
 					Window.alert("Der Raum ist zu diesem Zeitpunkt bereits belegt");
 					// Im index 0 befindet sich ein Dummy Zeitslot, mit dem die
 					// Belegung nicht gespeichert werden kann
