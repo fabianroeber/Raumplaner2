@@ -12,6 +12,8 @@ import itprojekt.raumplaner.shared.bo.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -185,7 +187,15 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 
 	@Override
 	public List<Belegung> getAllBelegung() {
-		return belegungMapper.getAll();
+		List<Belegung> belegungen = belegungMapper.getAll();
+		Collections.sort(belegungen, new Comparator<Belegung>() {
+
+			@Override
+			public int compare(Belegung o1, Belegung o2) {
+				return o1.getStartzeit().compareTo(o2.getStartzeit());
+			}
+		});
+		return belegungen;
 	}
 
 	@Override
