@@ -10,6 +10,7 @@ import itprojekt.raumplaner.shared.bo.Einladung;
 import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -101,15 +102,8 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	}
 
 	@Override
-	public List<Einladung> getEinladungenByBelegung() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Einladung> getEinladungenByUser() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Einladung> getEinladungenByBelegung(Belegung belegung) {
+		return einladungMapper.getAllByBelegung(belegung);
 	}
 
 	@Override
@@ -123,8 +117,8 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 			startzeit.setTime(belegung.getStartzeit());
 			actDatum.setTime(date);
 			endZeit.setTime(belegung.getEndzeit());
-			
-			//Zunächst nur Datum vergleichen
+
+			// Zunächst nur Datum vergleichen
 			if (startzeit.get(Calendar.YEAR) == actDatum.get(Calendar.YEAR)
 					&& startzeit.get(Calendar.DAY_OF_YEAR) == actDatum
 							.get(Calendar.DAY_OF_YEAR)) {
@@ -139,4 +133,57 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 
 	}
 
+	@Override
+	public List<Einladung> getEinladungenByUser(User user) {
+		return einladungMapper.getAllByUser(user);
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		return userMapper.getAll();
+	}
+
+	@Override
+	public List<User> getAllFreeUser(Belegung selectedBelegung, int start) {
+		// Laden aller notwendigen Daten
+		List<User> users = getAllUser();
+		List<User> freeUsers = new ArrayList<User>();
+		List<Belegung> belegungen = getAllBelegung();
+		List<Einladung> einladungen = getEinladungenByBelegung(selectedBelegung);
+
+		for (User user : users) {
+			for (Belegung belegung : belegungen) {
+				Calendar startzeit = Calendar.getInstance();
+				Calendar actDatum = Calendar.getInstance();
+				startzeit.setTime(belegung.getStartzeit());
+				actDatum.setTime(selectedBelegung.getStartzeit());
+				if (startzeit.get(Calendar.YEAR) == actDatum.get(Calendar.YEAR)
+						&& startzeit.get(Calendar.DAY_OF_YEAR) == actDatum
+								.get(Calendar.DAY_OF_YEAR)) {
+
+					if (startzeit.get(Calendar.HOUR_OF_DAY) == start) {
+						for (Einladung einladung : einladungen) {
+							if (!einladung.getUser().equals(user)) {
+								freeUsers.add(user);
+								break;
+							} else {
+								break;
+							}
+						}
+					}
+				} else {
+					freeUsers.add(user);
+					break;
+				}
+
+			}
+		}
+		return freeUsers;
+
+	}
+
+	@Override
+	public List<Belegung> getAllBelegung() {
+		return belegungMapper.getAll();
+	}
 }

@@ -91,20 +91,41 @@ public interface RaumplanerAdministration extends RemoteService {
 	 * 
 	 * @return Liste von {@link Einladung}
 	 */
-	public List<Einladung> getEinladungenByBelegung();
+	public List<Einladung> getEinladungenByBelegung(Belegung belegung);
 
 	/**
 	 * Lädt alle Einladungen für einen User.
 	 * 
 	 * @return
 	 */
-	public List<Einladung> getEinladungenByUser();
+	public List<Einladung> getEinladungenByUser(User user);
 
 	/**
 	 * Abfrage, ob Raum zum Zeitpunkt belegt ist
 	 * 
-	 * @return
+	 * @return boolean
 	 */
 	public boolean isRaumBelegt(Raum raum, Date date, int start, int end);
+
+	/**
+	 * Gibt alle User zurück
+	 * 
+	 * @return Liste von {@link User}
+	 */
+	public List<User> getAllUser();
+
+	/**
+	 * Gibt alle verfügbaren User zurück
+	 * 
+	 * @return Liste von {@link User}
+	 */
+	public List<User> getAllFreeUser(Belegung belegung, int start);
+
+	/**
+	 * Gibt alle Belegungen zurück
+	 * 
+	 * @return
+	 */
+	public List<Belegung> getAllBelegung();
 
 }

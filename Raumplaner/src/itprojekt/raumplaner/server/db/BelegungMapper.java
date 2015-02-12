@@ -50,9 +50,10 @@ public class BelegungMapper implements DbMapperInterface<Belegung> {
 			while (resultSet.next()) {
 
 				Belegung belegung = new Belegung(resultSet.getString("thema"),
-						resultSet.getDate("startzeit"),
-						resultSet.getDate("endzeit"),
-						resultSet.getDate("created"));
+						resultSet.getTimestamp("startzeit"),
+						resultSet.getTimestamp("endzeit"),
+						resultSet.getTimestamp("created"));
+				belegung.setId(resultSet.getInt("idBelegung"));
 				belegung.setRaum(RaumMapper.getRaumMapper().getById(
 						resultSet.getInt("Raum_idRaum")));
 				belegung.setErsteller(UserMapper.getUserMapper().getById(

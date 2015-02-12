@@ -51,12 +51,19 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 		try {
 			Statement statement = connection.createStatement();
 
-			statement.executeUpdate("UPDATE Einladung" + "SET User_idUser='"
-					+ bo.getUser() + "', " + "Belegung_idBelegung='"
+			String akzeptiert;
+
+			if (bo.getAkzeptiert()) {
+				akzeptiert = "y";
+			} else {
+				akzeptiert = "n";
+			}
+
+			statement.executeUpdate("UPDATE Einladung" + " SET User_idUser="
+					+ bo.getUser() + ", " + "Belegung_idBelegung='"
 					+ bo.getBelegung() + "', " + "created='"
-					+ new Timestamp(bo.getCreated().getTime()) + "', "
-					+ "akzeptiert='" + bo.getAkzeptiert() + "' "
-					+ "WHERE idEinladung=" + bo.getId());
+					+ DbUtil.getTimeNow() + "', " + "akzeptiert='" + akzeptiert
+					+ "' " + "WHERE idEinladung=" + bo.getId());
 
 		} catch (SQLException e) {
 			logger.log(
@@ -82,19 +89,27 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 				// Höchste ID + 1 ist die ID für unsere neue Einladung
 				bo.setId(resultSet.getInt("maxid") + 1);
 
+				String akzeptiert;
+
+				if (bo.getAkzeptiert()) {
+					akzeptiert = "y";
+				} else {
+					akzeptiert = "n";
+				}
+
 				statement = connection.createStatement();
 
 				statement
 						.executeUpdate("INSERT INTO Einladung (idEinladung, akzeptiert, User_idUser, Belegung_idBelegung, created) "
 								+ "VALUES ("
 								+ bo.getId()
-								+ "','"
-								+ bo.getAkzeptiert()
-								+ "','"
-								+ bo.getUser()
-								+ "','"
-								+ bo.getBelegung()
-								+ "','"
+								+ ", '"
+								+ akzeptiert
+								+ "', "
+								+ bo.getUser().getId()
+								+ ", "
+								+ bo.getBelegung().getId()
+								+ "', '"
 								+ DbUtil.getTimeNow() + "')");
 			}
 		} catch (SQLException e) {
@@ -113,7 +128,17 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 
 	@Override
 	public void delete(Einladung bo) {
-		// TODO Auto-generated method stub
+		Connection connection = DatabaseConnection.getConnection();
+		try {
+			Statement statement = connection.createStatement();
+
+			statement.executeUpdate("DELETE FROM Einladung "
+					+ "WHERE idEinladung=" + bo.getId());
+
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Einladung mit der ID: " + bo.getId()
+					+ " konnte nicht gelöscht werden", e);
+		}
 
 	}
 
@@ -151,4 +176,38 @@ public class EinladungMapper implements DbMapperInterface<Einladung> {
 
 		return resultlist;
 	}
+
+	public List<Einladung> getAllByBelegung(Belegung belegung) {
+		Connection connection = DatabaseConnection.getConnection();
+		List<Einladung> resultlist = new ArrayList<Einladung>();
+
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement
+					.executeQuery("SELECT idEinladung, akzeptiert, User_idUser, created, Belegung_idBelegung FROM Einladung"
+							+ " WHERE Belegung_idBelegung=" + belegung.getId());
+			while (resultSet.next()) {
+				Einladung einladung = new Einladung();
+				einladung.setId(resultSet.getInt("idEinladung"));
+				einladung.setCreated(resultSet.getDate("created"));
+				if (resultSet.getString("akzeptiert").equalsIgnoreCase("y")) {
+					einladung.setAkzeptiert(true);
+				} else {
+					einladung.setAkzeptiert(false);
+				}
+				einladung.setUser(UserMapper.getUserMapper().getById(
+						resultSet.getInt("User_idUser")));
+				einladung.setBelegung(BelegungMapper.getBelegungMapper()
+						.getById(resultSet.getInt("User_idUser")));
+				resultlist.add(einladung);
+			}
+		} catch (SQLException e) {
+			logger.log(
+					Level.WARNING,
+					"Fehler beim Laden aller Einladungen für den User: "
+							+ belegung.getId(), e);
+		}
+		return resultlist;
+	}
+	
 }

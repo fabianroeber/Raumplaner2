@@ -6,12 +6,16 @@ import itprojekt.raumplaner.shared.bo.Raum;
 import itprojekt.raumplaner.shared.bo.User;
 import itprojekt.raumplaner.shared.bo.Zeitslot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -19,6 +23,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -69,6 +75,26 @@ public class BelegungEditForm extends VerticalPanel {
 	 * Kennzeichner, ob es sich um eien neuen Raum handelt.
 	 */
 	final boolean isRaumNew;
+
+	/**
+	 * Auswahlbox für die Teilnehmer
+	 */
+	final ListBox userBox = new ListBox();
+
+	/**
+	 * Liste der Teilnehmer
+	 */
+	final List<User> userListe = new ArrayList<User>();
+
+	/**
+	 * Tabelle für Teilnehmer
+	 */
+	final CellTable<User> userTable = new CellTable<User>();
+
+	/**
+	 * Auswahlliste mit möglichen Teilnehmern
+	 */
+	final List<User> userAuswahlliste = new ArrayList<User>();
 
 	Logger logger = RpcSettings.getLogger();
 	RaumplanerAdministrationAsync raumplanerAdministration = RpcSettings
@@ -197,7 +223,7 @@ public class BelegungEditForm extends VerticalPanel {
 							Window.alert("Räume können nicht in der Vergangenheit gebucht werden!");
 							if (isNew) {
 								datebox.setValue(today);
-								
+
 							} else {
 								datebox.setValue(selectedBelegung
 										.getStartzeit());
@@ -212,7 +238,69 @@ public class BelegungEditForm extends VerticalPanel {
 		datumPanel.add(datebox);
 
 		// User zur Belegung einladen
-		HorizontalPanel userPanel = new HorizontalPanel();
+		final VerticalPanel userPanel = new VerticalPanel();
+		final VerticalPanel useraddPanel = new VerticalPanel();
+
+		Label userLabel = new Label("Teilnehmer: ");
+		// Button für einen neuen User
+		Button addUserButton = new Button("Teilnehmer hinzufügen");
+		addUserButton.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				useraddPanel.clear();
+				useraddPanel.add(userBox);
+			}
+		});
+
+		// Freie Teilnehemer laden, dabei wird die aktuelle Startzeit übergeben
+		raumplanerAdministration.getAllFreeUser(selectedBelegung, zeitslots
+				.get(zeitslotBox.getSelectedIndex()).getStart(),
+				new GetFreeUsersCallback());
+
+		// Spalte in der Teilnehmertabelle mit Anzeige der Mail-Adresse
+		Column<User, String> emailColumn = new Column<User, String>(
+				new TextCell()) {
+
+			@Override
+			public String getValue(User object) {
+				return object.getEmail();
+			}
+		};
+		userTable.addColumn(emailColumn);
+		// Spalte in der Teilnehmertabelle mit Löschen-Button
+		Column<User, String> deleteColum = new Column<User, String>(
+				new ButtonCell()) {
+
+			@Override
+			public String getValue(User object) {
+				return "Entfernen";
+			}
+		};
+		deleteColum.setFieldUpdater(new FieldUpdater<User, String>() {
+
+			@Override
+			public void update(int index, User object, String value) {
+				userListe.remove(object);
+				userTable.setRowCount(userListe.size());
+				userTable.setRowData(userListe);
+			}
+		});
+		userTable.addColumn(deleteColum);
+
+		userBox.addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				User newuser = userAuswahlliste.get(userBox.getSelectedIndex());
+				userListe.add(newuser);
+				userTable.setRowCount(userListe.size());
+				userTable.setRowData(userListe);
+				useraddPanel.clear();
+			}
+		});
+
+		userPanel.add(userLabel);
 
 		bezInput.setStyleName("inputField");
 		themaPanel.setStyleName("raumEditPanel");
@@ -229,6 +317,9 @@ public class BelegungEditForm extends VerticalPanel {
 			if (!isNew) {
 				zeitslotPanel.add(zeitslotBox);
 			}
+			userPanel.add(addUserButton);
+			userPanel.add(useraddPanel);
+			userPanel.add(userTable);
 		} else {
 			// Thema wird nur als Label angezeigt
 			bezLabel.setText("Thema: " + selectedBelegung.getThema());
@@ -359,6 +450,65 @@ public class BelegungEditForm extends VerticalPanel {
 		public void onSuccess(Void result) {
 			actualBelegungForm.updateBelegungen();
 			actualBelegungForm.clearBelegungsEditPanel();
+		}
+
+	}
+
+	/**
+	 * Fügt alle freien User zur Auswahlliste hinzu
+	 * 
+	 * @author Fabian *
+	 */
+	class GetFreeUsersCallback implements AsyncCallback<List<User>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			logger.log(Level.WARNING, "Fehler beim laden der Benutzer");
+
+		}
+
+		@Override
+		public void onSuccess(List<User> result) {
+			userAuswahlliste.clear();
+			userAuswahlliste.addAll(result);
+			userBox.clear();
+			for (User user : userAuswahlliste) {
+				userBox.addItem(user.getEmail());
+			}
+
+		}
+
+	}
+
+	class GetUserByMailCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	class AddTeilnehmerCallback implements AsyncCallback<User> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(User result) {
+			userListe.add(result);
+			userTable.setRowCount(userListe.size());
+			userTable.setRowData(userListe);
 		}
 
 	}

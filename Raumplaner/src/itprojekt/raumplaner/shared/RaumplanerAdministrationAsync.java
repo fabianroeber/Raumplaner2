@@ -36,11 +36,17 @@ public interface RaumplanerAdministrationAsync {
 
 	void deleteBelegung(Belegung belegung, AsyncCallback<Void> callback);
 
-	void getEinladungenByBelegung(AsyncCallback<List<Einladung>> callback);
+	void getEinladungenByBelegung(Belegung belegung, AsyncCallback<List<Einladung>> callback);
 
-	void getEinladungenByUser(AsyncCallback<List<Einladung>> callback);
+	void getEinladungenByUser(User user, AsyncCallback<List<Einladung>> callback);
 
 	void isRaumBelegt(Raum raum, Date date, int start, int end,
 			AsyncCallback<Boolean> callback);
+
+	void getAllFreeUser(Belegung belegung, int start, AsyncCallback<List<User>> callback);
+
+	void getAllUser(AsyncCallback<List<User>> callback);
+
+	void getAllBelegung(AsyncCallback<List<Belegung>> callback);
 
 }
