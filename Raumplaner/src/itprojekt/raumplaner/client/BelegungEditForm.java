@@ -181,7 +181,7 @@ public class BelegungEditForm extends VerticalPanel {
 		// Bereich für Thema der Belegung
 		HorizontalPanel themaPanel = new HorizontalPanel();
 		Label bezLabel = new Label("Thema: ");
-		bezLabel.setStyleName("inputlabel");
+		
 		themaPanel.add(bezLabel);
 		final TextBox bezInput = new TextBox();
 		bezInput.setValue(selectedBelegung.getThema());
@@ -632,7 +632,9 @@ public class BelegungEditForm extends VerticalPanel {
 			userAuswahlliste.addAll(result);
 			userBox.clear();
 			for (User user : userAuswahlliste) {
-				userBox.addItem(user.getEmail());
+				if (!userListe.contains(user)) {
+					userBox.addItem(user.getEmail());
+				}
 			}
 			useraddPanel.add(userBox);
 		}

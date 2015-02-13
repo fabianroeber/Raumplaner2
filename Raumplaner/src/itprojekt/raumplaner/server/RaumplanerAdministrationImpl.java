@@ -154,9 +154,9 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	public List<User> getAllFreeUser(Belegung selectedBelegung, int start) {
 		// Laden aller notwendigen Daten
 		List<User> users = getAllUser();
-		List<User> freeUsers = users;
+		List<User> usersToFilter = new ArrayList<>();
 		List<Belegung> belegungen = getAllBelegung();
-
+		List<Einladung> einladungen = getEinladungenByBelegung(selectedBelegung);
 		// Alle User und Belegungen durchgehen, Datum vergleichen, Uhrzeit
 		// vergleihen
 		for (User user : users) {
@@ -176,7 +176,7 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 					if (startzeit.get(Calendar.HOUR_OF_DAY) == start) {
 						for (Einladung einladung : belegung.getEinladungen()) {
 							if (einladung.getUser().equals(user)) {
-								freeUsers.remove(user);
+								usersToFilter.add(user);
 								break;
 							}
 						}
@@ -184,8 +184,9 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 				}
 
 			}
-		}
-		return freeUsers;
+		}		
+		users.removeAll(usersToFilter);
+		return users;
 
 	}
 
