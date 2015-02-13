@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -119,6 +120,10 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 			startzeit.setTime(belegung.getStartzeit());
 			actDatum.setTime(date);
 			endZeit.setTime(belegung.getEndzeit());
+			// Setzen der Zeitzone (App Engine setzt diese per Default auf UTC)
+			startzeit.setTimeZone(TimeZone.getTimeZone("CET"));
+			actDatum.setTimeZone(TimeZone.getTimeZone("CET"));
+			endZeit.setTimeZone(TimeZone.getTimeZone("CET"));
 
 			// Zunächst nur Datum vergleichen
 			if (startzeit.get(Calendar.YEAR) == actDatum.get(Calendar.YEAR)
@@ -149,9 +154,9 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	public List<User> getAllFreeUser(Belegung selectedBelegung, int start) {
 		// Laden aller notwendigen Daten
 		List<User> users = getAllUser();
-		List<User> freeUsers = new ArrayList<User>();
+		List<User> freeUsers = users;
 		List<Belegung> belegungen = getAllBelegung();
-		List<Einladung> einladungen = getEinladungenByBelegung(selectedBelegung);
+
 		// Alle User und Belegungen durchgehen, Datum vergleichen, Uhrzeit
 		// vergleihen
 		for (User user : users) {
@@ -160,23 +165,22 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 				Calendar actDatum = Calendar.getInstance();
 				startzeit.setTime(belegung.getStartzeit());
 				actDatum.setTime(selectedBelegung.getStartzeit());
+				// Setzen der Zeitzone (App Engine setzt diese per Default auf
+				// UTC)
+				startzeit.setTimeZone(TimeZone.getTimeZone("CET"));
+				actDatum.setTimeZone(TimeZone.getTimeZone("CET"));
 				if (startzeit.get(Calendar.YEAR) == actDatum.get(Calendar.YEAR)
 						&& startzeit.get(Calendar.DAY_OF_YEAR) == actDatum
 								.get(Calendar.DAY_OF_YEAR)) {
 
 					if (startzeit.get(Calendar.HOUR_OF_DAY) == start) {
-						for (Einladung einladung : einladungen) {
-							if (!einladung.getUser().equals(user)) {
-								freeUsers.add(user);
-								break;
-							} else {
+						for (Einladung einladung : belegung.getEinladungen()) {
+							if (einladung.getUser().equals(user)) {
+								freeUsers.remove(user);
 								break;
 							}
 						}
 					}
-				} else {
-					freeUsers.add(user);
-					break;
 				}
 
 			}
@@ -188,7 +192,7 @@ public class RaumplanerAdministrationImpl extends RemoteServiceServlet
 	@Override
 	public List<Belegung> getAllBelegung() {
 		List<Belegung> belegungen = belegungMapper.getAll();
-		
+
 		// Die Belegungen werden nach Datum und Uhrzeit sortiert
 		Collections.sort(belegungen, new Comparator<Belegung>() {
 
